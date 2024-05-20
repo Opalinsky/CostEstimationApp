@@ -8,18 +8,17 @@ namespace CostEstimationApp.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Material is required.")]
-        public int MaterialId { get; set; }
-
         [ForeignKey("MaterialId")]
-        public Material Material { get; set; } = null!;
+        public int MaterialId { get; set; }
+        public Material? Material { get; set; }
         
 
 
         [Required(ErrorMessage = "Tool is required.")]
-        public int ToolId { get; set; }
-       
         [ForeignKey("ToolId")]
-        public Tool Tool { get; set; } = null!;
+
+        public int ToolId { get; set; }
+        public Tool? Tool { get; set; }
 
         [Required]
         [Range(0, double.MaxValue, ErrorMessage = "Rate must be a positive number.")]

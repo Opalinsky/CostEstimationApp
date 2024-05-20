@@ -21,58 +21,7 @@ namespace CostEstimationApp.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Material>()
-                .Property(m => m.PricePerKg)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<Material>()
-                .Property(m => m.Density)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<Machine>()
-                .Property(m => m.CostPerHour)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<Tool>()
-                .Property(t => t.CostPerHour)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<Worker>()
-                .Property(w => w.CostPerHour)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<MRR>()
-                .Property(m => m.Rate)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<Order>()
-                .Property(o => o.PreLength)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<Order>()
-                .Property(o => o.PreWidth)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<Order>()
-                .Property(o => o.PreHeight)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<Order>()
-                .Property(o => o.PostLength)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<Order>()
-                .Property(o => o.PostWidth)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<Order>()
-                .Property(o => o.PostHeight)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<Operation>()
-                .Property(op => op.Duration)
-                .HasColumnType("decimal(18, 2)");
-
+            
             // Konfiguracja relacji dla tabeli Operations
             modelBuilder.Entity<Material>()
                 .HasMany(m => m.MRR)
