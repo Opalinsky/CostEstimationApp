@@ -1,0 +1,225 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = CostEstimationApp
+build_property.RootNamespace = CostEstimationApp
+build_property.ProjectDir = C:\Users\filip\Documents\mvc\CostEstimationApp\CostEstimationApp\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\filip\Documents\mvc\CostEstimationApp\CostEstimationApp
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Machines/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFjaGluZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Machines/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFjaGluZXNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Machines/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFjaGluZXNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Machines/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFjaGluZXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Machines/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFjaGluZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Materials/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Materials/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Materials/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Materials/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Materials/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/MRRs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVJSc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/MRRs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVJSc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/MRRs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVJSc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/MRRs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVJSc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/MRRs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVJSc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Operations/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3BlcmF0aW9uc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Operations/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3BlcmF0aW9uc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Operations/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3BlcmF0aW9uc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Operations/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3BlcmF0aW9uc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Operations/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3BlcmF0aW9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Orders/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Orders/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Orders/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Orders/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Orders/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Results/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdWx0c1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Results/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdWx0c1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Results/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdWx0c1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Results/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdWx0c1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Results/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdWx0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/SemiFinishedProducts/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtaUZpbmlzaGVkUHJvZHVjdHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/SemiFinishedProducts/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtaUZpbmlzaGVkUHJvZHVjdHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/SemiFinishedProducts/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtaUZpbmlzaGVkUHJvZHVjdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/SemiFinishedProducts/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtaUZpbmlzaGVkUHJvZHVjdHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/SemiFinishedProducts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VtaUZpbmlzaGVkUHJvZHVjdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Tools/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG9vbHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Tools/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG9vbHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Tools/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG9vbHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Tools/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG9vbHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Tools/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG9vbHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Workers/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV29ya2Vyc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Workers/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV29ya2Vyc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Workers/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV29ya2Vyc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Workers/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV29ya2Vyc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Workers/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV29ya2Vyc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-wbk0d1ev2a

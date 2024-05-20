@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CostEstimationApp.Models.Operation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Machine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tool)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Worker)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MRR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DimensionX)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DimensionY)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DimensionZ)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Machine.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tool.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Worker.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MRR.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DimensionX)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DimensionY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DimensionZ)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

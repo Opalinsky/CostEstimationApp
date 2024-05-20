@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CostEstimationApp.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SemiFinishedProduct)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Series)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PreLength)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PreWidth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PreHeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostLength)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostWidth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostHeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SemiFinishedProduct.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Series)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreWidth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreHeight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostWidth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostHeight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
