@@ -77,14 +77,14 @@ namespace CostEstimationApp.Data
             modelBuilder.Entity<Material>()
                 .HasMany(m => m.MRR)
                 .WithOne(a => a.Material)
-                .HasForeignKey(o => o.MaterialId);
-            // .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(o => o.MaterialId)
+                .OnDelete(DeleteBehavior.Restrict);
             // Konfiguracja relacji dla tabeli Operations
             modelBuilder.Entity<Tool>()
                 .HasMany(t => t.MRR)
                 .WithOne(o => o.Tool)
-                .HasForeignKey(o => o.ToolId);
-            // .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(o => o.ToolId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Operation>()
                 .HasOne(o => o.Machine)

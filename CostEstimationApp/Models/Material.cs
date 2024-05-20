@@ -16,7 +16,7 @@ namespace CostEstimationApp.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Density { get; set; }
 
-        public List<MRR> MRR { get; set; }
+        public List<MRR> MRR { get; set; } = new List<MRR>();
 
     }
 }

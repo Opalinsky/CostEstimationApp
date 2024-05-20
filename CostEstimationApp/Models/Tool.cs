@@ -8,7 +8,7 @@ namespace CostEstimationApp.Models
         public string Name { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
         public decimal CostPerHour { get; set; }
-        public List<MRR> MRR { get; set; }
+        public List<MRR> MRR { get; set; } = new List<MRR>();
 
     }
 }
