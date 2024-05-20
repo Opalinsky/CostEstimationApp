@@ -13,7 +13,10 @@ namespace CostEstimationApp.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal CostPerHour { get; set; }
 
-        [Required]
-        public string Type { get; set; }
+        [Required(ErrorMessage = "Machine type is required.")]
+        [ForeignKey("MachineTypeId")]
+        public int MachineTypeId { get; set; }
+        public MachineType? MachineType { get; set; }
+
     }
 }

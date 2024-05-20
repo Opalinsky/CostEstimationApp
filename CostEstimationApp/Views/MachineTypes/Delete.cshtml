@@ -1,4 +1,4 @@
-﻿@model CostEstimationApp.Models.Machine
+﻿@model CostEstimationApp.Models.MachineType
 
 @{
     ViewData["Title"] = "Delete";
@@ -8,26 +8,20 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Machine</h4>
+    <h4>MachineType</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Typeof)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Typeof)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CostPerHour)
+            @Html.DisplayNameFor(model => model.AdditionalTime)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CostPerHour)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MachineType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MachineType.Typeof)
+            @Html.DisplayFor(model => model.AdditionalTime)
         </dd>
     </dl>
     

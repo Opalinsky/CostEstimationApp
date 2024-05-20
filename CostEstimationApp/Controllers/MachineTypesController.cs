@@ -10,90 +10,87 @@ using CostEstimationApp.Models;
 
 namespace CostEstimationApp.Controllers
 {
-    public class MachinesController : Controller
+    public class MachineTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public MachinesController(ApplicationDbContext context)
+        public MachineTypesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Machines
+        // GET: MachineTypes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Machines.Include(m => m.MachineType);
-            return View(await applicationDbContext.ToListAsync());
+              return _context.MachineTypes != null ? 
+                          View(await _context.MachineTypes.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.MachineTypes'  is null.");
         }
 
-        // GET: Machines/Details/5
+        // GET: MachineTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Machines == null)
+            if (id == null || _context.MachineTypes == null)
             {
                 return NotFound();
             }
 
-            var machine = await _context.Machines
-                .Include(m => m.MachineType)
+            var machineType = await _context.MachineTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (machine == null)
+            if (machineType == null)
             {
                 return NotFound();
             }
 
-            return View(machine);
+            return View(machineType);
         }
 
-        // GET: Machines/Create
+        // GET: MachineTypes/Create
         public IActionResult Create()
         {
-            ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof");
             return View();
         }
 
-        // POST: Machines/Create
+        // POST: MachineTypes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour,MachineTypeId")] Machine machine)
+        public async Task<IActionResult> Create([Bind("Id,Typeof,AdditionalTime")] MachineType machineType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(machine);
+                _context.Add(machineType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof", machine.MachineTypeId);
-            return View(machine);
+            return View(machineType);
         }
 
-        // GET: Machines/Edit/5
+        // GET: MachineTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Machines == null)
+            if (id == null || _context.MachineTypes == null)
             {
                 return NotFound();
             }
 
-            var machine = await _context.Machines.FindAsync(id);
-            if (machine == null)
+            var machineType = await _context.MachineTypes.FindAsync(id);
+            if (machineType == null)
             {
                 return NotFound();
             }
-            ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof", machine.MachineTypeId);
-            return View(machine);
+            return View(machineType);
         }
 
-        // POST: Machines/Edit/5
+        // POST: MachineTypes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CostPerHour,MachineTypeId")] Machine machine)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Typeof,AdditionalTime")] MachineType machineType)
         {
-            if (id != machine.Id)
+            if (id != machineType.Id)
             {
                 return NotFound();
             }
@@ -102,12 +99,12 @@ namespace CostEstimationApp.Controllers
             {
                 try
                 {
-                    _context.Update(machine);
+                    _context.Update(machineType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MachineExists(machine.Id))
+                    if (!MachineTypeExists(machineType.Id))
                     {
                         return NotFound();
                     }
@@ -118,51 +115,49 @@ namespace CostEstimationApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof", machine.MachineTypeId);
-            return View(machine);
+            return View(machineType);
         }
 
-        // GET: Machines/Delete/5
+        // GET: MachineTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Machines == null)
+            if (id == null || _context.MachineTypes == null)
             {
                 return NotFound();
             }
 
-            var machine = await _context.Machines
-                .Include(m => m.MachineType)
+            var machineType = await _context.MachineTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (machine == null)
+            if (machineType == null)
             {
                 return NotFound();
             }
 
-            return View(machine);
+            return View(machineType);
         }
 
-        // POST: Machines/Delete/5
+        // POST: MachineTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Machines == null)
+            if (_context.MachineTypes == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Machines'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.MachineTypes'  is null.");
             }
-            var machine = await _context.Machines.FindAsync(id);
-            if (machine != null)
+            var machineType = await _context.MachineTypes.FindAsync(id);
+            if (machineType != null)
             {
-                _context.Machines.Remove(machine);
+                _context.MachineTypes.Remove(machineType);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MachineExists(int id)
+        private bool MachineTypeExists(int id)
         {
-          return (_context.Machines?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.MachineTypes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

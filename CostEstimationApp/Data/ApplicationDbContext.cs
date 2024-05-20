@@ -16,12 +16,18 @@ namespace CostEstimationApp.Data
         public DbSet<Operation> Operations { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Result> Results { get; set; }
+        public DbSet<MachineType> MachineTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            
+            // Konfiguracja relacji dla tabeli Operations
+            modelBuilder.Entity<MachineType>()
+                .HasMany(m => m.Machine)
+                .WithOne(a => a.MachineType)
+                .HasForeignKey(o => o.MachineTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
             // Konfiguracja relacji dla tabeli Operations
             modelBuilder.Entity<Material>()
                 .HasMany(m => m.MRR)
