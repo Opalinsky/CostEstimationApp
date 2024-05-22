@@ -13,31 +13,40 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Order)
+                @Html.DisplayNameFor(model => model.SemiFinishedProduct)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Machine)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Worker)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Tool)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Worker)
+                @Html.DisplayNameFor(model => model.OperationType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.MRR)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DimensionX)
+                @Html.DisplayNameFor(model => model.LengthBeforeOperation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DimensionY)
+                @Html.DisplayNameFor(model => model.WidthBeforeOperation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DimensionZ)
+                @Html.DisplayNameFor(model => model.HeightBeforeOperation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Duration)
+                @Html.DisplayNameFor(model => model.LengthAfterOperation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WidthAfterOperation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HeightAfterOperation)
             </th>
             <th></th>
         </tr>
@@ -46,31 +55,40 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Order.Id)
+                @Html.DisplayFor(modelItem => item.SemiFinishedProduct.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Machine.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tool.Id)
+                @Html.DisplayFor(modelItem => item.Machine.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Worker.Id)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Tool.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OperationType.Typeof)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.MRR.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DimensionX)
+                @Html.DisplayFor(modelItem => item.LengthBeforeOperation)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DimensionY)
+                @Html.DisplayFor(modelItem => item.WidthBeforeOperation)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DimensionZ)
+                @Html.DisplayFor(modelItem => item.HeightBeforeOperation)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Duration)
+                @Html.DisplayFor(modelItem => item.LengthAfterOperation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WidthAfterOperation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HeightAfterOperation)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

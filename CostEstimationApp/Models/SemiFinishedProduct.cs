@@ -17,5 +17,7 @@ namespace CostEstimationApp.Models
         public decimal DimensionY { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
         public decimal DimensionZ { get; set; }
+
+        public List<Operation> Operation { get; set; } = new List<Operation>();
     }
 }

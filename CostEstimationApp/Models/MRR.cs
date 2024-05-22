@@ -24,5 +24,7 @@ namespace CostEstimationApp.Models
         [Range(0, double.MaxValue, ErrorMessage = "Rate must be a positive number.")]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Rate { get; set; }
+        public List<Operation> Operation { get; set; } = new List<Operation>();
+
     }
 }

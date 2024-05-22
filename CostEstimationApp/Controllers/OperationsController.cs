@@ -22,7 +22,7 @@ namespace CostEstimationApp.Controllers
         // GET: Operations
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Operations.Include(o => o.MRR).Include(o => o.Machine).Include(o => o.Order).Include(o => o.Tool).Include(o => o.Worker);
+            var applicationDbContext = _context.Operations.Include(o => o.MRR).Include(o => o.Machine).Include(o => o.OperationType).Include(o => o.SemiFinishedProduct).Include(o => o.Tool).Include(o => o.Worker);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -37,7 +37,8 @@ namespace CostEstimationApp.Controllers
             var operation = await _context.Operations
                 .Include(o => o.MRR)
                 .Include(o => o.Machine)
-                .Include(o => o.Order)
+                .Include(o => o.OperationType)
+                .Include(o => o.SemiFinishedProduct)
                 .Include(o => o.Tool)
                 .Include(o => o.Worker)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -53,8 +54,9 @@ namespace CostEstimationApp.Controllers
         public IActionResult Create()
         {
             ViewData["MRRId"] = new SelectList(_context.MRRs, "Id", "Id");
-            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Id");
-            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id");
+            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name");
+            ViewData["OperationTypeId"] = new SelectList(_context.OperationType, "Id", "Typeof");
+            ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id");
             ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id");
             ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id");
             return View();
@@ -65,7 +67,7 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,OrderId,MachineId,ToolId,WorkerId,MRRId,DimensionX,DimensionY,DimensionZ,Duration")] Operation operation)
+        public async Task<IActionResult> Create([Bind("Id,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation")] Operation operation)
         {
             if (ModelState.IsValid)
             {
@@ -74,8 +76,9 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MRRId"] = new SelectList(_context.MRRs, "Id", "Id", operation.MRRId);
-            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Id", operation.MachineId);
-            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", operation.OrderId);
+            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operation.MachineId);
+            ViewData["OperationTypeId"] = new SelectList(_context.OperationType, "Id", "Typeof", operation.OperationTypeId);
+            ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", operation.SemiFinishedProductId);
             ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operation.ToolId);
             ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id", operation.WorkerId);
             return View(operation);
@@ -95,8 +98,9 @@ namespace CostEstimationApp.Controllers
                 return NotFound();
             }
             ViewData["MRRId"] = new SelectList(_context.MRRs, "Id", "Id", operation.MRRId);
-            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Id", operation.MachineId);
-            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", operation.OrderId);
+            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operation.MachineId);
+            ViewData["OperationTypeId"] = new SelectList(_context.OperationType, "Id", "Typeof", operation.OperationTypeId);
+            ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", operation.SemiFinishedProductId);
             ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operation.ToolId);
             ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id", operation.WorkerId);
             return View(operation);
@@ -107,7 +111,7 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,OrderId,MachineId,ToolId,WorkerId,MRRId,DimensionX,DimensionY,DimensionZ,Duration")] Operation operation)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation")] Operation operation)
         {
             if (id != operation.Id)
             {
@@ -135,8 +139,9 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MRRId"] = new SelectList(_context.MRRs, "Id", "Id", operation.MRRId);
-            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Id", operation.MachineId);
-            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", operation.OrderId);
+            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operation.MachineId);
+            ViewData["OperationTypeId"] = new SelectList(_context.OperationType, "Id", "Typeof", operation.OperationTypeId);
+            ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", operation.SemiFinishedProductId);
             ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operation.ToolId);
             ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id", operation.WorkerId);
             return View(operation);
@@ -153,7 +158,8 @@ namespace CostEstimationApp.Controllers
             var operation = await _context.Operations
                 .Include(o => o.MRR)
                 .Include(o => o.Machine)
-                .Include(o => o.Order)
+                .Include(o => o.OperationType)
+                .Include(o => o.SemiFinishedProduct)
                 .Include(o => o.Tool)
                 .Include(o => o.Worker)
                 .FirstOrDefaultAsync(m => m.Id == id);

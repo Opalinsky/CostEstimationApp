@@ -11,22 +11,16 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Order)
+            @Html.DisplayNameFor(model => model.SemiFinishedProduct)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Order.Id)
+            @Html.DisplayFor(model => model.SemiFinishedProduct.Id)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Machine)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Machine.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tool)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tool.Id)
+            @Html.DisplayFor(model => model.Machine.Name)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Worker)
@@ -35,34 +29,58 @@
             @Html.DisplayFor(model => model.Worker.Id)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tool)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tool.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OperationType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OperationType.Typeof)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.MRR)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.MRR.Id)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DimensionX)
+            @Html.DisplayNameFor(model => model.LengthBeforeOperation)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DimensionX)
+            @Html.DisplayFor(model => model.LengthBeforeOperation)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DimensionY)
+            @Html.DisplayNameFor(model => model.WidthBeforeOperation)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DimensionY)
+            @Html.DisplayFor(model => model.WidthBeforeOperation)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DimensionZ)
+            @Html.DisplayNameFor(model => model.HeightBeforeOperation)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DimensionZ)
+            @Html.DisplayFor(model => model.HeightBeforeOperation)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Duration)
+            @Html.DisplayNameFor(model => model.LengthAfterOperation)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Duration)
+            @Html.DisplayFor(model => model.LengthAfterOperation)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.WidthAfterOperation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.WidthAfterOperation)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HeightAfterOperation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HeightAfterOperation)
         </dd>
     </dl>
 </div>

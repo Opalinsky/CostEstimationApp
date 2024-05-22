@@ -14,9 +14,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="OrderId" class="control-label"></label>
-                <select asp-for="OrderId" class="form-control" asp-items="ViewBag.OrderId"></select>
-                <span asp-validation-for="OrderId" class="text-danger"></span>
+                <label asp-for="SemiFinishedProductId" class="control-label"></label>
+                <select asp-for="SemiFinishedProductId" class="form-control" asp-items="ViewBag.SemiFinishedProductId"></select>
+                <span asp-validation-for="SemiFinishedProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MachineId" class="control-label"></label>
@@ -24,14 +24,19 @@
                 <span asp-validation-for="MachineId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="WorkerId" class="control-label"></label>
+                <select asp-for="WorkerId" class="form-control" asp-items="ViewBag.WorkerId"></select>
+                <span asp-validation-for="WorkerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ToolId" class="control-label"></label>
                 <select asp-for="ToolId" class="form-control" asp-items="ViewBag.ToolId"></select>
                 <span asp-validation-for="ToolId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="WorkerId" class="control-label"></label>
-                <select asp-for="WorkerId" class="form-control" asp-items="ViewBag.WorkerId"></select>
-                <span asp-validation-for="WorkerId" class="text-danger"></span>
+                <label asp-for="OperationTypeId" class="control-label"></label>
+                <select asp-for="OperationTypeId" class="form-control" asp-items="ViewBag.OperationTypeId"></select>
+                <span asp-validation-for="OperationTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MRRId" class="control-label"></label>
@@ -39,24 +44,34 @@
                 <span asp-validation-for="MRRId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DimensionX" class="control-label"></label>
-                <input asp-for="DimensionX" class="form-control" />
-                <span asp-validation-for="DimensionX" class="text-danger"></span>
+                <label asp-for="LengthBeforeOperation" class="control-label"></label>
+                <input asp-for="LengthBeforeOperation" class="form-control" />
+                <span asp-validation-for="LengthBeforeOperation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DimensionY" class="control-label"></label>
-                <input asp-for="DimensionY" class="form-control" />
-                <span asp-validation-for="DimensionY" class="text-danger"></span>
+                <label asp-for="WidthBeforeOperation" class="control-label"></label>
+                <input asp-for="WidthBeforeOperation" class="form-control" />
+                <span asp-validation-for="WidthBeforeOperation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DimensionZ" class="control-label"></label>
-                <input asp-for="DimensionZ" class="form-control" />
-                <span asp-validation-for="DimensionZ" class="text-danger"></span>
+                <label asp-for="HeightBeforeOperation" class="control-label"></label>
+                <input asp-for="HeightBeforeOperation" class="form-control" />
+                <span asp-validation-for="HeightBeforeOperation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Duration" class="control-label"></label>
-                <input asp-for="Duration" class="form-control" />
-                <span asp-validation-for="Duration" class="text-danger"></span>
+                <label asp-for="LengthAfterOperation" class="control-label"></label>
+                <input asp-for="LengthAfterOperation" class="form-control" />
+                <span asp-validation-for="LengthAfterOperation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WidthAfterOperation" class="control-label"></label>
+                <input asp-for="WidthAfterOperation" class="form-control" />
+                <span asp-validation-for="WidthAfterOperation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HeightAfterOperation" class="control-label"></label>
+                <input asp-for="HeightAfterOperation" class="form-control" />
+                <span asp-validation-for="HeightAfterOperation" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

@@ -10,90 +10,87 @@ using CostEstimationApp.Models;
 
 namespace CostEstimationApp.Controllers
 {
-    public class ResultsController : Controller
+    public class OperationTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ResultsController(ApplicationDbContext context)
+        public OperationTypesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Results
+        // GET: OperationTypes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Results.Include(r => r.Order);
-            return View(await applicationDbContext.ToListAsync());
+              return _context.OperationType != null ? 
+                          View(await _context.OperationType.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.OperationType'  is null.");
         }
 
-        // GET: Results/Details/5
+        // GET: OperationTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Results == null)
+            if (id == null || _context.OperationType == null)
             {
                 return NotFound();
             }
 
-            var result = await _context.Results
-                .Include(r => r.Order)
+            var operationType = await _context.OperationType
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (result == null)
+            if (operationType == null)
             {
                 return NotFound();
             }
 
-            return View(result);
+            return View(operationType);
         }
 
-        // GET: Results/Create
+        // GET: OperationTypes/Create
         public IActionResult Create()
         {
-            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id");
             return View();
         }
 
-        // POST: Results/Create
+        // POST: OperationTypes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,OrderId,MaterialCost,OperationCost,TotalCost")] Result result)
+        public async Task<IActionResult> Create([Bind("Id,Typeof")] OperationType operationType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(result);
+                _context.Add(operationType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", result.OrderId);
-            return View(result);
+            return View(operationType);
         }
 
-        // GET: Results/Edit/5
+        // GET: OperationTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Results == null)
+            if (id == null || _context.OperationType == null)
             {
                 return NotFound();
             }
 
-            var result = await _context.Results.FindAsync(id);
-            if (result == null)
+            var operationType = await _context.OperationType.FindAsync(id);
+            if (operationType == null)
             {
                 return NotFound();
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", result.OrderId);
-            return View(result);
+            return View(operationType);
         }
 
-        // POST: Results/Edit/5
+        // POST: OperationTypes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,OrderId,MaterialCost,OperationCost,TotalCost")] Result result)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Typeof")] OperationType operationType)
         {
-            if (id != result.Id)
+            if (id != operationType.Id)
             {
                 return NotFound();
             }
@@ -102,12 +99,12 @@ namespace CostEstimationApp.Controllers
             {
                 try
                 {
-                    _context.Update(result);
+                    _context.Update(operationType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ResultExists(result.Id))
+                    if (!OperationTypeExists(operationType.Id))
                     {
                         return NotFound();
                     }
@@ -118,51 +115,49 @@ namespace CostEstimationApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", result.OrderId);
-            return View(result);
+            return View(operationType);
         }
 
-        // GET: Results/Delete/5
+        // GET: OperationTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Results == null)
+            if (id == null || _context.OperationType == null)
             {
                 return NotFound();
             }
 
-            var result = await _context.Results
-                .Include(r => r.Order)
+            var operationType = await _context.OperationType
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (result == null)
+            if (operationType == null)
             {
                 return NotFound();
             }
 
-            return View(result);
+            return View(operationType);
         }
 
-        // POST: Results/Delete/5
+        // POST: OperationTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Results == null)
+            if (_context.OperationType == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Results'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.OperationType'  is null.");
             }
-            var result = await _context.Results.FindAsync(id);
-            if (result != null)
+            var operationType = await _context.OperationType.FindAsync(id);
+            if (operationType != null)
             {
-                _context.Results.Remove(result);
+                _context.OperationType.Remove(operationType);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ResultExists(int id)
+        private bool OperationTypeExists(int id)
         {
-          return (_context.Results?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.OperationType?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -17,6 +17,8 @@ namespace CostEstimationApp.Models
         [ForeignKey("MachineTypeId")]
         public int MachineTypeId { get; set; }
         public MachineType? MachineType { get; set; }
+        public List<Operation> Operation { get; set; } = new List<Operation>();
+
 
     }
 }
