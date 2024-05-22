@@ -28,15 +28,21 @@ namespace CostEstimationApp.Models
         public Tool? Tool { get; set; }
 
         [Required(ErrorMessage = "Tool type is required.")]
-        [ForeignKey("OperationTypeId")]
-        public int OperationTypeId { get; set; }
-        public OperationType? OperationType { get; set; }
+        public int OperationType { get; set; }
 
         [Required(ErrorMessage = "MRR is required.")]
         [ForeignKey("MRRId")]
         public int MRRId { get; set; }
         public MRR? MRR { get; set; }
 
+        // Fields for CuttingOperation
+        public decimal? CuttingLength { get; set; }
+        public decimal? CuttingWidth { get; set; }
+        public decimal? CuttingDepth { get; set; }
+
+        // Fields for DrillingOperation
+        public decimal? DrillDiameter { get; set; }
+        public decimal? DrillDepth { get; set; }
 
         public decimal LengthBeforeOperation { get; set; }
         public decimal WidthBeforeOperation { get; set; }

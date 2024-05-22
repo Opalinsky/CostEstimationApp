@@ -14,7 +14,6 @@ namespace CostEstimationApp.Data
         public DbSet<SemiFinishedProduct> SemiFinishedProducts { get; set; }
         public DbSet<MRR> MRRs { get; set; } = null!;
         public DbSet<Operation> Operations { get; set; }
-        public DbSet<OperationType> OperationType { get; set; }
         public DbSet<MachineType> MachineTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,11 +39,6 @@ namespace CostEstimationApp.Data
                 .HasForeignKey(o => o.ToolId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<OperationType>()
-                .HasMany(t => t.Operation)
-                .WithOne(o => o.OperationType)
-                .HasForeignKey(o => o.OperationTypeId)
-                .OnDelete(DeleteBehavior.Restrict);
            
             modelBuilder.Entity<Machine>()
                 .HasMany(a => a.Operation)
