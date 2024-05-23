@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CostEstimationApp</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Css/_Layout.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CostEstimationApp.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -23,31 +23,30 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Materials" asp-action="Index">Materials</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Materials" asp-action="Index">Materiały</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Machines" asp-action="Index">Machines</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SemiFinishedProducts" asp-action="Index">Półfabrykat</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tools" asp-action="Index">Tools</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Machines" asp-action="Index">Maszyny</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Workers" asp-action="Index">Worker</a>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MachineTypes" asp-action="Index">Typy maszyn</a>
+                        </li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Tools" asp-action="Index">Narzędzia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Workers" asp-action="Index">Pracownicy</a>
                         </li>
                             <a class="nav-link text-dark" asp-area="" asp-controller="MRRs" asp-action="Index">MRR</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Operations" asp-action="Index">Operations</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Operations" asp-action="Index">Operacja</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="OperationTypes" asp-action="Index">OperationType</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MachineTypes" asp-action="Index">MachineTypes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SemiFinishedProducts" asp-action="Index">Semi Finished Product</a>
-                        </li>
+                        
+                       
                     </ul>
                 </div>
             </div>

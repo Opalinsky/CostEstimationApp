@@ -28,11 +28,11 @@
                 <label asp-for="ToolId" class="control-label"></label>
                 <select asp-for="ToolId" class ="form-control" asp-items="ViewBag.ToolId"></select>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="OperationType" class="control-label"></label>
                 <input asp-for="OperationType" class="form-control" />
                 <span asp-validation-for="OperationType" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="MRRId" class="control-label"></label>
                 <select asp-for="MRRId" class ="form-control" asp-items="ViewBag.MRRId"></select>
@@ -83,7 +83,7 @@
                 <input asp-for="HeightBeforeOperation" class="form-control" />
                 <span asp-validation-for="HeightBeforeOperation" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="LengthAfterOperation" class="control-label"></label>
                 <input asp-for="LengthAfterOperation" class="form-control" />
                 <span asp-validation-for="LengthAfterOperation" class="text-danger"></span>
@@ -97,7 +97,7 @@
                 <label asp-for="HeightAfterOperation" class="control-label"></label>
                 <input asp-for="HeightAfterOperation" class="form-control" />
                 <span asp-validation-for="HeightAfterOperation" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

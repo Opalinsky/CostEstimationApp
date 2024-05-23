@@ -69,6 +69,24 @@ namespace CostEstimationApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (operation.OperationType == "Cutting")
+                {
+                    operation.LengthAfterOperation = operation.LengthBeforeOperation - operation.CuttingLength.GetValueOrDefault();
+                    operation.WidthAfterOperation = operation.WidthBeforeOperation - operation.CuttingWidth.GetValueOrDefault();
+                    operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.CuttingDepth.GetValueOrDefault();
+
+                    operation.VolumeToRemove = operation.CuttingLength.GetValueOrDefault() * operation.CuttingWidth.GetValueOrDefault() * operation.CuttingDepth.GetValueOrDefault();
+                }
+                else if (operation.OperationType == "Drilling")
+                {
+                    operation.HeightAfterOperation = operation.HeightBeforeOperation;
+                    operation.LengthAfterOperation = operation.LengthBeforeOperation;
+                    operation.WidthAfterOperation = operation.WidthBeforeOperation;
+                    
+                    var radius = operation.DrillDiameter.GetValueOrDefault() / 2;
+                    operation.VolumeToRemove = (decimal)Math.PI * radius * radius * operation.DrillDepth.GetValueOrDefault();
+                }
+                    operation.MachiningTime = operation.VolumeToRemove / operation.MRRId;
                 _context.Add(operation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

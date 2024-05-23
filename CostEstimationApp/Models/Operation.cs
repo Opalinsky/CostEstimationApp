@@ -28,7 +28,7 @@ namespace CostEstimationApp.Models
         public Tool? Tool { get; set; }
 
         [Required(ErrorMessage = "Tool type is required.")]
-        public int OperationType { get; set; }
+        public string OperationType { get; set; }
 
         [Required(ErrorMessage = "MRR is required.")]
         [ForeignKey("MRRId")]
@@ -51,6 +51,10 @@ namespace CostEstimationApp.Models
         public decimal LengthAfterOperation { get; set; }
         public decimal WidthAfterOperation { get; set; }
         public decimal HeightAfterOperation { get; set; }
+
+        // New fields
+        public decimal VolumeToRemove { get; set; }
+        public decimal MachiningTime { get; set; }
 
     }
 }
