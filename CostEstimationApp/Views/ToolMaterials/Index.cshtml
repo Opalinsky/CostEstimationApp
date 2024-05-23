@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CostEstimationApp.Models.Tool>
+﻿@model IEnumerable<CostEstimationApp.Models.ToolMaterial>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,12 +15,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CostPerHour)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ToolMaterial)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -29,12 +23,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CostPerHour)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ToolMaterial.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

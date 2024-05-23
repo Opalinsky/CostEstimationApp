@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CostEstimationApp.Data;
 using CostEstimationApp.Models;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CostEstimationApp.Controllers
 {
@@ -20,21 +22,21 @@ namespace CostEstimationApp.Controllers
         // GET: MRRs
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.MRRs.Include(m => m.Material).Include(m => m.Tool);
+            var applicationDbContext = _context.MRRs.Include(m => m.Material).Include(m => m.ToolMaterial);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: MRRs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null || _context.MRRs == null)
             {
                 return NotFound();
             }
 
             var mRR = await _context.MRRs
                 .Include(m => m.Material)
-                .Include(m => m.Tool)
+                .Include(m => m.ToolMaterial)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (mRR == null)
             {
@@ -48,14 +50,16 @@ namespace CostEstimationApp.Controllers
         public IActionResult Create()
         {
             ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name");
-            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Name");
+            ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name");
             return View();
         }
 
         // POST: MRRs/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaterialId,ToolId,Rate")] MRR mRR)
+        public async Task<IActionResult> Create([Bind("Id,MaterialId,ToolMaterialId,Rate")] MRR mRR)
         {
             if (ModelState.IsValid)
             {
@@ -63,42 +67,35 @@ namespace CostEstimationApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            else
-            {
-                // Jeśli ModelState jest nieprawidłowy (są błędy walidacji)
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
-                foreach (var error in errors)
-                {
-                    Console.WriteLine(error.ErrorMessage); // Lub użyj loggera
-                }
-                ViewBag.ErrorMessages = errors.Select(e => e.ErrorMessage).ToList();
-            }
             ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", mRR.MaterialId);
-            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Name", mRR.ToolId);
+            ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", mRR.ToolMaterialId);
             return View(mRR);
         }
 
         // GET: MRRs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id == null || _context.MRRs == null)
             {
                 return NotFound();
             }
+
             var mRR = await _context.MRRs.FindAsync(id);
             if (mRR == null)
             {
                 return NotFound();
             }
             ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", mRR.MaterialId);
-            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Name", mRR.ToolId);
+            ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", mRR.ToolMaterialId);
             return View(mRR);
         }
 
         // POST: MRRs/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaterialId,ToolId,Rate")] MRR mRR)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,MaterialId,ToolMaterialId,Rate")] MRR mRR)
         {
             if (id != mRR.Id)
             {
@@ -126,21 +123,21 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", mRR.MaterialId);
-            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Name", mRR.ToolId);
+            ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", mRR.ToolMaterialId);
             return View(mRR);
         }
 
         // GET: MRRs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if (id == null || _context.MRRs == null)
             {
                 return NotFound();
             }
 
             var mRR = await _context.MRRs
                 .Include(m => m.Material)
-                .Include(m => m.Tool)
+                .Include(m => m.ToolMaterial)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (mRR == null)
             {
@@ -155,18 +152,23 @@ namespace CostEstimationApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (_context.MRRs == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.MRRs'  is null.");
+            }
             var mRR = await _context.MRRs.FindAsync(id);
             if (mRR != null)
             {
                 _context.MRRs.Remove(mRR);
-                await _context.SaveChangesAsync();
             }
+            
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MRRExists(int id)
         {
-            return _context.MRRs.Any(e => e.Id == id);
+          return (_context.MRRs?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -99,6 +99,16 @@
                 <span asp-validation-for="HeightAfterOperation" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="VolumeToRemove" class="control-label"></label>
+                <input asp-for="VolumeToRemove" class="form-control" />
+                <span asp-validation-for="VolumeToRemove" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MachiningTime" class="control-label"></label>
+                <input asp-for="MachiningTime" class="form-control" />
+                <span asp-validation-for="MachiningTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

@@ -10,90 +10,87 @@ using CostEstimationApp.Models;
 
 namespace CostEstimationApp.Controllers
 {
-    public class ToolsController : Controller
+    public class ToolMaterialsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ToolsController(ApplicationDbContext context)
+        public ToolMaterialsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Tools
+        // GET: ToolMaterials
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Tools.Include(t => t.ToolMaterial);
-            return View(await applicationDbContext.ToListAsync());
+              return _context.ToolMaterials != null ? 
+                          View(await _context.ToolMaterials.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.ToolMaterials'  is null.");
         }
 
-        // GET: Tools/Details/5
+        // GET: ToolMaterials/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Tools == null)
+            if (id == null || _context.ToolMaterials == null)
             {
                 return NotFound();
             }
 
-            var tool = await _context.Tools
-                .Include(t => t.ToolMaterial)
+            var toolMaterial = await _context.ToolMaterials
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (tool == null)
+            if (toolMaterial == null)
             {
                 return NotFound();
             }
 
-            return View(tool);
+            return View(toolMaterial);
         }
 
-        // GET: Tools/Create
+        // GET: ToolMaterials/Create
         public IActionResult Create()
         {
-            ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name");
             return View();
         }
 
-        // POST: Tools/Create
+        // POST: ToolMaterials/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour,ToolMaterialId")] Tool tool)
+        public async Task<IActionResult> Create([Bind("Id,Name")] ToolMaterial toolMaterial)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tool);
+                _context.Add(toolMaterial);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
-            return View(tool);
+            return View(toolMaterial);
         }
 
-        // GET: Tools/Edit/5
+        // GET: ToolMaterials/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Tools == null)
+            if (id == null || _context.ToolMaterials == null)
             {
                 return NotFound();
             }
 
-            var tool = await _context.Tools.FindAsync(id);
-            if (tool == null)
+            var toolMaterial = await _context.ToolMaterials.FindAsync(id);
+            if (toolMaterial == null)
             {
                 return NotFound();
             }
-            ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
-            return View(tool);
+            return View(toolMaterial);
         }
 
-        // POST: Tools/Edit/5
+        // POST: ToolMaterials/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CostPerHour,ToolMaterialId")] Tool tool)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] ToolMaterial toolMaterial)
         {
-            if (id != tool.Id)
+            if (id != toolMaterial.Id)
             {
                 return NotFound();
             }
@@ -102,12 +99,12 @@ namespace CostEstimationApp.Controllers
             {
                 try
                 {
-                    _context.Update(tool);
+                    _context.Update(toolMaterial);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ToolExists(tool.Id))
+                    if (!ToolMaterialExists(toolMaterial.Id))
                     {
                         return NotFound();
                     }
@@ -118,51 +115,49 @@ namespace CostEstimationApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
-            return View(tool);
+            return View(toolMaterial);
         }
 
-        // GET: Tools/Delete/5
+        // GET: ToolMaterials/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Tools == null)
+            if (id == null || _context.ToolMaterials == null)
             {
                 return NotFound();
             }
 
-            var tool = await _context.Tools
-                .Include(t => t.ToolMaterial)
+            var toolMaterial = await _context.ToolMaterials
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (tool == null)
+            if (toolMaterial == null)
             {
                 return NotFound();
             }
 
-            return View(tool);
+            return View(toolMaterial);
         }
 
-        // POST: Tools/Delete/5
+        // POST: ToolMaterials/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Tools == null)
+            if (_context.ToolMaterials == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Tools'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.ToolMaterials'  is null.");
             }
-            var tool = await _context.Tools.FindAsync(id);
-            if (tool != null)
+            var toolMaterial = await _context.ToolMaterials.FindAsync(id);
+            if (toolMaterial != null)
             {
-                _context.Tools.Remove(tool);
+                _context.ToolMaterials.Remove(toolMaterial);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ToolExists(int id)
+        private bool ToolMaterialExists(int id)
         {
-          return (_context.Tools?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.ToolMaterials?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -48,7 +48,7 @@ namespace CostEstimationApp.Controllers
         // GET: SemiFinishedProducts/Create
         public IActionResult Create()
         {
-            ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Id");
+            ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace CostEstimationApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Id", semiFinishedProduct.MaterialId);
+            ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", semiFinishedProduct.MaterialId);
             return View(semiFinishedProduct);
         }
 
@@ -82,7 +82,7 @@ namespace CostEstimationApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Id", semiFinishedProduct.MaterialId);
+            ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", semiFinishedProduct.MaterialId);
             return View(semiFinishedProduct);
         }
 
@@ -118,7 +118,7 @@ namespace CostEstimationApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Id", semiFinishedProduct.MaterialId);
+            ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", semiFinishedProduct.MaterialId);
             return View(semiFinishedProduct);
         }
 

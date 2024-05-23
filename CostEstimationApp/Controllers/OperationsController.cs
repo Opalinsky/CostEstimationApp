@@ -82,11 +82,11 @@ namespace CostEstimationApp.Controllers
                     operation.HeightAfterOperation = operation.HeightBeforeOperation;
                     operation.LengthAfterOperation = operation.LengthBeforeOperation;
                     operation.WidthAfterOperation = operation.WidthBeforeOperation;
-                    
+
                     var radius = operation.DrillDiameter.GetValueOrDefault() / 2;
                     operation.VolumeToRemove = (decimal)Math.PI * radius * radius * operation.DrillDepth.GetValueOrDefault();
                 }
-                    operation.MachiningTime = operation.VolumeToRemove / operation.MRRId;
+                operation.MachiningTime = operation.VolumeToRemove / operation.MRRId;
                 _context.Add(operation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -197,14 +197,14 @@ namespace CostEstimationApp.Controllers
             {
                 _context.Operations.Remove(operation);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool OperationExists(int id)
         {
-          return (_context.Operations?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Operations?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
