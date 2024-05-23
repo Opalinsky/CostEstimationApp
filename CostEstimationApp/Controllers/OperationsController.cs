@@ -67,6 +67,46 @@ namespace CostEstimationApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationType,MRRId,CuttingLength,CuttingWidth,CuttingDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation")] Operation operation)
         {
+            // Pobierz półfabrykat
+            var semiFinishedProduct = await _context.SemiFinishedProducts.FindAsync(operation.SemiFinishedProductId);
+            if (semiFinishedProduct == null)
+            {
+                return NotFound();
+            }
+
+            // Pobierz narzędzie
+            var tool = await _context.Tools.FindAsync(operation.ToolId);
+            if (tool == null)
+            {
+                return NotFound();
+            }
+
+            // Pobierz materiał półfabrykatu
+            var material = await _context.Materials.FindAsync(semiFinishedProduct.MaterialId);
+            if (material == null)
+            {
+                return NotFound();
+            }
+
+            // Znajdź ToolMaterial na podstawie ToolId i MaterialId
+            var toolMaterial = await _context.ToolMaterials
+                .FirstOrDefaultAsync(tm => tm.ToolId == tool.Id && tm.MaterialId == material.Id);
+
+            if (toolMaterial == null)
+            {
+                return NotFound();
+            }
+
+            // Pobierz MRR na podstawie ToolMaterialId
+            var mrr = await _context.MRRs
+                .FirstOrDefaultAsync(m => m.ToolMaterialId == toolMaterial.Id);
+
+            if (mrr == null)
+            {
+                return NotFound();
+            }
+
+            operation.MRRId = mrr.Id;
             if (ModelState.IsValid)
             {
                 if (operation.OperationType == "Cutting")
