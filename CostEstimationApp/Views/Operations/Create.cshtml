@@ -38,6 +38,37 @@
                 <select asp-for="MRRId" class ="form-control" asp-items="ViewBag.MRRId"></select>
             </div>
             <div class="form-group">
+                <label asp-for="OperationType" class="control-label">Operation Type</label><br />
+                <input type="radio" id="Cutting" name="OperationType" value="Cutting" />
+                <label for="Cutting">Cutting</label><br />
+                <input type="radio" id="Drilling" name="OperationType" value="Drilling" />
+                <label for="Drilling">Drilling</label>
+            </div>
+            <div id="cutting-fields" style="display:none;">
+                <div class="form-group">
+                    <label for="CuttingLength" class="control-label">Cutting Length</label>
+                    <input type="number" class="form-control" id="CuttingLength" name="CuttingLength" />
+                </div>
+                <div class="form-group">
+                    <label for="CuttingWidth" class="control-label">Cutting Width</label>
+                    <input type="number" class="form-control" id="CuttingWidth" name="CuttingWidth" />
+                </div>
+                <div class="form-group">
+                    <label for="CuttingDepth" class="control-label">Cutting Depth</label>
+                    <input type="number" class="form-control" id="CuttingDepth" name="CuttingDepth" />
+                </div>
+            </div>
+            <div id="drilling-fields" style="display:none;">
+                <div class="form-group">
+                    <label for="DrillDiameter" class="control-label">Drill Diameter</label>
+                    <input type="number" class="form-control" id="DrillDiameter" name="DrillDiameter" />
+                </div>
+                <div class="form-group">
+                    <label for="DrillDepth" class="control-label">Drill Depth</label>
+                    <input type="number" class="form-control" id="DrillDepth" name="DrillDepth" />
+                </div>
+            </div>
+            <div class="form-group">
                 <label asp-for="LengthBeforeOperation" class="control-label"></label>
                 <input asp-for="LengthBeforeOperation" class="form-control" />
                 <span asp-validation-for="LengthBeforeOperation" class="text-danger"></span>
@@ -79,5 +110,24 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.querySelectorAll('input[name="OperationType"]').forEach(function (elem) {
+            elem.addEventListener("change", function () {
+                var selectedType = this.value;
+                if (selectedType === "Cutting") {
+                    document.getElementById("cutting-fields").style.display = "block";
+                    document.getElementById("drilling-fields").style.display = "none";
+                } else if (selectedType === "Drilling") {
+                    document.getElementById("cutting-fields").style.display = "none";
+                    document.getElementById("drilling-fields").style.display = "block";
+                } else {
+                    document.getElementById("cutting-fields").style.display = "none";
+                    document.getElementById("drilling-fields").style.display = "none";
+                }
+            });
+        });
+    </script>
 }
