@@ -28,9 +28,6 @@
                 @Html.DisplayNameFor(model => model.OperationType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MRR)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.CuttingLength)
             </th>
             <th>
@@ -67,6 +64,9 @@
                 @Html.DisplayNameFor(model => model.VolumeToRemove)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.MRR)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.MachiningTime)
             </th>
             <th></th>
@@ -82,16 +82,13 @@
                 @Html.DisplayFor(modelItem => item.Machine.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Worker.Id)
+                @Html.DisplayFor(modelItem => item.Worker.LastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Tool.Id)
+                @Html.DisplayFor(modelItem => item.Tool.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OperationType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MRR.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CuttingLength)
@@ -129,6 +126,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.VolumeToRemove)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MRR.Rate)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MachiningTime)
             </td>

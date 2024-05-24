@@ -22,7 +22,12 @@ namespace CostEstimationApp.Controllers
         // GET: Operations
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Operations.Include(o => o.MRR).Include(o => o.Machine).Include(o => o.SemiFinishedProduct).Include(o => o.Tool).Include(o => o.Worker);
+            var applicationDbContext = _context.Operations
+                .Include(o => o.MRR)
+                .Include(o => o.Machine)
+                .Include(o => o.SemiFinishedProduct)
+                .Include(o => o.Tool)
+                .Include(o => o.Worker);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -52,20 +57,17 @@ namespace CostEstimationApp.Controllers
         // GET: Operations/Create
         public IActionResult Create()
         {
-            ViewData["MRRId"] = new SelectList(_context.MRRs, "Id", "Id");
             ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name");
             ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id");
-            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id");
-            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id");
+            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Name");
+            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "LastName");
             return View();
         }
 
         // POST: Operations/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationType,MRRId,CuttingLength,CuttingWidth,CuttingDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation")] Operation operation)
+        public async Task<IActionResult> Create([Bind("Id,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationType,CuttingLength,CuttingWidth,CuttingDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation")] Operation operation)
         {
             // Pobierz półfabrykat
             var semiFinishedProduct = await _context.SemiFinishedProducts
@@ -102,7 +104,6 @@ namespace CostEstimationApp.Controllers
             // Znajdź MRR na podstawie ToolMaterialId i MaterialId
             var mrr = await _context.MRRs
                 .FirstOrDefaultAsync(m => m.ToolMaterialId == toolMaterial.Id && m.MaterialId == material.Id);
-
             if (mrr == null)
             {
                 return NotFound();
@@ -122,23 +123,19 @@ namespace CostEstimationApp.Controllers
                 }
                 else if (operation.OperationType == "Drilling")
                 {
-                    operation.HeightAfterOperation = operation.HeightBeforeOperation;
-                    operation.LengthAfterOperation = operation.LengthBeforeOperation;
-                    operation.WidthAfterOperation = operation.WidthBeforeOperation;
-
                     var radius = operation.DrillDiameter.GetValueOrDefault() / 2;
                     operation.VolumeToRemove = (decimal)Math.PI * radius * radius * operation.DrillDepth.GetValueOrDefault();
                 }
-                operation.MachiningTime = operation.VolumeToRemove / operation.MRRId;
+
+                operation.MachiningTime = operation.VolumeToRemove / mrr.Rate; // Use the Rate field from MRR
                 _context.Add(operation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MRRId"] = new SelectList(_context.MRRs, "Id", "Id", operation.MRRId);
             ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operation.MachineId);
             ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", operation.SemiFinishedProductId);
-            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operation.ToolId);
-            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id", operation.WorkerId);
+            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Name", operation.ToolId);
+            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "LastName", operation.WorkerId);
             return View(operation);
         }
 
@@ -155,7 +152,6 @@ namespace CostEstimationApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["MRRId"] = new SelectList(_context.MRRs, "Id", "Id", operation.MRRId);
             ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operation.MachineId);
             ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", operation.SemiFinishedProductId);
             ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operation.ToolId);
@@ -164,8 +160,6 @@ namespace CostEstimationApp.Controllers
         }
 
         // POST: Operations/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationType,MRRId,CuttingLength,CuttingWidth,CuttingDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation")] Operation operation)
@@ -195,7 +189,6 @@ namespace CostEstimationApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MRRId"] = new SelectList(_context.MRRs, "Id", "Id", operation.MRRId);
             ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operation.MachineId);
             ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", operation.SemiFinishedProductId);
             ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operation.ToolId);
@@ -233,7 +226,7 @@ namespace CostEstimationApp.Controllers
         {
             if (_context.Operations == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Operations'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Operations' is null.");
             }
             var operation = await _context.Operations.FindAsync(id);
             if (operation != null)

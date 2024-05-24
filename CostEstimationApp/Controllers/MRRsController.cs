@@ -63,9 +63,20 @@ namespace CostEstimationApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(mRR);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // Sprawdź, czy istnieje już kombinacja MaterialId i ToolMaterialId
+                var existingMRR = await _context.MRRs
+                    .FirstOrDefaultAsync(m => m.MaterialId == mRR.MaterialId && m.ToolMaterialId == mRR.ToolMaterialId);
+
+                if (existingMRR != null)
+                {
+                    ModelState.AddModelError(string.Empty, "This Material and ToolMaterial combination already exists.");
+                }
+                else
+                {
+                    _context.Add(mRR);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", mRR.MaterialId);
             ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", mRR.ToolMaterialId);

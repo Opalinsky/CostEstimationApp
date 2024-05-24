@@ -28,6 +28,11 @@ namespace CostEstimationApp.Data
                 .HasForeignKey(t => t.ToolMaterialId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Konfiguracja unikalnego indeksu dla MRR
+            modelBuilder.Entity<MRR>()
+                .HasIndex(m => new { m.MaterialId, m.ToolMaterialId })
+                .IsUnique();
+
             // Relacje dla MRR
             modelBuilder.Entity<Material>()
                 .HasMany(m => m.SemiFinishedProduct)
