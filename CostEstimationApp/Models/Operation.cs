@@ -27,8 +27,10 @@ namespace CostEstimationApp.Models
         public int ToolId { get; set; }
         public Tool? Tool { get; set; }
 
-        [Required(ErrorMessage = "Tool type is required.")]
-        public string OperationType { get; set; }
+        [Required(ErrorMessage = "Operation type is required.")]
+        [ForeignKey("OperationTypeId")]
+        public int OperationTypeId { get; set; }
+        public OperationType? OperationType { get; set; }
 
         [Required(ErrorMessage = "MRR is required.")]
         [ForeignKey("MRRId")]

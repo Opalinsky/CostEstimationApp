@@ -18,9 +18,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.CostPerHour)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ToolMaterial)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -32,9 +29,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CostPerHour)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ToolMaterial.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

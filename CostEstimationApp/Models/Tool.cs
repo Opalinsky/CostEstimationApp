@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CostEstimationApp.Models
 {
@@ -9,9 +10,7 @@ namespace CostEstimationApp.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal CostPerHour { get; set; }
         public List<Operation> Operation { get; set; } = new List<Operation>();
+        public List<OperationTypeTool> OperationTypeTools { get; set; } = new List<OperationTypeTool>();
 
-        [ForeignKey("ToolMaterialId")]
-        public int ToolMaterialId { get; set; }
-        public ToolMaterial? ToolMaterial { get; set; }
     }
 }

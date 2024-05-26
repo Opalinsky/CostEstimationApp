@@ -22,8 +22,9 @@ namespace CostEstimationApp.Controllers
         // GET: Tools
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Tools.Include(t => t.ToolMaterial);
-            return View(await applicationDbContext.ToListAsync());
+              return _context.Tools != null ? 
+                          View(await _context.Tools.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Tools'  is null.");
         }
 
         // GET: Tools/Details/5
@@ -35,7 +36,6 @@ namespace CostEstimationApp.Controllers
             }
 
             var tool = await _context.Tools
-                .Include(t => t.ToolMaterial)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tool == null)
             {
@@ -48,7 +48,6 @@ namespace CostEstimationApp.Controllers
         // GET: Tools/Create
         public IActionResult Create()
         {
-            ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name");
             return View();
         }
 
@@ -57,7 +56,7 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour,ToolMaterialId")] Tool tool)
+        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour")] Tool tool)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +64,6 @@ namespace CostEstimationApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
             return View(tool);
         }
 
@@ -82,7 +80,6 @@ namespace CostEstimationApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
             return View(tool);
         }
 
@@ -91,7 +88,7 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CostPerHour,ToolMaterialId")] Tool tool)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CostPerHour")] Tool tool)
         {
             if (id != tool.Id)
             {
@@ -118,7 +115,6 @@ namespace CostEstimationApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
             return View(tool);
         }
 
@@ -131,7 +127,6 @@ namespace CostEstimationApp.Controllers
             }
 
             var tool = await _context.Tools
-                .Include(t => t.ToolMaterial)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tool == null)
             {

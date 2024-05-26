@@ -15,17 +15,37 @@ namespace CostEstimationApp.Data
         public DbSet<MRR> MRRs { get; set; } = null!;
         public DbSet<Operation> Operations { get; set; }
         public DbSet<MachineType> MachineTypes { get; set; }
-
         public DbSet<ToolMaterial> ToolMaterials { get; set; }
-
+        public DbSet<OperationTypeMachine> OperationTypeMachines { get; set; }
+        public DbSet<OperationTypeTool> OperationTypeTools { get; set; }
+        public DbSet<OperationType> OperationTypes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // Relacje dla ToolMaterial i Tool
-            modelBuilder.Entity<ToolMaterial>()
-                .HasMany(t => t.Tools)
-                .WithOne(t => t.ToolMaterial)
-                .HasForeignKey(t => t.ToolMaterialId)
+            
+            modelBuilder.Entity<OperationType>().HasData(
+                new OperationType { Id = 1, Name = "Cutting" },
+                new OperationType { Id = 2, Name = "Drilling" }
+            );
+
+            modelBuilder.Entity<Machine>()
+                .HasMany(m => m.OperationTypeMachines)
+                .WithMany(a => a.Machines);
+
+            modelBuilder.Entity<Tool>()
+                .HasMany(m => m.OperationTypeTools)
+                .WithMany(a => a.Tools);
+            
+            modelBuilder.Entity<OperationType>()
+                .HasMany(m => m.OperationTypeMachines)
+                .WithOne(t => t.OperationType)
+                .HasForeignKey(m => m.OperationTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+           
+            modelBuilder.Entity<OperationType>()
+                .HasMany(m => m.OperationTypeTools)
+                .WithOne(t => t.OperationType)
+                .HasForeignKey(m => m.OperationTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Konfiguracja unikalnego indeksu dla MRR
