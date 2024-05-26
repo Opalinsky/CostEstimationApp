@@ -13,5 +13,6 @@ namespace CostEstimationApp.Models
         public OperationType? OperationType { get; set; }
         public List<Machine> Machines { get; set; } = new List<Machine>();
 
+
     }
 }

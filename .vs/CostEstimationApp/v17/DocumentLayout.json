@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\models\\operationtypemachine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\models\\operationtypemachine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\models\\operationtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\models\\operationtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\models\\operationtypetool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\models\\operationtypetool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\migrations\\20240526170556_dodanieklucza.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\migrations\\20240526170556_dodanieklucza.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -63,14 +79,6 @@
       "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\models\\material.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\models\\operationtypetool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\models\\operationtypetool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\models\\operationtypemachine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\models\\operationtypemachine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\models\\toolmaterial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\models\\toolmaterial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -81,14 +89,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\models\\semifinishedproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\models\\semifinishedproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\models\\operationtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\models\\operationtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\models\\operation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -178,7 +178,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 250,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Bookmark",
@@ -218,33 +218,72 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ApplicationDbContextModelSnapshot.cs",
-              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "RelativeToolTip": "CostEstimationApp\\Migrations\\ApplicationDbContextModelSnapshot.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 4,
+              "Title": "20240526170556_dodanieKlucza.cs",
+              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240526170556_dodanieKlucza.cs",
+              "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\20240526170556_dodanieKlucza.cs",
+              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240526170556_dodanieKlucza.cs",
+              "RelativeToolTip": "CostEstimationApp\\Migrations\\20240526170556_dodanieKlucza.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAQwBMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T17:08:46.958Z",
+              "WhenOpened": "2024-05-26T17:05:57.28Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "20240522134547_AddOperationRelations.cs",
-              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240522134547_AddOperationRelations.cs",
-              "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\20240522134547_AddOperationRelations.cs",
-              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240522134547_AddOperationRelations.cs",
-              "RelativeToolTip": "CostEstimationApp\\Migrations\\20240522134547_AddOperationRelations.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 1,
+              "Title": "OperationType.cs",
+              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\OperationType.cs",
+              "RelativeDocumentMoniker": "CostEstimationApp\\Models\\OperationType.cs",
+              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\OperationType.cs",
+              "RelativeToolTip": "CostEstimationApp\\Models\\OperationType.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T17:08:43.016Z",
+              "WhenOpened": "2024-05-26T12:16:15.695Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "OperationTypeMachine.cs",
+              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\OperationTypeMachine.cs",
+              "RelativeDocumentMoniker": "CostEstimationApp\\Models\\OperationTypeMachine.cs",
+              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\OperationTypeMachine.cs",
+              "RelativeToolTip": "CostEstimationApp\\Models\\OperationTypeMachine.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T13:02:47.549Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "OperationTypeTool.cs",
+              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\OperationTypeTool.cs",
+              "RelativeDocumentMoniker": "CostEstimationApp\\Models\\OperationTypeTool.cs",
+              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\OperationTypeTool.cs",
+              "RelativeToolTip": "CostEstimationApp\\Models\\OperationTypeTool.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T13:03:27.233Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "CostEstimationApp\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "CostEstimationApp\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAA3wCsAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-23T14:06:07.882Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "20240524113023_migracja87.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240524113023_migracja87.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\20240524113023_migracja87.cs",
@@ -252,25 +291,35 @@
               "RelativeToolTip": "CostEstimationApp\\Migrations\\20240524113023_migracja87.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T17:08:42.364Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-26T17:08:42.364Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20240526170556_dodanieKlucza.cs",
-              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240526170556_dodanieKlucza.cs",
-              "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\20240526170556_dodanieKlucza.cs",
-              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240526170556_dodanieKlucza.cs",
-              "RelativeToolTip": "CostEstimationApp\\Migrations\\20240526170556_dodanieKlucza.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAAAAAA",
+              "DocumentIndex": 6,
+              "Title": "20240522134547_AddOperationRelations.cs",
+              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240522134547_AddOperationRelations.cs",
+              "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\20240522134547_AddOperationRelations.cs",
+              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240522134547_AddOperationRelations.cs",
+              "RelativeToolTip": "CostEstimationApp\\Migrations\\20240522134547_AddOperationRelations.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T17:05:57.28Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-26T17:08:43.016Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "ApplicationDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeToolTip": "CostEstimationApp\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T17:08:46.958Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "20240519193250_DodanieRekordow1.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240519193250_DodanieRekordow1.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\20240519193250_DodanieRekordow1.cs",
@@ -278,12 +327,11 @@
               "RelativeToolTip": "CostEstimationApp\\Migrations\\20240519193250_DodanieRekordow1.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T17:07:57.2Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-26T17:07:57.2Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "20240519232848_migracja4.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240519232848_migracja4.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\20240519232848_migracja4.cs",
@@ -291,12 +339,11 @@
               "RelativeToolTip": "CostEstimationApp\\Migrations\\20240519232848_migracja4.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T17:07:56.264Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-26T17:07:56.264Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "20240526165904_DodaneKey.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240526165904_DodaneKey.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\20240526165904_DodaneKey.cs",
@@ -304,12 +351,11 @@
               "RelativeToolTip": "CostEstimationApp\\Migrations\\20240526165904_DodaneKey.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T16:59:04.641Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-26T16:59:04.641Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "20240522193350_Operacja.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240522193350_Operacja.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\20240522193350_Operacja.cs",
@@ -317,12 +363,11 @@
               "RelativeToolTip": "CostEstimationApp\\Migrations\\20240522193350_Operacja.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T17:07:55.177Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-26T17:07:55.177Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "Material.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\Material.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Models\\Material.cs",
@@ -330,12 +375,11 @@
               "RelativeToolTip": "CostEstimationApp\\Models\\Material.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-23T14:00:55.391Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-23T14:00:55.391Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "20240526161618_mifgdawda.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240526161618_mifgdawda.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\20240526161618_mifgdawda.cs",
@@ -343,12 +387,11 @@
               "RelativeToolTip": "CostEstimationApp\\Migrations\\20240526161618_mifgdawda.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T16:16:19.856Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-26T16:16:19.856Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "20240526083929_Main1.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240526083929_Main1.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\20240526083929_Main1.cs",
@@ -356,12 +399,11 @@
               "RelativeToolTip": "CostEstimationApp\\Migrations\\20240526083929_Main1.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T08:39:29.472Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-26T08:39:29.472Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "MachineType.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\MachineType.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Models\\MachineType.cs",
@@ -369,12 +411,11 @@
               "RelativeToolTip": "CostEstimationApp\\Models\\MachineType.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-23T14:36:02.171Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-23T14:36:02.171Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "MRR.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\MRR.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Models\\MRR.cs",
@@ -382,12 +423,11 @@
               "RelativeToolTip": "CostEstimationApp\\Models\\MRR.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-23T11:21:29.193Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-23T11:21:29.193Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "Machine.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\Machine.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Models\\Machine.cs",
@@ -395,38 +435,11 @@
               "RelativeToolTip": "CostEstimationApp\\Models\\Machine.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-23T14:12:33.918Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "OperationTypeMachine.cs",
-              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\OperationTypeMachine.cs",
-              "RelativeDocumentMoniker": "CostEstimationApp\\Models\\OperationTypeMachine.cs",
-              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\OperationTypeMachine.cs",
-              "RelativeToolTip": "CostEstimationApp\\Models\\OperationTypeMachine.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T13:02:47.549Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-23T14:12:33.918Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 15,
-              "Title": "OperationTypeTool.cs",
-              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\OperationTypeTool.cs",
-              "RelativeDocumentMoniker": "CostEstimationApp\\Models\\OperationTypeTool.cs",
-              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\OperationTypeTool.cs",
-              "RelativeToolTip": "CostEstimationApp\\Models\\OperationTypeTool.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T13:03:27.233Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
               "Title": "ErrorViewModel.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\ErrorViewModel.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Models\\ErrorViewModel.cs",
@@ -434,25 +447,11 @@
               "RelativeToolTip": "CostEstimationApp\\Models\\ErrorViewModel.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-23T14:35:59.567Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-23T14:35:59.567Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "OperationType.cs",
-              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\OperationType.cs",
-              "RelativeDocumentMoniker": "CostEstimationApp\\Models\\OperationType.cs",
-              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\OperationType.cs",
-              "RelativeToolTip": "CostEstimationApp\\Models\\OperationType.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T12:16:15.695Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "SemiFinishedProduct.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\SemiFinishedProduct.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Models\\SemiFinishedProduct.cs",
@@ -460,12 +459,11 @@
               "RelativeToolTip": "CostEstimationApp\\Models\\SemiFinishedProduct.cs",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAAA8AAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-23T14:35:44.083Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-23T14:35:44.083Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "Worker.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\Worker.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Models\\Worker.cs",
@@ -473,12 +471,11 @@
               "RelativeToolTip": "CostEstimationApp\\Models\\Worker.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-23T14:05:27.924Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-23T14:05:27.924Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "ToolMaterial.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\ToolMaterial.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Models\\ToolMaterial.cs",
@@ -486,20 +483,7 @@
               "RelativeToolTip": "CostEstimationApp\\Models\\ToolMaterial.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-26T11:53:15.72Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Data\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "CostEstimationApp\\Data\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Data\\ApplicationDbContext.cs",
-              "RelativeToolTip": "CostEstimationApp\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAcwCAAAAApAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-23T14:06:07.882Z"
+              "WhenOpened": "2024-05-26T11:53:15.72Z"
             },
             {
               "$type": "Document",
