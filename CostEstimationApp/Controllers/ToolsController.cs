@@ -45,27 +45,33 @@ namespace CostEstimationApp.Controllers
             return View(tool);
         }
 
-        // GET: Tools/Create
         public IActionResult Create()
         {
+            ViewData["OperationTypes"] = new SelectList(_context.OperationTypes, "Id", "Name");
             return View();
         }
 
         // POST: Tools/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour")] Tool tool)
+        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour,SelectedOperationTypes")] Tool tool)
         {
             if (ModelState.IsValid)
             {
+                foreach (var operationTypeId in tool.SelectedOperationTypes)
+                {
+                    tool.OperationTypeTools.Add(new OperationTypeTool { OperationTypeId = operationTypeId, Tool = tool });
+                }
+
                 _context.Add(tool);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["OperationTypes"] = new SelectList(_context.OperationTypes, "Id", "Name");
             return View(tool);
         }
+
+
 
         // GET: Tools/Edit/5
         public async Task<IActionResult> Edit(int? id)

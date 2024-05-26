@@ -22,7 +22,17 @@ namespace CostEstimationApp.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-           
+             
+            modelBuilder.Entity<Machine>()
+             .HasMany(m => m.OperationTypeMachines)
+             .WithOne(otm => otm.Machine)
+             .HasForeignKey(otm => otm.MachineId);
+
+            modelBuilder.Entity<Tool>()
+                .HasMany(t => t.OperationTypeTools)
+                .WithOne(ott => ott.Tool)
+                .HasForeignKey(ott => ott.ToolId);
+
             modelBuilder.Entity<OperationTypeMachine>()
                .HasKey(otm => new { otm.OperationTypeId, otm.MachineId });
 

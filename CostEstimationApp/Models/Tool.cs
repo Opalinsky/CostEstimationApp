@@ -12,6 +12,7 @@ namespace CostEstimationApp.Models
         public List<Operation> Operation { get; set; } = new List<Operation>();
         public List<OperationTypeTool> OperationTypeTools { get; set; } = new List<OperationTypeTool>();
 
-
+        [NotMapped]
+        public List<int> SelectedOperationTypes { get; set; } = new List<int>();
     }
 }

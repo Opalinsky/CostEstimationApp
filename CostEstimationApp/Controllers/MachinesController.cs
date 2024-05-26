@@ -22,8 +22,12 @@ namespace CostEstimationApp.Controllers
         // GET: Machines
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Machines.Include(m => m.MachineType);
-            return View(await applicationDbContext.ToListAsync());
+            var machines = await _context.Machines
+                .Include(m => m.OperationTypeMachines)
+                    .ThenInclude(otm => otm.OperationType)
+                .ToListAsync();
+
+            return View(machines);
         }
 
         // GET: Machines/Details/5
@@ -45,29 +49,35 @@ namespace CostEstimationApp.Controllers
             return View(machine);
         }
 
-        // GET: Machines/Create
         public IActionResult Create()
         {
             ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof");
+            ViewData["OperationTypes"] = new SelectList(_context.OperationTypes, "Id", "Name");
             return View();
         }
 
         // POST: Machines/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour,MachineTypeId")] Machine machine)
+        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour,MachineTypeId,SelectedOperationTypes")] Machine machine)
         {
             if (ModelState.IsValid)
             {
+                foreach (var operationTypeId in machine.SelectedOperationTypes)
+                {
+                    machine.OperationTypeMachines.Add(new OperationTypeMachine { OperationTypeId = operationTypeId, Machine = machine });
+                }
+
                 _context.Add(machine);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof", machine.MachineTypeId);
+            ViewData["OperationTypes"] = new SelectList(_context.OperationTypes, "Id", "Name");
             return View(machine);
         }
+
+
 
         // GET: Machines/Edit/5
         public async Task<IActionResult> Edit(int? id)

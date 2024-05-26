@@ -23,5 +23,7 @@ namespace CostEstimationApp.Models
 
         public List<OperationTypeMachine> OperationTypeMachines { get; set; } = new List<OperationTypeMachine>();
 
+        [NotMapped]
+        public List<int> SelectedOperationTypes { get; set; } = new List<int>();
     }
 }

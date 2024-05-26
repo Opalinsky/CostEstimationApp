@@ -27,6 +27,10 @@
                 <select asp-for="MachineTypeId" class ="form-control" asp-items="ViewBag.MachineTypeId"></select>
             </div>
             <div class="form-group">
+                <label class="control-label">Operation Types</label>
+                <select asp-for="OperationTypeMachines" class="form-control" multiple asp-items="ViewBag.OperationTypes"></select>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
