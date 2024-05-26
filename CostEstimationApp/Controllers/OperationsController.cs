@@ -45,7 +45,7 @@ namespace CostEstimationApp.Controllers
                 .Include(o => o.SemiFinishedProduct)
                 .Include(o => o.Tool)
                 .Include(o => o.Worker)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);  
             if (operation == null)
             {
                 return NotFound();
@@ -111,6 +111,25 @@ namespace CostEstimationApp.Controllers
 
             operation.MRRId = mrr.Id;
 
+            // Pobierz wymiary z poprzedniej operacji, jeśli istnieje
+            var previousOperation = await _context.Operations
+                .Where(o => o.SemiFinishedProductId == operation.SemiFinishedProductId)
+                .OrderByDescending(o => o.Id)
+                .FirstOrDefaultAsync();
+
+            if (previousOperation != null)
+            {
+                operation.LengthBeforeOperation = previousOperation.LengthAfterOperation;
+                operation.WidthBeforeOperation = previousOperation.WidthAfterOperation;
+                operation.HeightBeforeOperation = previousOperation.HeightAfterOperation;
+            }
+            else
+            {
+                operation.LengthBeforeOperation = semiFinishedProduct.DimensionX;
+                operation.WidthBeforeOperation = semiFinishedProduct.DimensionY;
+                operation.HeightBeforeOperation = semiFinishedProduct.DimensionZ;
+            }
+
             if (ModelState.IsValid)
             {
                 if (operation.OperationType == "Cutting")
@@ -125,6 +144,9 @@ namespace CostEstimationApp.Controllers
                 {
                     var radius = operation.DrillDiameter.GetValueOrDefault() / 2;
                     operation.VolumeToRemove = (decimal)Math.PI * radius * radius * operation.DrillDepth.GetValueOrDefault();
+                    operation.LengthAfterOperation = operation.LengthBeforeOperation;
+                    operation.WidthAfterOperation = operation.WidthBeforeOperation;
+                    operation.HeightAfterOperation = operation.HeightBeforeOperation;
                 }
 
                 operation.MachiningTime = operation.VolumeToRemove / mrr.Rate; // Use the Rate field from MRR
