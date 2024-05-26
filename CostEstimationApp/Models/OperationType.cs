@@ -6,6 +6,7 @@ namespace CostEstimationApp.Models
 {
     public class OperationType
     {
+        [Key]
         public int Id { get; set; }
         
         [Required]

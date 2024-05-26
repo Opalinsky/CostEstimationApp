@@ -11,7 +11,11 @@ namespace CostEstimationApp.Models
         [ForeignKey("OperationTypeId")]
         public int OperationTypeId { get; set; }
         public OperationType? OperationType { get; set; }
-        public List<Tool> Tools { get; set; } = new List<Tool>();
+
+        [Required(ErrorMessage = "Operation type is required.")]
+        [ForeignKey("ToolId")]
+        public int ToolId { get; set; }
+        public Tool? Tool { get; set; }
 
     }
 }

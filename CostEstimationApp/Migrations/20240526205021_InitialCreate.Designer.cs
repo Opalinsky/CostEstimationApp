@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CostEstimationApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240523054830_addingVolumeAndMachiningTime")]
-    partial class addingVolumeAndMachiningTime
+    [Migration("20240526205021_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -106,14 +106,15 @@ namespace CostEstimationApp.Migrations
                     b.Property<decimal>("Rate")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ToolId")
+                    b.Property<int>("ToolMaterialId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MaterialId");
+                    b.HasIndex("ToolMaterialId");
 
-                    b.HasIndex("ToolId");
+                    b.HasIndex("MaterialId", "ToolMaterialId")
+                        .IsUnique();
 
                     b.ToTable("MRRs");
                 });
@@ -162,9 +163,8 @@ namespace CostEstimationApp.Migrations
                     b.Property<decimal>("MachiningTime")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("OperationType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("OperationTypeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("SemiFinishedProductId")
                         .HasColumnType("int");
@@ -190,6 +190,8 @@ namespace CostEstimationApp.Migrations
 
                     b.HasIndex("MachineId");
 
+                    b.HasIndex("OperationTypeId");
+
                     b.HasIndex("SemiFinishedProductId");
 
                     b.HasIndex("ToolId");
@@ -197,6 +199,59 @@ namespace CostEstimationApp.Migrations
                     b.HasIndex("WorkerId");
 
                     b.ToTable("Operations");
+                });
+
+            modelBuilder.Entity("CostEstimationApp.Models.OperationType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OperationTypes");
+                });
+
+            modelBuilder.Entity("CostEstimationApp.Models.OperationTypeMachine", b =>
+                {
+                    b.Property<int>("OperationTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MachineId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("OperationTypeId", "MachineId");
+
+                    b.HasIndex("MachineId");
+
+                    b.ToTable("OperationTypeMachines");
+                });
+
+            modelBuilder.Entity("CostEstimationApp.Models.OperationTypeTool", b =>
+                {
+                    b.Property<int>("OperationTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToolId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("OperationTypeId", "ToolId");
+
+                    b.HasIndex("ToolId");
+
+                    b.ToTable("OperationTypeTools");
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.SemiFinishedProduct", b =>
@@ -241,9 +296,31 @@ namespace CostEstimationApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ToolMaterialId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("ToolMaterialId");
+
                     b.ToTable("Tools");
+                });
+
+            modelBuilder.Entity("CostEstimationApp.Models.ToolMaterial", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ToolMaterials");
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.Worker", b =>
@@ -289,15 +366,15 @@ namespace CostEstimationApp.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CostEstimationApp.Models.Tool", "Tool")
+                    b.HasOne("CostEstimationApp.Models.ToolMaterial", "ToolMaterial")
                         .WithMany("MRR")
-                        .HasForeignKey("ToolId")
+                        .HasForeignKey("ToolMaterialId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Material");
 
-                    b.Navigation("Tool");
+                    b.Navigation("ToolMaterial");
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.Operation", b =>
@@ -312,6 +389,12 @@ namespace CostEstimationApp.Migrations
                         .WithMany("Operation")
                         .HasForeignKey("MachineId")
                         .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CostEstimationApp.Models.OperationType", "OperationType")
+                        .WithMany("Operations")
+                        .HasForeignKey("OperationTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CostEstimationApp.Models.SemiFinishedProduct", "SemiFinishedProduct")
@@ -336,6 +419,8 @@ namespace CostEstimationApp.Migrations
 
                     b.Navigation("Machine");
 
+                    b.Navigation("OperationType");
+
                     b.Navigation("SemiFinishedProduct");
 
                     b.Navigation("Tool");
@@ -343,20 +428,67 @@ namespace CostEstimationApp.Migrations
                     b.Navigation("Worker");
                 });
 
+            modelBuilder.Entity("CostEstimationApp.Models.OperationTypeMachine", b =>
+                {
+                    b.HasOne("CostEstimationApp.Models.Machine", "Machine")
+                        .WithMany("OperationTypeMachines")
+                        .HasForeignKey("MachineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CostEstimationApp.Models.OperationType", "OperationType")
+                        .WithMany("OperationTypeMachines")
+                        .HasForeignKey("OperationTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Machine");
+
+                    b.Navigation("OperationType");
+                });
+
+            modelBuilder.Entity("CostEstimationApp.Models.OperationTypeTool", b =>
+                {
+                    b.HasOne("CostEstimationApp.Models.OperationType", "OperationType")
+                        .WithMany("OperationTypeTools")
+                        .HasForeignKey("OperationTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CostEstimationApp.Models.Tool", "Tool")
+                        .WithMany("OperationTypeTools")
+                        .HasForeignKey("ToolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OperationType");
+
+                    b.Navigation("Tool");
+                });
+
             modelBuilder.Entity("CostEstimationApp.Models.SemiFinishedProduct", b =>
                 {
                     b.HasOne("CostEstimationApp.Models.Material", "Material")
-                        .WithMany()
+                        .WithMany("SemiFinishedProduct")
                         .HasForeignKey("MaterialId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Material");
                 });
 
+            modelBuilder.Entity("CostEstimationApp.Models.Tool", b =>
+                {
+                    b.HasOne("CostEstimationApp.Models.ToolMaterial", null)
+                        .WithMany("Tools")
+                        .HasForeignKey("ToolMaterialId");
+                });
+
             modelBuilder.Entity("CostEstimationApp.Models.Machine", b =>
                 {
                     b.Navigation("Operation");
+
+                    b.Navigation("OperationTypeMachines");
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.MachineType", b =>
@@ -367,11 +499,22 @@ namespace CostEstimationApp.Migrations
             modelBuilder.Entity("CostEstimationApp.Models.Material", b =>
                 {
                     b.Navigation("MRR");
+
+                    b.Navigation("SemiFinishedProduct");
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.MRR", b =>
                 {
                     b.Navigation("Operation");
+                });
+
+            modelBuilder.Entity("CostEstimationApp.Models.OperationType", b =>
+                {
+                    b.Navigation("OperationTypeMachines");
+
+                    b.Navigation("OperationTypeTools");
+
+                    b.Navigation("Operations");
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.SemiFinishedProduct", b =>
@@ -381,9 +524,16 @@ namespace CostEstimationApp.Migrations
 
             modelBuilder.Entity("CostEstimationApp.Models.Tool", b =>
                 {
+                    b.Navigation("Operation");
+
+                    b.Navigation("OperationTypeTools");
+                });
+
+            modelBuilder.Entity("CostEstimationApp.Models.ToolMaterial", b =>
+                {
                     b.Navigation("MRR");
 
-                    b.Navigation("Operation");
+                    b.Navigation("Tools");
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.Worker", b =>

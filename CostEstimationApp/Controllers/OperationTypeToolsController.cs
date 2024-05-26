@@ -22,7 +22,7 @@ namespace CostEstimationApp.Controllers
         // GET: OperationTypeTools
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.OperationTypeTools.Include(o => o.OperationType);
+            var applicationDbContext = _context.OperationTypeTools.Include(o => o.OperationType).Include(o => o.Tool);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,7 +36,8 @@ namespace CostEstimationApp.Controllers
 
             var operationTypeTool = await _context.OperationTypeTools
                 .Include(o => o.OperationType)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(o => o.Tool)
+                .FirstOrDefaultAsync(m => m.OperationTypeId == id);
             if (operationTypeTool == null)
             {
                 return NotFound();
@@ -49,6 +50,7 @@ namespace CostEstimationApp.Controllers
         public IActionResult Create()
         {
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name");
+            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id");
             return View();
         }
 
@@ -57,7 +59,7 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,OperationTypeId")] OperationTypeTool operationTypeTool)
+        public async Task<IActionResult> Create([Bind("Id,OperationTypeId,ToolId")] OperationTypeTool operationTypeTool)
         {
             if (ModelState.IsValid)
             {
@@ -66,6 +68,7 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name", operationTypeTool.OperationTypeId);
+            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operationTypeTool.ToolId);
             return View(operationTypeTool);
         }
 
@@ -83,6 +86,7 @@ namespace CostEstimationApp.Controllers
                 return NotFound();
             }
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name", operationTypeTool.OperationTypeId);
+            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operationTypeTool.ToolId);
             return View(operationTypeTool);
         }
 
@@ -91,9 +95,9 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,OperationTypeId")] OperationTypeTool operationTypeTool)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,OperationTypeId,ToolId")] OperationTypeTool operationTypeTool)
         {
-            if (id != operationTypeTool.Id)
+            if (id != operationTypeTool.OperationTypeId)
             {
                 return NotFound();
             }
@@ -107,7 +111,7 @@ namespace CostEstimationApp.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OperationTypeToolExists(operationTypeTool.Id))
+                    if (!OperationTypeToolExists(operationTypeTool.OperationTypeId))
                     {
                         return NotFound();
                     }
@@ -119,6 +123,7 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name", operationTypeTool.OperationTypeId);
+            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operationTypeTool.ToolId);
             return View(operationTypeTool);
         }
 
@@ -132,7 +137,8 @@ namespace CostEstimationApp.Controllers
 
             var operationTypeTool = await _context.OperationTypeTools
                 .Include(o => o.OperationType)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(o => o.Tool)
+                .FirstOrDefaultAsync(m => m.OperationTypeId == id);
             if (operationTypeTool == null)
             {
                 return NotFound();
@@ -162,7 +168,7 @@ namespace CostEstimationApp.Controllers
 
         private bool OperationTypeToolExists(int id)
         {
-          return (_context.OperationTypeTools?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.OperationTypeTools?.Any(e => e.OperationTypeId == id)).GetValueOrDefault();
         }
     }
 }

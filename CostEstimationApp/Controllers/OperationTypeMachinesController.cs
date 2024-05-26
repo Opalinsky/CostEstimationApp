@@ -22,7 +22,7 @@ namespace CostEstimationApp.Controllers
         // GET: OperationTypeMachines
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.OperationTypeMachines.Include(o => o.OperationType);
+            var applicationDbContext = _context.OperationTypeMachines.Include(o => o.Machine).Include(o => o.OperationType);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,8 +35,9 @@ namespace CostEstimationApp.Controllers
             }
 
             var operationTypeMachine = await _context.OperationTypeMachines
+                .Include(o => o.Machine)
                 .Include(o => o.OperationType)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.OperationTypeId == id);
             if (operationTypeMachine == null)
             {
                 return NotFound();
@@ -48,6 +49,7 @@ namespace CostEstimationApp.Controllers
         // GET: OperationTypeMachines/Create
         public IActionResult Create()
         {
+            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name");
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name");
             return View();
         }
@@ -57,7 +59,7 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,OperationTypeId")] OperationTypeMachine operationTypeMachine)
+        public async Task<IActionResult> Create([Bind("Id,OperationTypeId,MachineId")] OperationTypeMachine operationTypeMachine)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +67,7 @@ namespace CostEstimationApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operationTypeMachine.MachineId);
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name", operationTypeMachine.OperationTypeId);
             return View(operationTypeMachine);
         }
@@ -82,6 +85,7 @@ namespace CostEstimationApp.Controllers
             {
                 return NotFound();
             }
+            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operationTypeMachine.MachineId);
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name", operationTypeMachine.OperationTypeId);
             return View(operationTypeMachine);
         }
@@ -91,9 +95,9 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,OperationTypeId")] OperationTypeMachine operationTypeMachine)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,OperationTypeId,MachineId")] OperationTypeMachine operationTypeMachine)
         {
-            if (id != operationTypeMachine.Id)
+            if (id != operationTypeMachine.OperationTypeId)
             {
                 return NotFound();
             }
@@ -107,7 +111,7 @@ namespace CostEstimationApp.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OperationTypeMachineExists(operationTypeMachine.Id))
+                    if (!OperationTypeMachineExists(operationTypeMachine.OperationTypeId))
                     {
                         return NotFound();
                     }
@@ -118,6 +122,7 @@ namespace CostEstimationApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operationTypeMachine.MachineId);
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name", operationTypeMachine.OperationTypeId);
             return View(operationTypeMachine);
         }
@@ -131,8 +136,9 @@ namespace CostEstimationApp.Controllers
             }
 
             var operationTypeMachine = await _context.OperationTypeMachines
+                .Include(o => o.Machine)
                 .Include(o => o.OperationType)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.OperationTypeId == id);
             if (operationTypeMachine == null)
             {
                 return NotFound();
@@ -162,7 +168,7 @@ namespace CostEstimationApp.Controllers
 
         private bool OperationTypeMachineExists(int id)
         {
-          return (_context.OperationTypeMachines?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.OperationTypeMachines?.Any(e => e.OperationTypeId == id)).GetValueOrDefault();
         }
     }
 }

@@ -7,11 +7,16 @@ namespace CostEstimationApp.Models
     {
         [Key]
         public int Id { get; set; }
+
         [Required(ErrorMessage = "Operation type is required.")]
         [ForeignKey("OperationTypeId")]
         public int OperationTypeId { get; set; }
         public OperationType? OperationType { get; set; }
-        public List<Machine> Machines { get; set; } = new List<Machine>();
+        
+        [Required(ErrorMessage = "Operation type is required.")]
+        [ForeignKey("MachineId")]
+        public int MachineId { get; set; }
+        public Machine? Machine { get; set; }
 
 
     }

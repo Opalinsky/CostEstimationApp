@@ -19,13 +19,9 @@ namespace CostEstimationApp.Models
         public int MachineTypeId { get; set; }
         public MachineType? MachineType { get; set; }
 
-        //[Required(ErrorMessage = "Operation type is required.")]
-        //[ForeignKey("OperationTypeId")]
-        //public int OperationTypeId { get; set; }
-        //public OperationType? OperationType { get; set; }
-        public List<OperationTypeMachine> OperationTypeMachines { get; set; } = new List<OperationTypeMachine>();
         public List<Operation> Operation { get; set; } = new List<Operation>();
 
+        public List<OperationTypeMachine> OperationTypeMachines { get; set; } = new List<OperationTypeMachine>();
 
     }
 }

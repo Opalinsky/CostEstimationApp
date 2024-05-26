@@ -11,14 +11,26 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.OperationType)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.OperationType.Name)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Machine)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Machine.Name)
+        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>
