@@ -16,48 +16,21 @@ namespace CostEstimationApp.Data
         public DbSet<Operation> Operations { get; set; }
         public DbSet<MachineType> MachineTypes { get; set; }
         public DbSet<ToolMaterial> ToolMaterials { get; set; }
-        public DbSet<OperationTypeMachine> OperationTypeMachines { get; set; }
-        public DbSet<OperationTypeTool> OperationTypeTools { get; set; }
         public DbSet<OperationType> OperationTypes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-             
-            modelBuilder.Entity<Machine>()
-             .HasMany(m => m.OperationTypeMachines)
-             .WithOne(otm => otm.Machine)
-             .HasForeignKey(otm => otm.MachineId);
+            
+            modelBuilder.Entity<OperationType>()
+                .HasMany(ot => ot.Machines)
+                .WithMany(m => m.OperationTypes)
+                .UsingEntity(j => j.ToTable("OperationTypeMachines"));
 
-            modelBuilder.Entity<Tool>()
-                .HasMany(t => t.OperationTypeTools)
-                .WithOne(ott => ott.Tool)
-                .HasForeignKey(ott => ott.ToolId);
+            modelBuilder.Entity<OperationType>()
+                .HasMany(ot => ot.Tools)
+                .WithMany(t => t.OperationTypes)
+                .UsingEntity(j => j.ToTable("OperationTypeTools"));
 
-            modelBuilder.Entity<OperationTypeMachine>()
-               .HasKey(otm => new { otm.OperationTypeId, otm.MachineId });
-
-            modelBuilder.Entity<OperationTypeMachine>()
-                .HasOne(otm => otm.OperationType)
-                .WithMany(ot => ot.OperationTypeMachines)
-                .HasForeignKey(otm => otm.OperationTypeId);
-
-            modelBuilder.Entity<OperationTypeMachine>()
-                .HasOne(otm => otm.Machine)
-                .WithMany(m => m.OperationTypeMachines)
-                .HasForeignKey(otm => otm.MachineId);
-
-            modelBuilder.Entity<OperationTypeTool>()
-                .HasKey(ott => new { ott.OperationTypeId, ott.ToolId });
-
-            modelBuilder.Entity<OperationTypeTool>()
-                .HasOne(ott => ott.OperationType)
-                .WithMany(ot => ot.OperationTypeTools)
-                .HasForeignKey(ott => ott.OperationTypeId);
-
-            modelBuilder.Entity<OperationTypeTool>()
-                .HasOne(ott => ott.Tool)
-                .WithMany(t => t.OperationTypeTools)
-                .HasForeignKey(ott => ott.ToolId);
             // Konfiguracja unikalnego indeksu dla MRR
             modelBuilder.Entity<MRR>()
                 .HasIndex(m => new { m.MaterialId, m.ToolMaterialId })
@@ -103,7 +76,7 @@ namespace CostEstimationApp.Data
 
             //Jedna maszyna do wielu operacji
             modelBuilder.Entity<Machine>()
-               .HasMany(a => a.Operation)
+               .HasMany(a => a.Operations)
                .WithOne(o => o.Machine)
                .HasForeignKey(o => o.MachineId)
                .OnDelete(DeleteBehavior.Restrict);

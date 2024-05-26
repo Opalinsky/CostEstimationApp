@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,12 +20,10 @@ namespace CostEstimationApp.Controllers
         // GET: Machines
         public async Task<IActionResult> Index()
         {
-            var machines = await _context.Machines
-                .Include(m => m.OperationTypeMachines)
-                    .ThenInclude(otm => otm.OperationType)
-                .ToListAsync();
-
-            return View(machines);
+            var applicationDbContext = _context.Machines
+                .Include(m => m.MachineType)
+                .Include(m => m.OperationTypes);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Machines/Details/5
@@ -40,6 +36,7 @@ namespace CostEstimationApp.Controllers
 
             var machine = await _context.Machines
                 .Include(m => m.MachineType)
+                .Include(m => m.OperationTypes)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (machine == null)
             {
@@ -49,23 +46,32 @@ namespace CostEstimationApp.Controllers
             return View(machine);
         }
 
+        // GET: Machines/Create
         public IActionResult Create()
         {
             ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof");
-            ViewData["OperationTypes"] = new SelectList(_context.OperationTypes, "Id", "Name");
+            ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name");
             return View();
         }
 
         // POST: Machines/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour,MachineTypeId,SelectedOperationTypes")] Machine machine)
+        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour,MachineTypeId")] Machine machine, int[] OperationTypeIds)
         {
             if (ModelState.IsValid)
             {
-                foreach (var operationTypeId in machine.SelectedOperationTypes)
+                if (OperationTypeIds != null)
                 {
-                    machine.OperationTypeMachines.Add(new OperationTypeMachine { OperationTypeId = operationTypeId, Machine = machine });
+                    machine.OperationTypes = new List<OperationType>();
+                    foreach (var operationTypeId in OperationTypeIds)
+                    {
+                        var operationType = await _context.OperationTypes.FindAsync(operationTypeId);
+                        if (operationType != null)
+                        {
+                            machine.OperationTypes.Add(operationType);
+                        }
+                    }
                 }
 
                 _context.Add(machine);
@@ -73,11 +79,9 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof", machine.MachineTypeId);
-            ViewData["OperationTypes"] = new SelectList(_context.OperationTypes, "Id", "Name");
+            ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
             return View(machine);
         }
-
-
 
         // GET: Machines/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -87,21 +91,24 @@ namespace CostEstimationApp.Controllers
                 return NotFound();
             }
 
-            var machine = await _context.Machines.FindAsync(id);
+            var machine = await _context.Machines
+                .Include(m => m.OperationTypes)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (machine == null)
             {
                 return NotFound();
             }
+
             ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof", machine.MachineTypeId);
+            ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", machine.OperationTypes.Select(ot => ot.Id));
             return View(machine);
         }
 
         // POST: Machines/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CostPerHour,MachineTypeId")] Machine machine)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CostPerHour,MachineTypeId")] Machine machine, int[] OperationTypeIds)
         {
             if (id != machine.Id)
             {
@@ -112,7 +119,33 @@ namespace CostEstimationApp.Controllers
             {
                 try
                 {
-                    _context.Update(machine);
+                    var machineToUpdate = await _context.Machines
+                        .Include(m => m.OperationTypes)
+                        .FirstOrDefaultAsync(m => m.Id == id);
+
+                    if (machineToUpdate == null)
+                    {
+                        return NotFound();
+                    }
+
+                    machineToUpdate.Name = machine.Name;
+                    machineToUpdate.CostPerHour = machine.CostPerHour;
+                    machineToUpdate.MachineTypeId = machine.MachineTypeId;
+                    machineToUpdate.OperationTypes.Clear();
+
+                    if (OperationTypeIds != null)
+                    {
+                        foreach (var operationTypeId in OperationTypeIds)
+                        {
+                            var operationType = await _context.OperationTypes.FindAsync(operationTypeId);
+                            if (operationType != null)
+                            {
+                                machineToUpdate.OperationTypes.Add(operationType);
+                            }
+                        }
+                    }
+
+                    _context.Update(machineToUpdate);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -129,6 +162,7 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof", machine.MachineTypeId);
+            ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
             return View(machine);
         }
 
@@ -142,6 +176,7 @@ namespace CostEstimationApp.Controllers
 
             var machine = await _context.Machines
                 .Include(m => m.MachineType)
+                .Include(m => m.OperationTypes)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (machine == null)
             {
@@ -158,21 +193,21 @@ namespace CostEstimationApp.Controllers
         {
             if (_context.Machines == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Machines'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Machines' is null.");
             }
             var machine = await _context.Machines.FindAsync(id);
             if (machine != null)
             {
                 _context.Machines.Remove(machine);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MachineExists(int id)
         {
-          return (_context.Machines?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Machines?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

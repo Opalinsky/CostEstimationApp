@@ -19,11 +19,8 @@ namespace CostEstimationApp.Models
         public int MachineTypeId { get; set; }
         public MachineType? MachineType { get; set; }
 
-        public List<Operation> Operation { get; set; } = new List<Operation>();
+        public List<OperationType> OperationTypes { get; set; } = new List<OperationType>();
+        public List<Operation> Operations { get; set; } = new List<Operation>();
 
-        public List<OperationTypeMachine> OperationTypeMachines { get; set; } = new List<OperationTypeMachine>();
-
-        [NotMapped]
-        public List<int> SelectedOperationTypes { get; set; } = new List<int>();
     }
 }

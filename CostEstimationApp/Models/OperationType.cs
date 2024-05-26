@@ -12,8 +12,8 @@ namespace CostEstimationApp.Models
         [Required]
         public string Name { get; set; }
 
-        public List<OperationTypeMachine> OperationTypeMachines { get; set; } = new List<OperationTypeMachine>();
-        public List<OperationTypeTool> OperationTypeTools { get; set; } = new List<OperationTypeTool>();
+        public List<Machine> Machines { get; set; } = new List<Machine>();
+        public List<Tool> Tools { get; set; } = new List<Tool>();
         public List<Operation> Operations { get; set; } = new List<Operation>();
     }
 }

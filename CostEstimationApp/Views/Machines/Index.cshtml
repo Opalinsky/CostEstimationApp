@@ -19,10 +19,10 @@
                 @Html.DisplayNameFor(model => model.CostPerHour)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MachineType)
+                @Html.DisplayNameFor(model => model.MachineType.Typeof)
             </th>
             <th>
-                Typy Operacji
+                Operation Types
             </th>
             <th></th>
         </tr>
@@ -40,10 +40,7 @@
                 @Html.DisplayFor(modelItem => item.MachineType.Typeof)
             </td>
             <td>
-                @foreach (var otm in item.OperationTypeMachines)
-                {
-                    <span>@otm.OperationType.Name</span><br />
-                }
+                @string.Join(", ", item.OperationTypes.Select(ot => ot.Name))
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

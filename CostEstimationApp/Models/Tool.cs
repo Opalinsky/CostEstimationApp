@@ -10,9 +10,8 @@ namespace CostEstimationApp.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal CostPerHour { get; set; }
         public List<Operation> Operation { get; set; } = new List<Operation>();
-        public List<OperationTypeTool> OperationTypeTools { get; set; } = new List<OperationTypeTool>();
+        public List<OperationType> OperationTypes { get; set; } = new List<OperationType>();
 
-        [NotMapped]
-        public List<int> SelectedOperationTypes { get; set; } = new List<int>();
+    
     }
 }
