@@ -164,8 +164,7 @@ namespace CostEstimationApp.Controllers
                         operation.HeightAfterOperation = operation.HeightBeforeOperation;
                     }
                 }
-
-                operation.MachiningTime = operation.VolumeToRemove / mrr.Rate; // Użyj pola Rate z MRR
+                operation.MachiningTime  = operation.VolumeToRemove / mrr.Rate; // Użyj pola Rate z MRR
 
                 // Pobierz koszt maszyny, pracownika i narzędzia
                 var machine = await _context.Machines
@@ -183,8 +182,8 @@ namespace CostEstimationApp.Controllers
                 }
 
                 // Użyj AdditionalTime z MachineType
-                operation.MachineCost = machine.CostPerHour * (operation.MachiningTime + (decimal)machine.MachineType.AdditionalTime);
-                operation.WorkerCost = worker.CostPerHour * operation.MachiningTime;
+                operation.MachineCost = (machine.CostPerHour * operation.MachiningTime ) * ( 1 + (decimal)machine.MachineType.AdditionalTime);
+                operation.WorkerCost = (worker.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime + (decimal)machine.MachineType.AuxiliaryTime);
                 operation.ToolCost = tool.CostPerHour * operation.MachiningTime;
 
                 operation.TotalCost = operation.MachineCost + operation.WorkerCost + operation.ToolCost;

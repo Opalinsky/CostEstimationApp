@@ -12,8 +12,8 @@ namespace CostEstimationApp.Models
 
         [Column(TypeName = "decimal(18, 2)")]
         public decimal PricePerKg { get; set; }
-
-        [Column(TypeName = "decimal(18, 2)")]
+        
+        [Column(TypeName = "decimal(18, 12)")]
         public decimal Density { get; set; }
         public List<SemiFinishedProduct> SemiFinishedProduct { get; set; } = new List<SemiFinishedProduct>();
         public List<MRR> MRR { get; set; } = new List<MRR>();

@@ -56,7 +56,7 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Typeof,AdditionalTime")] MachineType machineType)
+        public async Task<IActionResult> Create([Bind("Id,Typeof,AdditionalTime,AuxiliaryTime")] MachineType machineType)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Typeof,AdditionalTime")] MachineType machineType)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Typeof,AdditionalTime,AuxiliaryTime")] MachineType machineType)
         {
             if (id != machineType.Id)
             {

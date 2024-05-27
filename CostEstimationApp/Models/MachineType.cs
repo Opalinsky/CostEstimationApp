@@ -15,5 +15,9 @@ namespace CostEstimationApp.Models
         [Range(0, double.MaxValue, ErrorMessage = "Additional time must be a positive number.")]
         public double AdditionalTime { get; set; }
 
+        [Required(ErrorMessage = "Auxiliary time is required.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Additional time must be a positive number.")]
+        public double AuxiliaryTime { get; set; }
+
     }
 }

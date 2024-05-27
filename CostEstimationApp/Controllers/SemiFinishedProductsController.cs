@@ -53,12 +53,23 @@ namespace CostEstimationApp.Controllers
         }
 
         // POST: SemiFinishedProducts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,MaterialId,DimensionX,DimensionY,DimensionZ")] SemiFinishedProduct semiFinishedProduct)
         {
+            // Pobierz materiał
+            var material = await _context.Materials.FirstOrDefaultAsync(m => m.Id == semiFinishedProduct.MaterialId);
+            if (material == null)
+            {
+                ModelState.AddModelError("", "Invalid material.");
+                ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", semiFinishedProduct.MaterialId);
+                return View(semiFinishedProduct);
+            }
+
+            // Oblicz objętość i cenę półfabrykatu
+            semiFinishedProduct.Volume = semiFinishedProduct.DimensionX * semiFinishedProduct.DimensionY * semiFinishedProduct.DimensionZ;
+            semiFinishedProduct.Price = (decimal)material.Density * semiFinishedProduct.Volume * (decimal)material.PricePerKg;
+
             if (ModelState.IsValid)
             {
                 _context.Add(semiFinishedProduct);
@@ -87,8 +98,6 @@ namespace CostEstimationApp.Controllers
         }
 
         // POST: SemiFinishedProducts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,MaterialId,DimensionX,DimensionY,DimensionZ")] SemiFinishedProduct semiFinishedProduct)
@@ -97,6 +106,19 @@ namespace CostEstimationApp.Controllers
             {
                 return NotFound();
             }
+
+            // Pobierz materiał
+            var material = await _context.Materials.FirstOrDefaultAsync(m => m.Id == semiFinishedProduct.MaterialId);
+            if (material == null)
+            {
+                ModelState.AddModelError("", "Invalid material.");
+                ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", semiFinishedProduct.MaterialId);
+                return View(semiFinishedProduct);
+            }
+
+            // Oblicz objętość i cenę półfabrykatu
+            semiFinishedProduct.Volume = semiFinishedProduct.DimensionX * semiFinishedProduct.DimensionY * semiFinishedProduct.DimensionZ;
+            semiFinishedProduct.Price = (decimal)material.Density * semiFinishedProduct.Volume * (decimal)material.PricePerKg;
 
             if (ModelState.IsValid)
             {
@@ -148,21 +170,21 @@ namespace CostEstimationApp.Controllers
         {
             if (_context.SemiFinishedProducts == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.SemiFinishedProducts'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.SemiFinishedProducts' is null.");
             }
             var semiFinishedProduct = await _context.SemiFinishedProducts.FindAsync(id);
             if (semiFinishedProduct != null)
             {
                 _context.SemiFinishedProducts.Remove(semiFinishedProduct);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SemiFinishedProductExists(int id)
         {
-          return (_context.SemiFinishedProducts?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.SemiFinishedProducts?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

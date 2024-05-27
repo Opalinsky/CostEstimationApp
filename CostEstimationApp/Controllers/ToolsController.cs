@@ -57,10 +57,21 @@ namespace CostEstimationApp.Controllers
         // POST: Tools/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,VitalityPerEdge,AmountOfEdges,CostPerHour,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
         {
             if (ModelState.IsValid)
             {
+                if (tool.VitalityPerEdge > 0 && tool.AmountOfEdges > 0)
+                {
+                    tool.CostPerHour = (tool.Price / (tool.VitalityPerEdge * tool.AmountOfEdges)) * 60;
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Vitality per edge and amount of edges must be greater than zero.");
+                    ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
+                    ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
+                    return View(tool);
+                }
                 if (OperationTypeIds != null)
                 {
                     tool.OperationTypes = new List<OperationType>();
@@ -106,7 +117,7 @@ namespace CostEstimationApp.Controllers
         // POST: Tools/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CostPerHour,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,VitalityPerEdge,AmountOfEdges,CostPerHour,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
         {
             if (id != tool.Id)
             {
@@ -115,8 +126,31 @@ namespace CostEstimationApp.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                
+                    if (tool.VitalityPerEdge > 0 && tool.AmountOfEdges > 0)
+                    {
+                        tool.CostPerHour = (tool.Price / (tool.VitalityPerEdge * tool.AmountOfEdges)) * 60;
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Vitality per edge and amount of edges must be greater than zero.");
+                        ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
+                        ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
+                        return View(tool);
+                    }
+                    try
                 {
+                    if (tool.VitalityPerEdge > 0 && tool.AmountOfEdges > 0)
+                    {
+                        tool.CostPerHour = (tool.Price / (tool.VitalityPerEdge * tool.AmountOfEdges)) * 60;
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Vitality per edge and amount of edges must be greater than zero.");
+                        ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
+                        ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
+                        return View(tool);
+                    }
                     var toolToUpdate = await _context.Tools
                          .Include(t => t.OperationTypes)
                          .FirstOrDefaultAsync(t => t.Id == id);
