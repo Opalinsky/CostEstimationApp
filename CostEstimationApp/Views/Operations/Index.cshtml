@@ -69,6 +69,18 @@
             <th>
                 @Html.DisplayNameFor(model => model.MachiningTime)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MachineCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToolCost)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.WorkerCost)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.TotalCost)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -132,6 +144,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.MachiningTime)
             </td>
+            <th>
+                @Html.DisplayFor(model => item.MachineCost)
+            </th>
+            <th>
+                @Html.DisplayFor(model => item.ToolCost)
+            </th>
+             <th>
+                @Html.DisplayFor(model => item.WorkerCost)
+            </th>
+             <th>
+                @Html.DisplayFor(model => item.TotalCost)
+            </th>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

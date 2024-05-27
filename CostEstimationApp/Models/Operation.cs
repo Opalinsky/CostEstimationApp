@@ -54,9 +54,13 @@ namespace CostEstimationApp.Models
         public decimal WidthAfterOperation { get; set; }
         public decimal HeightAfterOperation { get; set; }
 
-        // New fields
         public decimal VolumeToRemove { get; set; }
         public decimal MachiningTime { get; set; }
+
+        public decimal MachineCost  { get; set; }
+        public decimal ToolCost { get;set; }
+        public decimal WorkerCost { get;set; }
+        public decimal TotalCost { get;set; }
 
     }
 }

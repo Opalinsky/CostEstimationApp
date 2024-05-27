@@ -166,6 +166,30 @@ namespace CostEstimationApp.Controllers
                 }
 
                 operation.MachiningTime = operation.VolumeToRemove / mrr.Rate; // Użyj pola Rate z MRR
+
+                // Pobierz koszt maszyny, pracownika i narzędzia
+                var machine = await _context.Machines
+                    .Include(m => m.MachineType) // Pobierz powiązany MachineType
+                    .FirstOrDefaultAsync(m => m.Id == operation.MachineId);
+                if (machine == null || machine.MachineType == null)
+                {
+                    return NotFound();
+                }
+
+                var worker = await _context.Workers.FirstOrDefaultAsync(w => w.Id == operation.WorkerId);
+                if (worker == null)
+                {
+                    return NotFound();
+                }
+
+                // Użyj AdditionalTime z MachineType
+                operation.MachineCost = machine.CostPerHour * (operation.MachiningTime + (decimal)machine.MachineType.AdditionalTime);
+                operation.WorkerCost = worker.CostPerHour * operation.MachiningTime;
+                operation.ToolCost = tool.CostPerHour * operation.MachiningTime;
+
+                operation.TotalCost = operation.MachineCost + operation.WorkerCost + operation.ToolCost;
+
+
                 _context.Add(operation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
