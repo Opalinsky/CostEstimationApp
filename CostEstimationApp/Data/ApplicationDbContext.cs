@@ -37,6 +37,13 @@ namespace CostEstimationApp.Data
                 .IsUnique();
 
             // Relacje dla MRR
+            modelBuilder.Entity<ToolMaterial>()
+                .HasMany(m => m.Tools)
+                .WithOne(t => t.ToolMaterial)
+                .HasForeignKey(m => m.ToolMaterialId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Relacje dla MRR
             modelBuilder.Entity<Material>()
                 .HasMany(m => m.SemiFinishedProduct)
                 .WithOne(t => t.Material)

@@ -12,6 +12,10 @@ namespace CostEstimationApp.Models
         public List<Operation> Operation { get; set; } = new List<Operation>();
         public List<OperationType> OperationTypes { get; set; } = new List<OperationType>();
 
-    
+
+        [Required(ErrorMessage = "Material is required.")]
+        [ForeignKey("ToolMaterial")]
+        public int ToolMaterialId { get; set; }
+        public ToolMaterial? ToolMaterial { get; set; }
     }
 }

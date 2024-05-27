@@ -11,6 +11,7 @@ namespace CostEstimationApp.Models
         [ForeignKey("MaterialId")]
         public int MaterialId { get; set; }
         public Material? Material { get; set; }
+
         [Column(TypeName = "decimal(18, 2)")]
         public decimal DimensionX { get; set; }
         [Column(TypeName = "decimal(18, 2)")]

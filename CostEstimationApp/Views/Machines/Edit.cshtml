@@ -31,13 +31,13 @@
             <div class="form-group">
                 <label>Operation Types</label>
                 <div>
-                   @*  @foreach (var operationType in (MultiSelectList)ViewBag.OperationTypeIds)
+                    @foreach (var operationType in (MultiSelectList)ViewBag.OperationTypeIds)
                     {
                         <div>
-                            <input type="checkbox" name="OperationTypeIds" value="@operationType.Value" id="operationType_@operationType.Value" @(Model.OperationTypeMachines.Any(otm => otm.OperationTypeId == (int)operationType.Value) ? "checked" : "") />
+                            <input type="checkbox" name="OperationTypeIds" value="@operationType.Value" id="operationType_@operationType.Value" @(Model.OperationTypes.Any(ot => ot.Id == int.Parse(operationType.Value)) ? "checked" : "") />
                             <label for="operationType_@operationType.Value">@operationType.Text</label>
                         </div>
-                    } *@
+                    } 
                 </div>
             </div>
             <div class="form-group">
