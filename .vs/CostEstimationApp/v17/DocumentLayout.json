@@ -11,8 +11,8 @@
       "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\views\\operations\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\views\\machines\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\views\\machines\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\controllers\\mrrscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\controllers\\mrrscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\controllers\\operationtypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,6 +21,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\views\\operations\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\views\\operations\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\views\\machines\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|solutionrelative:costestimationapp\\views\\machines\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240527134845_migracja.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CostEstimationApp\\Migrations\\20240527134845_migracja.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E29567B1-A05A-4CF1-BA9B-A2DDC23BCB0E}|CostEstimationApp\\CostEstimationApp.csproj|c:\\users\\filip\\documents\\mvc\\costestimationapp\\costestimationapp\\models\\operation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 250,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
@@ -78,15 +86,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Views\\Operations\\Index.cshtml",
-              "RelativeDocumentMoniker": "CostEstimationApp\\Views\\Operations\\Index.cshtml",
-              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Views\\Operations\\Index.cshtml",
-              "RelativeToolTip": "CostEstimationApp\\Views\\Operations\\Index.cshtml",
-              "ViewState": "AQIAAIEAAAAAAAAAAAAcwIcAAABHAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-05-27T12:39:21.467Z",
+              "DocumentIndex": 2,
+              "Title": "MRRsController.cs",
+              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Controllers\\MRRsController.cs",
+              "RelativeDocumentMoniker": "CostEstimationApp\\Controllers\\MRRsController.cs",
+              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Controllers\\MRRsController.cs",
+              "RelativeToolTip": "CostEstimationApp\\Controllers\\MRRsController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-27T15:31:07.477Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "20240527134845_migracja.cs",
+              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240527134845_migracja.cs",
+              "RelativeDocumentMoniker": "CostEstimationApp\\Migrations\\20240527134845_migracja.cs",
+              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Migrations\\20240527134845_migracja.cs",
+              "RelativeToolTip": "CostEstimationApp\\Migrations\\20240527134845_migracja.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-27T13:48:45.91Z",
               "EditorCaption": ""
             },
             {
@@ -97,7 +118,7 @@
               "RelativeDocumentMoniker": "CostEstimationApp\\Views\\Operations\\Create.cshtml",
               "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Views\\Operations\\Create.cshtml",
               "RelativeToolTip": "CostEstimationApp\\Views\\Operations\\Create.cshtml",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAADQAAAASAAAA",
+              "ViewState": "AQIAAHcAAAAAAAAAAAAmwKEAAABWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-05-27T12:39:14.175Z",
               "EditorCaption": ""
@@ -110,14 +131,27 @@
               "RelativeDocumentMoniker": "CostEstimationApp\\Controllers\\OperationsController.cs",
               "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Controllers\\OperationsController.cs",
               "RelativeToolTip": "CostEstimationApp\\Controllers\\OperationsController.cs",
-              "ViewState": "AQIAABoBAAAAAAAAAAAgwB0BAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAIEAAABdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-27T12:37:12.603Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Views\\Operations\\Index.cshtml",
+              "RelativeDocumentMoniker": "CostEstimationApp\\Views\\Operations\\Index.cshtml",
+              "ToolTip": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Views\\Operations\\Index.cshtml",
+              "RelativeToolTip": "CostEstimationApp\\Views\\Operations\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFgAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-05-27T12:39:21.467Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Views\\Machines\\Create.cshtml",
               "RelativeDocumentMoniker": "CostEstimationApp\\Views\\Machines\\Create.cshtml",
@@ -143,7 +177,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "OperationType.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\OperationType.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Models\\OperationType.cs",
@@ -151,12 +185,11 @@
               "RelativeToolTip": "CostEstimationApp\\Models\\OperationType.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-27T11:42:57.749Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-27T11:42:57.749Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "Operation.cs",
               "DocumentMoniker": "C:\\Users\\filip\\Documents\\mvc\\CostEstimationApp\\CostEstimationApp\\Models\\Operation.cs",
               "RelativeDocumentMoniker": "CostEstimationApp\\Models\\Operation.cs",
@@ -164,8 +197,7 @@
               "RelativeToolTip": "CostEstimationApp\\Models\\Operation.cs",
               "ViewState": "AQIAAB0AAAAAAAAAAAAAADUAAAA4AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-27T11:29:16.364Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-27T11:29:16.364Z"
             }
           ]
         },

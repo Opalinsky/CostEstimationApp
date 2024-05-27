@@ -63,16 +63,15 @@ namespace CostEstimationApp.Controllers
             ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name");
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name");
             ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id");
-            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Name");
-            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "LastName");
-            ViewBag.OperationTypeIds = new MultiSelectList(_context.OperationTypes, "Id", "Name");
+            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id");
+            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id");
             return View();
         }
 
         // POST: Operations/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime")] Operation operation, int[] OperationTypeIds)
+        public async Task<IActionResult> Create([Bind("Id,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime")] Operation operation)
         {
             if (ModelState.IsValid)
             {
@@ -136,27 +135,37 @@ namespace CostEstimationApp.Controllers
                     operation.WidthBeforeOperation = semiFinishedProduct.DimensionY;
                     operation.HeightBeforeOperation = semiFinishedProduct.DimensionZ;
                 }
-
-                // Obliczenia dla typu operacji
-                if (operation.OperationTypeId == (int)OperationTypes.Cutting)
+                // Pobierz OperationType
+                var operationType = await _context.OperationTypes
+                    .FirstOrDefaultAsync(ot => ot.Id == operation.OperationTypeId);
+                if (operationType == null)
                 {
-                    operation.LengthAfterOperation = operation.LengthBeforeOperation - operation.CuttingLength.GetValueOrDefault();
-                    operation.WidthAfterOperation = operation.WidthBeforeOperation - operation.CuttingWidth.GetValueOrDefault();
-                    operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.CuttingDepth.GetValueOrDefault();
-
-                    operation.VolumeToRemove = operation.CuttingLength.GetValueOrDefault() * operation.CuttingWidth.GetValueOrDefault() * operation.CuttingDepth.GetValueOrDefault();
+                    return NotFound();
                 }
-                else if (operation.OperationTypeId == (int)OperationTypes.Drilling)
+                operation.OperationType = operationType;
+
+                //// Obliczenia dla typu operacji
+                if (ModelState.IsValid)
                 {
-                    var radius = operation.DrillDiameter.GetValueOrDefault() / 2;
-                    operation.VolumeToRemove = (decimal)Math.PI * radius * radius * operation.DrillDepth.GetValueOrDefault();
-                    operation.LengthAfterOperation = operation.LengthBeforeOperation;
-                    operation.WidthAfterOperation = operation.WidthBeforeOperation;
-                    operation.HeightAfterOperation = operation.HeightBeforeOperation;
+                    if (operation.OperationType.Name == "Cutting")
+                    {
+                        operation.LengthAfterOperation = operation.LengthBeforeOperation - operation.CuttingLength.GetValueOrDefault();
+                        operation.WidthAfterOperation = operation.WidthBeforeOperation - operation.CuttingWidth.GetValueOrDefault();
+                        operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.CuttingDepth.GetValueOrDefault();
+
+                        operation.VolumeToRemove = operation.CuttingLength.GetValueOrDefault() * operation.CuttingWidth.GetValueOrDefault() * operation.CuttingDepth.GetValueOrDefault();
+                    }
+                    else if (operation.OperationType.Name == "Drilling")
+                    {
+                        var radius = operation.DrillDiameter.GetValueOrDefault() / 2;
+                        operation.VolumeToRemove = (decimal)Math.PI * radius * radius * operation.DrillDepth.GetValueOrDefault();
+                        operation.LengthAfterOperation = operation.LengthBeforeOperation;
+                        operation.WidthAfterOperation = operation.WidthBeforeOperation;
+                        operation.HeightAfterOperation = operation.HeightBeforeOperation;
+                    }
                 }
 
-                operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
-
+                operation.MachiningTime = operation.VolumeToRemove / mrr.Rate; // Użyj pola Rate z MRR
                 _context.Add(operation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -165,9 +174,8 @@ namespace CostEstimationApp.Controllers
             ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operation.MachineId);
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name", operation.OperationTypeId);
             ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", operation.SemiFinishedProductId);
-            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Name", operation.ToolId);
-            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "LastName", operation.WorkerId);
-            ViewBag.OperationTypeIds = new MultiSelectList(_context.OperationTypes, "Id", "Name");
+            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operation.ToolId);
+            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id", operation.WorkerId);
             return View(operation);
         }
 
@@ -188,9 +196,8 @@ namespace CostEstimationApp.Controllers
             ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operation.MachineId);
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name", operation.OperationTypeId);
             ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", operation.SemiFinishedProductId);
-            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Name", operation.ToolId);
-            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "LastName", operation.WorkerId);
-            ViewBag.OperationTypeIds = new MultiSelectList(_context.OperationTypes, "Id", "Name");
+            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operation.ToolId);
+            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id", operation.WorkerId);
             return View(operation);
         }
 
@@ -228,9 +235,8 @@ namespace CostEstimationApp.Controllers
             ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operation.MachineId);
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name", operation.OperationTypeId);
             ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", operation.SemiFinishedProductId);
-            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Name", operation.ToolId);
-            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "LastName", operation.WorkerId);
-            ViewBag.OperationTypeIds = new MultiSelectList(_context.OperationTypes, "Id", "Name");
+            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operation.ToolId);
+            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id", operation.WorkerId);
             return View(operation);
         }
 

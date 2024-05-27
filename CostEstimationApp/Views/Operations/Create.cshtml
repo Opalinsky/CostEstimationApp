@@ -40,12 +40,12 @@
                 <label for="Drilling">Drilling</label>
             </div> *@
             <div class="form-group">
-                <label>Operation Types</label>
+                <label asp-for="OperationTypeId" class="control-label">Operation Type</label>
                 <div>
-                    @foreach (var operationType in (MultiSelectList)ViewBag.OperationTypeIds)
+                    @foreach (var operationType in (SelectList)ViewBag.OperationTypeId)
                     {
                         <div>
-                            <input type="checkbox" name="OperationTypeIds" value="@operationType.Value" id="operationType_@operationType.Value" />
+                            <input type="radio" name="OperationTypeId" value="@operationType.Value" id="operationType_@operationType.Value" />
                             <label for="operationType_@operationType.Value">@operationType.Text</label>
                         </div>
                     }
@@ -130,7 +130,7 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script>
+    @* <script>
         document.querySelectorAll('input[name="OperationType"]').forEach(function (elem) {
             elem.addEventListener("change", function () {
                 var selectedType = this.value;
@@ -146,5 +146,23 @@
                 }
             });
         });
+    </script> *@
+    <script>
+        document.querySelectorAll('input[name="OperationTypeId"]').forEach(function (elem) {
+            elem.addEventListener("change", function () {
+                var selectedTypeName = this.nextElementSibling.textContent.trim();
+                if (selectedTypeName === "Cutting") {
+                    document.getElementById("cutting-fields").style.display = "block";
+                    document.getElementById("drilling-fields").style.display = "none";
+                } else if (selectedTypeName === "Drilling") {
+                    document.getElementById("cutting-fields").style.display = "none";
+                    document.getElementById("drilling-fields").style.display = "block";
+                } else {
+                    document.getElementById("cutting-fields").style.display = "none";
+                    document.getElementById("drilling-fields").style.display = "none";
+                }
+            });
+        });
     </script>
+
 }

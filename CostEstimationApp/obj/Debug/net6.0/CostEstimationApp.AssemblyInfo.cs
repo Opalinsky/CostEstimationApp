@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CostEstimationApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df4897a7f0b563f44106c144ac47c0cf2efeffe6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e130e5f6c00f38d3b87514d0ec355db252a7f84b")]
 [assembly: System.Reflection.AssemblyProductAttribute("CostEstimationApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CostEstimationApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
