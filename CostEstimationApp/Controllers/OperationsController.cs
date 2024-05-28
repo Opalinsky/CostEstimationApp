@@ -71,7 +71,7 @@ namespace CostEstimationApp.Controllers
         // POST: Operations/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime")] Operation operation)
+        public async Task<IActionResult> Create([Bind("Id,Name,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime")] Operation operation)
         {
             if (ModelState.IsValid)
             {
@@ -164,8 +164,7 @@ namespace CostEstimationApp.Controllers
                         operation.HeightAfterOperation = operation.HeightBeforeOperation;
                     }
                 }
-                operation.MachiningTime  = operation.VolumeToRemove / mrr.Rate; // Użyj pola Rate z MRR
-
+                operation.MachiningTime  = operation.VolumeToRemove / mrr.Rate; 
                 // Pobierz koszt maszyny, pracownika i narzędzia
                 var machine = await _context.Machines
                     .Include(m => m.MachineType) // Pobierz powiązany MachineType
@@ -227,7 +226,7 @@ namespace CostEstimationApp.Controllers
         // POST: Operations/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime")] Operation operation)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime")] Operation operation)
         {
             if (id != operation.Id)
             {

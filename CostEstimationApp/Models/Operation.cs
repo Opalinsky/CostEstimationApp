@@ -6,6 +6,8 @@ namespace CostEstimationApp.Models
     public class Operation
     {
         public int Id { get; set; }
+
+        public string Name { get; set; }
         
         [Required(ErrorMessage = "SemiFinishedProduct type is required.")]
         [ForeignKey("SemiFinishedProductId")]
@@ -26,7 +28,7 @@ namespace CostEstimationApp.Models
         [ForeignKey("ToolId")]
         public int ToolId { get; set; }
         public Tool? Tool { get; set; }
-
+        
         [Required(ErrorMessage = "Operation type is required.")]
         [ForeignKey("OperationTypeId")]
         public int OperationTypeId { get; set; }
@@ -36,6 +38,10 @@ namespace CostEstimationApp.Models
         [ForeignKey("MRRId")]
         public int MRRId { get; set; }
         public MRR? MRR { get; set; }
+
+        [ForeignKey("OperationSet")]
+        public int? OperationSetId { get; set; }
+        public OperationSet? OperationSet { get; set; }
 
         // Fields for CuttingOperation
         public decimal? CuttingLength { get; set; }

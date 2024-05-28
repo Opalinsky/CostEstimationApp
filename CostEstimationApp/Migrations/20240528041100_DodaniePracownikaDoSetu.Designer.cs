@@ -4,6 +4,7 @@ using CostEstimationApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CostEstimationApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240528041100_DodaniePracownikaDoSetu")]
+    partial class DodaniePracownikaDoSetu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -253,7 +255,12 @@ namespace CostEstimationApp.Migrations
                     b.Property<decimal>("WorkerCost")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("WorkerId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("WorkerId");
 
                     b.ToTable("OperationSets");
                 });
@@ -497,6 +504,17 @@ namespace CostEstimationApp.Migrations
                     b.Navigation("SemiFinishedProduct");
 
                     b.Navigation("Tool");
+
+                    b.Navigation("Worker");
+                });
+
+            modelBuilder.Entity("CostEstimationApp.Models.OperationSet", b =>
+                {
+                    b.HasOne("CostEstimationApp.Models.Worker", "Worker")
+                        .WithMany()
+                        .HasForeignKey("WorkerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Worker");
                 });

@@ -17,6 +17,8 @@ namespace CostEstimationApp.Data
         public DbSet<MachineType> MachineTypes { get; set; }
         public DbSet<ToolMaterial> ToolMaterials { get; set; }
         public DbSet<OperationType> OperationTypes { get; set; }
+        public DbSet<OperationSet> OperationSets { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -107,6 +109,13 @@ namespace CostEstimationApp.Data
                 .HasMany(a => a.Operation)
                 .WithOne(o => o.Worker)
                 .HasForeignKey(o => o.WorkerId)
+                .OnDelete(DeleteBehavior.Restrict);
+           
+            //Jeden OperationSet dla wielu operacji 
+            modelBuilder.Entity<OperationSet>()
+                .HasMany(a => a.Operations)
+                .WithOne(o => o.OperationSet)
+                .HasForeignKey(o => o.OperationSetId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
