@@ -71,7 +71,7 @@ namespace CostEstimationApp.Controllers
         // POST: Operations/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime")] Operation operation)
+        public async Task<IActionResult> Create([Bind("Id,Name,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,PocketLength,PocketWidth,PocketDepth,DrillDiameter,DrillDepth,FaceMillingDepth,FinishingMillingDepth,FaceArea,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime")] Operation operation)
         {
             if (ModelState.IsValid)
             {
@@ -128,12 +128,14 @@ namespace CostEstimationApp.Controllers
                     operation.LengthBeforeOperation = previousOperation.LengthAfterOperation;
                     operation.WidthBeforeOperation = previousOperation.WidthAfterOperation;
                     operation.HeightBeforeOperation = previousOperation.HeightAfterOperation;
+                    operation.FaceArea = previousOperation.FaceArea;
                 }
                 else
                 {
                     operation.LengthBeforeOperation = semiFinishedProduct.DimensionX;
                     operation.WidthBeforeOperation = semiFinishedProduct.DimensionY;
                     operation.HeightBeforeOperation = semiFinishedProduct.DimensionZ;
+                    operation.FaceArea = semiFinishedProduct.DimensionX * semiFinishedProduct.DimensionY;
                 }
                 // Pobierz OperationType
                 var operationType = await _context.OperationTypes
@@ -152,8 +154,8 @@ namespace CostEstimationApp.Controllers
                         operation.LengthAfterOperation = operation.LengthBeforeOperation - operation.CuttingLength.GetValueOrDefault();
                         operation.WidthAfterOperation = operation.WidthBeforeOperation - operation.CuttingWidth.GetValueOrDefault();
                         operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.CuttingDepth.GetValueOrDefault();
-
                         operation.VolumeToRemove = operation.CuttingLength.GetValueOrDefault() * operation.CuttingWidth.GetValueOrDefault() * operation.CuttingDepth.GetValueOrDefault();
+                        operation.FaceArea = operation.FaceArea - operation.CuttingLength.GetValueOrDefault() * operation.CuttingWidth.GetValueOrDefault();
                     }
                     else if (operation.OperationType.Name == "Drilling")
                     {
@@ -162,6 +164,28 @@ namespace CostEstimationApp.Controllers
                         operation.LengthAfterOperation = operation.LengthBeforeOperation;
                         operation.WidthAfterOperation = operation.WidthBeforeOperation;
                         operation.HeightAfterOperation = operation.HeightBeforeOperation;
+                        operation.FaceArea = operation.FaceArea - (decimal)Math.PI * radius * radius;
+                    }
+                    else if (operation.OperationType.Name == "Pocket Milling")
+                    {
+                        operation.VolumeToRemove = operation.PocketLength.GetValueOrDefault() * operation.PocketWidth.GetValueOrDefault() * operation.PocketDepth.GetValueOrDefault();
+
+                        operation.LengthAfterOperation = operation.LengthBeforeOperation;
+                        operation.WidthAfterOperation = operation.WidthBeforeOperation;
+                        operation.HeightAfterOperation = operation.HeightBeforeOperation;
+                        operation.FaceArea = operation.FaceArea - operation.PocketLength.GetValueOrDefault() * operation.PocketWidth.GetValueOrDefault();
+                    }
+                    else if (operation.OperationType.Name == "Face Milling")
+                    {
+                        operation.LengthAfterOperation = operation.LengthBeforeOperation;
+                        operation.WidthAfterOperation = operation.WidthBeforeOperation;
+                        operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.FaceMillingDepth.GetValueOrDefault();
+                        operation.VolumeToRemove = operation.LengthBeforeOperation * operation.WidthBeforeOperation * operation.FaceMillingDepth.GetValueOrDefault();
+                    }
+                    else if (operation.OperationType.Name == "Finishing Milling")
+                    {
+                        operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.FinishingMillingDepth.GetValueOrDefault();
+                        operation.VolumeToRemove = operation.FinishingMillingDepth.GetValueOrDefault() * operation.FaceArea;
                     }
                 }
                 operation.MachiningTime  = operation.VolumeToRemove / mrr.Rate; 
@@ -226,7 +250,7 @@ namespace CostEstimationApp.Controllers
         // POST: Operations/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime")] Operation operation)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,PocketLength,PocketWidth,PocketDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,FaceMillingDepth,FinishingMillingDepth,FaceArea,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime")] Operation operation)
         {
             if (id != operation.Id)
             {

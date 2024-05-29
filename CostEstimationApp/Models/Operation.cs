@@ -52,6 +52,14 @@ namespace CostEstimationApp.Models
         public decimal? DrillDiameter { get; set; }
         public decimal? DrillDepth { get; set; }
 
+        public decimal? FinishingMillingDepth { get; set; }
+        public decimal FaceArea { get; set; }
+        public decimal? FaceMillingDepth { get; set; }
+
+        public decimal? PocketLength { get; set; }
+        public decimal? PocketWidth { get; set; }
+        public decimal? PocketDepth { get; set; }
+
         public decimal LengthBeforeOperation { get; set; }
         public decimal WidthBeforeOperation { get; set; }
         public decimal HeightBeforeOperation { get; set; }
