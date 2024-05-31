@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -32,46 +30,31 @@ namespace CostEstimationApp.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Operations/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Operations == null)
-            {
-                return NotFound();
-            }
-
-            var operation = await _context.Operations
-                .Include(o => o.MRR)
-                .Include(o => o.Machine)
-                .Include(o => o.OperationType)
-                .Include(o => o.SemiFinishedProduct)
-                .Include(o => o.Tool)
-                .Include(o => o.Worker)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (operation == null)
-            {
-                return NotFound();
-            }
-
-            return View(operation);
-        }
-
         // GET: Operations/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            int projectId = int.Parse(HttpContext.Session.GetString("ProjectId"));
+            var projectFeatures = await _context.Projekts
+                .Where(p => p.Id == projectId)
+                .SelectMany(p => p.Przedmiots)
+                .SelectMany(p => p.Features)
+                .Distinct()
+                .ToListAsync();
+
             ViewData["MRRId"] = new SelectList(_context.MRRs, "Id", "Id");
             ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name");
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name");
             ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id");
             ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id");
             ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id");
+            ViewData["FeatureId"] = new SelectList(projectFeatures, "Id", "Name");
             return View();
         }
 
         // POST: Operations/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,PocketLength,PocketWidth,PocketDepth,DrillDiameter,DrillDepth,FaceMillingDepth,FinishingMillingDepth,FaceArea,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime")] Operation operation)
+        public async Task<IActionResult> Create([Bind("Id,Name,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,PocketLength,PocketWidth,PocketDepth,DrillDiameter,DrillDepth,FaceMillingDepth,FinishingMillingDepth,FaceArea,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime,FeatureId")] Operation operation)
         {
             if (ModelState.IsValid)
             {
@@ -137,6 +120,7 @@ namespace CostEstimationApp.Controllers
                     operation.HeightBeforeOperation = semiFinishedProduct.DimensionZ;
                     operation.FaceArea = semiFinishedProduct.DimensionX * semiFinishedProduct.DimensionY;
                 }
+
                 // Pobierz OperationType
                 var operationType = await _context.OperationTypes
                     .FirstOrDefaultAsync(ot => ot.Id == operation.OperationTypeId);
@@ -146,49 +130,47 @@ namespace CostEstimationApp.Controllers
                 }
                 operation.OperationType = operationType;
 
-                //// Obliczenia dla typu operacji
-                if (ModelState.IsValid)
+                // Obliczenia dla typu operacji
+                if (operation.OperationType.Name == "Cutting")
                 {
-                    if (operation.OperationType.Name == "Cutting")
-                    {
-                        operation.LengthAfterOperation = operation.LengthBeforeOperation - operation.CuttingLength.GetValueOrDefault();
-                        operation.WidthAfterOperation = operation.WidthBeforeOperation - operation.CuttingWidth.GetValueOrDefault();
-                        operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.CuttingDepth.GetValueOrDefault();
-                        operation.VolumeToRemove = operation.CuttingLength.GetValueOrDefault() * operation.CuttingWidth.GetValueOrDefault() * operation.CuttingDepth.GetValueOrDefault();
-                        operation.FaceArea = operation.FaceArea - operation.CuttingLength.GetValueOrDefault() * operation.CuttingWidth.GetValueOrDefault();
-                    }
-                    else if (operation.OperationType.Name == "Drilling")
-                    {
-                        var radius = operation.DrillDiameter.GetValueOrDefault() / 2;
-                        operation.VolumeToRemove = (decimal)Math.PI * radius * radius * operation.DrillDepth.GetValueOrDefault();
-                        operation.LengthAfterOperation = operation.LengthBeforeOperation;
-                        operation.WidthAfterOperation = operation.WidthBeforeOperation;
-                        operation.HeightAfterOperation = operation.HeightBeforeOperation;
-                        operation.FaceArea = operation.FaceArea - (decimal)Math.PI * radius * radius;
-                    }
-                    else if (operation.OperationType.Name == "Pocket Milling")
-                    {
-                        operation.VolumeToRemove = operation.PocketLength.GetValueOrDefault() * operation.PocketWidth.GetValueOrDefault() * operation.PocketDepth.GetValueOrDefault();
-
-                        operation.LengthAfterOperation = operation.LengthBeforeOperation;
-                        operation.WidthAfterOperation = operation.WidthBeforeOperation;
-                        operation.HeightAfterOperation = operation.HeightBeforeOperation;
-                        operation.FaceArea = operation.FaceArea - operation.PocketLength.GetValueOrDefault() * operation.PocketWidth.GetValueOrDefault();
-                    }
-                    else if (operation.OperationType.Name == "Face Milling")
-                    {
-                        operation.LengthAfterOperation = operation.LengthBeforeOperation;
-                        operation.WidthAfterOperation = operation.WidthBeforeOperation;
-                        operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.FaceMillingDepth.GetValueOrDefault();
-                        operation.VolumeToRemove = operation.LengthBeforeOperation * operation.WidthBeforeOperation * operation.FaceMillingDepth.GetValueOrDefault();
-                    }
-                    else if (operation.OperationType.Name == "Finishing Milling")
-                    {
-                        operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.FinishingMillingDepth.GetValueOrDefault();
-                        operation.VolumeToRemove = operation.FinishingMillingDepth.GetValueOrDefault() * operation.FaceArea;
-                    }
+                    operation.LengthAfterOperation = operation.LengthBeforeOperation - operation.CuttingLength.GetValueOrDefault();
+                    operation.WidthAfterOperation = operation.WidthBeforeOperation - operation.CuttingWidth.GetValueOrDefault();
+                    operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.CuttingDepth.GetValueOrDefault();
+                    operation.VolumeToRemove = operation.CuttingLength.GetValueOrDefault() * operation.CuttingWidth.GetValueOrDefault() * operation.CuttingDepth.GetValueOrDefault();
+                    operation.FaceArea = operation.FaceArea - operation.CuttingLength.GetValueOrDefault() * operation.CuttingWidth.GetValueOrDefault();
                 }
-                operation.MachiningTime  = operation.VolumeToRemove / mrr.Rate; 
+                else if (operation.OperationType.Name == "Drilling")
+                {
+                    var radius = operation.DrillDiameter.GetValueOrDefault() / 2;
+                    operation.VolumeToRemove = (decimal)Math.PI * radius * radius * operation.DrillDepth.GetValueOrDefault();
+                    operation.LengthAfterOperation = operation.LengthBeforeOperation;
+                    operation.WidthAfterOperation = operation.WidthBeforeOperation;
+                    operation.HeightAfterOperation = operation.HeightBeforeOperation;
+                    operation.FaceArea = operation.FaceArea - (decimal)Math.PI * radius * radius;
+                }
+                else if (operation.OperationType.Name == "Pocket Milling")
+                {
+                    operation.VolumeToRemove = operation.PocketLength.GetValueOrDefault() * operation.PocketWidth.GetValueOrDefault() * operation.PocketDepth.GetValueOrDefault();
+                    operation.LengthAfterOperation = operation.LengthBeforeOperation;
+                    operation.WidthAfterOperation = operation.WidthBeforeOperation;
+                    operation.HeightAfterOperation = operation.HeightBeforeOperation;
+                    operation.FaceArea = operation.FaceArea - operation.PocketLength.GetValueOrDefault() * operation.PocketWidth.GetValueOrDefault();
+                }
+                else if (operation.OperationType.Name == "Face Milling")
+                {
+                    operation.LengthAfterOperation = operation.LengthBeforeOperation;
+                    operation.WidthAfterOperation = operation.WidthBeforeOperation;
+                    operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.FaceMillingDepth.GetValueOrDefault();
+                    operation.VolumeToRemove = operation.LengthBeforeOperation * operation.WidthBeforeOperation * operation.FaceMillingDepth.GetValueOrDefault();
+                }
+                else if (operation.OperationType.Name == "Finishing Milling")
+                {
+                    operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.FinishingMillingDepth.GetValueOrDefault();
+                    operation.VolumeToRemove = operation.FinishingMillingDepth.GetValueOrDefault() * operation.FaceArea;
+                }
+
+                operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
+
                 // Pobierz koszt maszyny, pracownika i narzędzia
                 var machine = await _context.Machines
                     .Include(m => m.MachineType) // Pobierz powiązany MachineType
@@ -205,133 +187,45 @@ namespace CostEstimationApp.Controllers
                 }
 
                 // Użyj AdditionalTime z MachineType
-                operation.MachineCost = (machine.CostPerHour * operation.MachiningTime ) * ( 1 + (decimal)machine.MachineType.AdditionalTime);
+                operation.MachineCost = (machine.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime);
                 operation.WorkerCost = (worker.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime + (decimal)machine.MachineType.AuxiliaryTime);
                 operation.ToolCost = tool.CostPerHour * operation.MachiningTime;
 
                 operation.TotalCost = operation.MachineCost + operation.WorkerCost + operation.ToolCost;
 
-
                 _context.Add(operation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            int projectId = int.Parse(HttpContext.Session.GetString("ProjectId"));
+            var projectFeatures = await _context.Projekts
+                .Where(p => p.Id == projectId)
+                .SelectMany(p => p.Przedmiots)
+                .SelectMany(p => p.Features)
+                .Distinct()
+                .ToListAsync();
+
             ViewData["MRRId"] = new SelectList(_context.MRRs, "Id", "Id", operation.MRRId);
             ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operation.MachineId);
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name", operation.OperationTypeId);
             ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", operation.SemiFinishedProductId);
             ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operation.ToolId);
             ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id", operation.WorkerId);
+            ViewData["FeatureId"] = new SelectList(projectFeatures, "Id", "Name", operation.FeatureId);
             return View(operation);
         }
 
-        // GET: Operations/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Operations/OperationTypesByFeature/5
+        public async Task<IActionResult> GetOperationTypesByFeature(int featureId)
         {
-            if (id == null || _context.Operations == null)
-            {
-                return NotFound();
-            }
+            var operationTypes = await _context.FeatureOperationTypes
+                .Where(fot => fot.FeatureId == featureId)
+                .Select(fot => fot.OperationType)
+                .ToListAsync();
 
-            var operation = await _context.Operations.FindAsync(id);
-            if (operation == null)
-            {
-                return NotFound();
-            }
-            ViewData["MRRId"] = new SelectList(_context.MRRs, "Id", "Id", operation.MRRId);
-            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operation.MachineId);
-            ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name", operation.OperationTypeId);
-            ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", operation.SemiFinishedProductId);
-            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operation.ToolId);
-            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id", operation.WorkerId);
-            return View(operation);
+            return Json(operationTypes.Select(ot => new { id = ot.Id, name = ot.Name }));
         }
 
-        // POST: Operations/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,PocketLength,PocketWidth,PocketDepth,DrillDiameter,DrillDepth,LengthBeforeOperation,FaceMillingDepth,FinishingMillingDepth,FaceArea,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime")] Operation operation)
-        {
-            if (id != operation.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(operation);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!OperationExists(operation.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MRRId"] = new SelectList(_context.MRRs, "Id", "Id", operation.MRRId);
-            ViewData["MachineId"] = new SelectList(_context.Machines, "Id", "Name", operation.MachineId);
-            ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name", operation.OperationTypeId);
-            ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", operation.SemiFinishedProductId);
-            ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operation.ToolId);
-            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id", operation.WorkerId);
-            return View(operation);
-        }
-
-        // GET: Operations/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Operations == null)
-            {
-                return NotFound();
-            }
-
-            var operation = await _context.Operations
-                .Include(o => o.MRR)
-                .Include(o => o.Machine)
-                .Include(o => o.OperationType)
-                .Include(o => o.SemiFinishedProduct)
-                .Include(o => o.Tool)
-                .Include(o => o.Worker)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (operation == null)
-            {
-                return NotFound();
-            }
-
-            return View(operation);
-        }
-
-        // POST: Operations/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Operations == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Operations' is null.");
-            }
-            var operation = await _context.Operations.FindAsync(id);
-            if (operation != null)
-            {
-                _context.Operations.Remove(operation);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool OperationExists(int id)
-        {
-            return (_context.Operations?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        // Inne metody kontrolera...
     }
 }

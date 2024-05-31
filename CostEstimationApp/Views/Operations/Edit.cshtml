@@ -14,13 +14,19 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="SemiFinishedProductId" class="control-label"></label>
-                <select asp-for="SemiFinishedProductId" class="form-control" asp-items="ViewBag.SemiFinishedProductId"></select>
-                <span asp-validation-for="SemiFinishedProductId" class="text-danger"></span>
+                <label asp-for="FeatureId" class="control-label"></label>
+                <select asp-for="FeatureId" class="form-control" asp-items="ViewBag.FeatureId"></select>
+                <span asp-validation-for="FeatureId" class="text-danger"></span>
+                <button type="button" id="accept-feature" class="btn btn-primary">Zaakceptuj</button>
             </div>
             <div class="form-group">
-                <label asp-for="MachineId" class="control-label"></label>
-                <select asp-for="MachineId" class="form-control" asp-items="ViewBag.MachineId"></select>
+                <label asp-for="OperationTypeId" class="control-label">Operation Type</label>
+                <select asp-for="OperationTypeId" class="form-control" id="operationTypeId"></select>
+                <span asp-validation-for="OperationTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MachineId" class="control-label">Machine</label>
+                <select asp-for="MachineId" class="form-control" id="machineId"></select>
                 <span asp-validation-for="MachineId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -34,80 +40,11 @@
                 <span asp-validation-for="ToolId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OperationTypeId" class="control-label"></label>
-                <select asp-for="OperationTypeId" class="form-control" asp-items="ViewBag.OperationTypeId"></select>
-                <span asp-validation-for="OperationTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="MRRId" class="control-label"></label>
                 <select asp-for="MRRId" class="form-control" asp-items="ViewBag.MRRId"></select>
                 <span asp-validation-for="MRRId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CuttingLength" class="control-label"></label>
-                <input asp-for="CuttingLength" class="form-control" />
-                <span asp-validation-for="CuttingLength" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CuttingWidth" class="control-label"></label>
-                <input asp-for="CuttingWidth" class="form-control" />
-                <span asp-validation-for="CuttingWidth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CuttingDepth" class="control-label"></label>
-                <input asp-for="CuttingDepth" class="form-control" />
-                <span asp-validation-for="CuttingDepth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DrillDiameter" class="control-label"></label>
-                <input asp-for="DrillDiameter" class="form-control" />
-                <span asp-validation-for="DrillDiameter" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DrillDepth" class="control-label"></label>
-                <input asp-for="DrillDepth" class="form-control" />
-                <span asp-validation-for="DrillDepth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LengthBeforeOperation" class="control-label"></label>
-                <input asp-for="LengthBeforeOperation" class="form-control" />
-                <span asp-validation-for="LengthBeforeOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WidthBeforeOperation" class="control-label"></label>
-                <input asp-for="WidthBeforeOperation" class="form-control" />
-                <span asp-validation-for="WidthBeforeOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HeightBeforeOperation" class="control-label"></label>
-                <input asp-for="HeightBeforeOperation" class="form-control" />
-                <span asp-validation-for="HeightBeforeOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LengthAfterOperation" class="control-label"></label>
-                <input asp-for="LengthAfterOperation" class="form-control" />
-                <span asp-validation-for="LengthAfterOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WidthAfterOperation" class="control-label"></label>
-                <input asp-for="WidthAfterOperation" class="form-control" />
-                <span asp-validation-for="WidthAfterOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HeightAfterOperation" class="control-label"></label>
-                <input asp-for="HeightAfterOperation" class="form-control" />
-                <span asp-validation-for="HeightAfterOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VolumeToRemove" class="control-label"></label>
-                <input asp-for="VolumeToRemove" class="form-control" />
-                <span asp-validation-for="VolumeToRemove" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MachiningTime" class="control-label"></label>
-                <input asp-for="MachiningTime" class="form-control" />
-                <span asp-validation-for="MachiningTime" class="text-danger"></span>
-            </div>
+            <!-- Additional fields for operation details -->
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -120,5 +57,41 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.getElementById("accept-feature").addEventListener("click", function () {
+            var featureId = document.getElementById("FeatureId").value;
+            if (featureId) {
+                $.ajax({
+                    url: '@Url.Action("GetOperationsAndMachinesByFeature")',
+                    type: 'POST',
+                    data: { featureId: featureId },
+                    success: function (data) {
+                        var operationTypeSelect = document.getElementById("operationTypeId");
+                        var machineSelect = document.getElementById("machineId");
+
+                        operationTypeSelect.innerHTML = '';
+                        machineSelect.innerHTML = '';
+
+                        data.operationTypes.forEach(function (operationType) {
+                            var option = document.createElement("option");
+                            option.value = operationType.id;
+                            option.text = operationType.name;
+                            operationTypeSelect.appendChild(option);
+                        });
+
+                        data.machines.forEach(function (machine) {
+                            var option = document.createElement("option");
+                            option.value = machine.id;
+                            option.text = machine.name;
+                            machineSelect.appendChild(option);
+                        });
+                    }
+                });
+            }
+        });
+    </script>
 }

@@ -22,20 +22,20 @@ namespace CostEstimationApp.Controllers
         // GET: Features
         public async Task<IActionResult> Index()
         {
-              return _context.Feature != null ? 
-                          View(await _context.Feature.ToListAsync()) :
+              return _context.Features != null ? 
+                          View(await _context.Features.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Feature'  is null.");
         }
 
         // GET: Features/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Feature == null)
+            if (id == null || _context.Features == null)
             {
                 return NotFound();
             }
 
-            var feature = await _context.Feature
+            var feature = await _context.Features
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (feature == null)
             {
@@ -70,12 +70,12 @@ namespace CostEstimationApp.Controllers
         // GET: Features/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Feature == null)
+            if (id == null || _context.Features == null)
             {
                 return NotFound();
             }
 
-            var feature = await _context.Feature.FindAsync(id);
+            var feature = await _context.Features.FindAsync(id);
             if (feature == null)
             {
                 return NotFound();
@@ -121,12 +121,12 @@ namespace CostEstimationApp.Controllers
         // GET: Features/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Feature == null)
+            if (id == null || _context.Features == null)
             {
                 return NotFound();
             }
 
-            var feature = await _context.Feature
+            var feature = await _context.Features
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (feature == null)
             {
@@ -141,14 +141,14 @@ namespace CostEstimationApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Feature == null)
+            if (_context.Features == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Feature'  is null.");
             }
-            var feature = await _context.Feature.FindAsync(id);
+            var feature = await _context.Features.FindAsync(id);
             if (feature != null)
             {
-                _context.Feature.Remove(feature);
+                _context.Features.Remove(feature);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace CostEstimationApp.Controllers
 
         private bool FeatureExists(int id)
         {
-          return (_context.Feature?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Features?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

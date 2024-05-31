@@ -4,6 +4,7 @@ using CostEstimationApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CostEstimationApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240531204939_OperacjaOdCechy4")]
+    partial class OperacjaOdCechy4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,29 +39,6 @@ namespace CostEstimationApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Features");
-                });
-
-            modelBuilder.Entity("CostEstimationApp.Models.FeatureOperationType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("FeatureId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OperationTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FeatureId");
-
-                    b.HasIndex("OperationTypeId");
-
-                    b.ToTable("FeatureOperationTypes");
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.Machine", b =>
@@ -450,6 +429,21 @@ namespace CostEstimationApp.Migrations
                     b.ToTable("Workers");
                 });
 
+            modelBuilder.Entity("FeatureOperationType", b =>
+                {
+                    b.Property<int>("FeaturesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OperationTypesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FeaturesId", "OperationTypesId");
+
+                    b.HasIndex("OperationTypesId");
+
+                    b.ToTable("FeatureOperationType", (string)null);
+                });
+
             modelBuilder.Entity("MachineOperationType", b =>
                 {
                     b.Property<int>("MachinesId")
@@ -613,25 +607,6 @@ namespace CostEstimationApp.Migrations
                     b.ToTable("Przedmiots");
                 });
 
-            modelBuilder.Entity("CostEstimationApp.Models.FeatureOperationType", b =>
-                {
-                    b.HasOne("CostEstimationApp.Models.Feature", "Feature")
-                        .WithMany("FeatureOperationTypes")
-                        .HasForeignKey("FeatureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CostEstimationApp.Models.OperationType", "OperationType")
-                        .WithMany("FeatureOperationTypes")
-                        .HasForeignKey("OperationTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Feature");
-
-                    b.Navigation("OperationType");
-                });
-
             modelBuilder.Entity("CostEstimationApp.Models.Machine", b =>
                 {
                     b.HasOne("CostEstimationApp.Models.MachineType", "MachineType")
@@ -765,6 +740,21 @@ namespace CostEstimationApp.Migrations
                     b.Navigation("ToolMaterial");
                 });
 
+            modelBuilder.Entity("FeatureOperationType", b =>
+                {
+                    b.HasOne("CostEstimationApp.Models.Feature", null)
+                        .WithMany()
+                        .HasForeignKey("FeaturesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CostEstimationApp.Models.OperationType", null)
+                        .WithMany()
+                        .HasForeignKey("OperationTypesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("MachineOperationType", b =>
                 {
                     b.HasOne("CostEstimationApp.Models.Machine", null)
@@ -842,8 +832,6 @@ namespace CostEstimationApp.Migrations
 
             modelBuilder.Entity("CostEstimationApp.Models.Feature", b =>
                 {
-                    b.Navigation("FeatureOperationTypes");
-
                     b.Navigation("Operations");
 
                     b.Navigation("Przedmiot");
@@ -878,8 +866,6 @@ namespace CostEstimationApp.Migrations
 
             modelBuilder.Entity("CostEstimationApp.Models.OperationType", b =>
                 {
-                    b.Navigation("FeatureOperationTypes");
-
                     b.Navigation("Operations");
                 });
 

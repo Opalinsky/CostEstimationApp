@@ -9,8 +9,10 @@ namespace CostEstimationApp.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public List<Przedmiot> Przedmiot { get; set; } = new List<Przedmiot>();
-        public List<OperationType> OperationTypes { get; set; } = new List<OperationType>();
+        public List<Przedmiot> Przedmiots { get; set; } = new List<Przedmiot>();
+        public List<FeatureOperationType> FeatureOperationTypes { get; set; } = new List<FeatureOperationType>();
+        public List<Operation> Operations { get; set; } = new List<Operation>();
+
 
     }
 }

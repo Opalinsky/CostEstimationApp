@@ -21,7 +21,9 @@ namespace CostEstimationApp.Data
         public DbSet<Projekt> Projekts { get; set; }
         public DbSet<Przedmiot> Przedmiots { get; set; }
         public DbSet<Proces> Process { get; set; }
-        public DbSet<Feature> Feature { get; set; }
+        public DbSet<Feature> Features { get; set; }
+        public DbSet<FeatureOperationType> FeatureOperationTypes { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +38,16 @@ namespace CostEstimationApp.Data
                 .HasMany(ot => ot.Tools)
                 .WithMany(t => t.OperationTypes)
                 .UsingEntity(j => j.ToTable("OperationTypeTools"));
+            
+            modelBuilder.Entity<FeatureOperationType>()
+                 .HasOne(fot => fot.Feature)
+                 .WithMany(f => f.FeatureOperationTypes)
+                 .HasForeignKey(fot => fot.FeatureId);
+
+            modelBuilder.Entity<FeatureOperationType>()
+                .HasOne(fot => fot.OperationType)
+                .WithMany(ot => ot.FeatureOperationTypes)
+                .HasForeignKey(fot => fot.OperationTypeId);
 
             // Konfiguracja unikalnego indeksu dla MRR
             modelBuilder.Entity<MRR>()

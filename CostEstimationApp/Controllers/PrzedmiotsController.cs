@@ -66,7 +66,7 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction("Index", "Projekts");
             }
 
-            ViewData["FeatureId"] = new SelectList(_context.Feature, "Id", "Name");
+            ViewData["FeatureId"] = new SelectList(_context.Features, "Id", "Name");
             ViewData["ProjektId"] = new SelectList(_context.Projekts, "Id", "Id", selectedProjectId);
             return View();
         }
@@ -90,7 +90,7 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["FeatureId"] = new SelectList(_context.Feature, "Id", "Name", przedmiot.FeatureId);
+            ViewData["FeatureId"] = new SelectList(_context.Features, "Id", "Name", przedmiot.FeatureId);
             ViewData["ProjektId"] = new SelectList(_context.Projekts, "Id", "Id", przedmiot.ProjektId);
             return View(przedmiot);
         }
@@ -108,7 +108,7 @@ namespace CostEstimationApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["FeatureId"] = new SelectList(_context.Feature, "Id", "Name", przedmiot.FeatureId);
+            ViewData["FeatureId"] = new SelectList(_context.Features, "Id", "Name", przedmiot.FeatureId);
             ViewData["ProjektId"] = new SelectList(_context.Projekts, "Id", "Id", przedmiot.ProjektId);
             return View(przedmiot);
         }
@@ -143,7 +143,7 @@ namespace CostEstimationApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FeatureId"] = new SelectList(_context.Feature, "Id", "Name", przedmiot.FeatureId);
+            ViewData["FeatureId"] = new SelectList(_context.Features, "Id", "Name", przedmiot.FeatureId);
             ViewData["ProjektId"] = new SelectList(_context.Projekts, "Id", "Id", przedmiot.ProjektId);
             return View(przedmiot);
         }

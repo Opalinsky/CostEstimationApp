@@ -18,6 +18,11 @@ namespace CostEstimationApp.Models
         [ForeignKey("MachineId")]
         public int MachineId { get; set; }
         public Machine? Machine { get; set; }
+        
+        [Required(ErrorMessage = "Machine type is required.")]
+        [ForeignKey("FeatureId")]
+        public int FeatureId { get; set; }
+        public Feature? Feature { get; set; }
 
         [Required(ErrorMessage = "Worker type is required.")]
         [ForeignKey("WorkerId")]

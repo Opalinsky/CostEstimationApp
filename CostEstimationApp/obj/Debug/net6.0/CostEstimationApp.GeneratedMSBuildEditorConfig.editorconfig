@@ -18,6 +18,26 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\filip\Documents\mvc\CostEstimationApp\CostEstimationApp
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FeatureOperationTypes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVhdHVyZU9wZXJhdGlvblR5cGVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FeatureOperationTypes/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVhdHVyZU9wZXJhdGlvblR5cGVzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FeatureOperationTypes/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVhdHVyZU9wZXJhdGlvblR5cGVzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FeatureOperationTypes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVhdHVyZU9wZXJhdGlvblR5cGVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FeatureOperationTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVhdHVyZU9wZXJhdGlvblR5cGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Features/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVhdHVyZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
