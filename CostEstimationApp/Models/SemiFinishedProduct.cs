@@ -21,5 +21,7 @@ namespace CostEstimationApp.Models
         public decimal Volume {  get; set; }
         public decimal Price { get; set; }
         public List<Operation> Operation { get; set; } = new List<Operation>();
+        public List<Projekt> Projekts { get; set; } = new List<Projekt>();
+
     }
 }

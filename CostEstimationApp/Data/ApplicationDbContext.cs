@@ -18,6 +18,10 @@ namespace CostEstimationApp.Data
         public DbSet<ToolMaterial> ToolMaterials { get; set; }
         public DbSet<OperationType> OperationTypes { get; set; }
         public DbSet<OperationSet> OperationSets { get; set; }
+        public DbSet<Projekt> Projekts { get; set; }
+        public DbSet<Przedmiot> Przedmiots { get; set; }
+        public DbSet<Proces> Process { get; set; }
+        public DbSet<Feature> Feature { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -93,6 +97,13 @@ namespace CostEstimationApp.Data
             //Jeden półfabrykat do wielu operacji
             modelBuilder.Entity<SemiFinishedProduct>()
                 .HasMany(a => a.Operation)
+                .WithOne(o => o.SemiFinishedProduct)
+                .HasForeignKey(o => o.SemiFinishedProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+           
+            //Jeden półfabrykat do wielu operacji
+            modelBuilder.Entity<SemiFinishedProduct>()
+                .HasMany(a => a.Projekts)
                 .WithOne(o => o.SemiFinishedProduct)
                 .HasForeignKey(o => o.SemiFinishedProductId)
                 .OnDelete(DeleteBehavior.Restrict);

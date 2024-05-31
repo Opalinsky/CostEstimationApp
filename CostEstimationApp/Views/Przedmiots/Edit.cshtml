@@ -1,0 +1,109 @@
+﻿@model Przedmiot
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Przedmiot</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjektId" class="control-label"></label>
+                <select asp-for="ProjektId" class="form-control" asp-items="ViewBag.ProjektId"></select>
+                <span asp-validation-for="ProjektId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FeatureId" class="control-label"></label>
+                <select asp-for="FeatureId" class="form-control" asp-items="ViewBag.FeatureId"></select>
+                <span asp-validation-for="FeatureId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DrillDiameter" class="control-label"></label>
+                <input asp-for="DrillDiameter" class="form-control" />
+                <span asp-validation-for="DrillDiameter" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DrillDepth" class="control-label"></label>
+                <input asp-for="DrillDepth" class="form-control" />
+                <span asp-validation-for="DrillDepth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DrillApplicationCount" class="control-label"></label>
+                <input asp-for="DrillApplicationCount" class="form-control" />
+                <span asp-validation-for="DrillApplicationCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FaceMillingDepth" class="control-label"></label>
+                <input asp-for="FaceMillingDepth" class="form-control" />
+                <span asp-validation-for="FaceMillingDepth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinishingMillingDepth" class="control-label"></label>
+                <input asp-for="FinishingMillingDepth" class="form-control" />
+                <span asp-validation-for="FinishingMillingDepth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddFinishingMilling" class="control-label"></label>
+                <input asp-for="AddFinishingMilling" class="form-control" />
+                <span asp-validation-for="AddFinishingMilling" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PocketLength" class="control-label"></label>
+                <input asp-for="PocketLength" class="form-control" />
+                <span asp-validation-for="PocketLength" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PocketWidth" class="control-label"></label>
+                <input asp-for="PocketWidth" class="form-control" />
+                <span asp-validation-for="PocketWidth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PocketDepth" class="control-label"></label>
+                <input asp-for="PocketDepth" class="form-control" />
+                <span asp-validation-for="PocketDepth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddFinishingOperation" class="control-label"></label>
+                <input asp-for="AddFinishingOperation" class="form-control" />
+                <span asp-validation-for="AddFinishingOperation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SlotHeight" class="control-label"></label>
+                <input asp-for="SlotHeight" class="form-control" />
+                <span asp-validation-for="SlotHeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WhichSurface" class="control-label"></label>
+                <input asp-for="WhichSurface" class="form-control" />
+                <span asp-validation-for="WhichSurface" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SlotApplicationCount" class="control-label"></label>
+                <input asp-for="SlotApplicationCount" class="form-control" />
+                <span asp-validation-for="SlotApplicationCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

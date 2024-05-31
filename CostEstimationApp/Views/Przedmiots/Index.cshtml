@@ -1,0 +1,128 @@
+﻿@model IEnumerable<Przedmiot>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+    <a asp-action="GoToOperationSets" class="btn btn-primary">Go to Operation Sets</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Projekt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Feature)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DrillDiameter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DrillDepth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DrillApplicationCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FaceMillingDepth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FinishingMillingDepth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddFinishingMilling)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PocketLength)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PocketWidth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PocketDepth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddFinishingOperation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SlotHeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WhichSurface)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SlotApplicationCount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Projekt.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Feature.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DrillDiameter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DrillDepth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DrillApplicationCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FaceMillingDepth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinishingMillingDepth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddFinishingMilling)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PocketLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PocketWidth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PocketDepth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddFinishingOperation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SlotHeight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WhichSurface)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SlotApplicationCount)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+                <a asp-controller="Projekts" asp-action="Index">Powrót</a>
+
+        </tr>
+}
+    </tbody>
+</table>

@@ -15,5 +15,6 @@ namespace CostEstimationApp.Models
         public List<Machine> Machines { get; set; } = new List<Machine>();
         public List<Tool> Tools { get; set; } = new List<Tool>();
         public List<Operation> Operations { get; set; } = new List<Operation>();
+        public List<Feature> Features { get; set; } = new List<Feature>();
     }
 }

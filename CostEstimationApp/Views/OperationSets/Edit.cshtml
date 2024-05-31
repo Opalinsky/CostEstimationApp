@@ -17,16 +17,6 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PreparationTime" class="control-label"></label>
-                <input asp-for="PreparationTime" class="form-control" />
-                <span asp-validation-for="PreparationTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label>Operations</label>
                 <div>
                     @foreach (var operation in (MultiSelectList)ViewBag.Operations)
