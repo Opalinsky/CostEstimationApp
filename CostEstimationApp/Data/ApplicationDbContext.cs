@@ -24,11 +24,10 @@ namespace CostEstimationApp.Data
         public DbSet<Feature> Features { get; set; }
         public DbSet<FeatureOperationType> FeatureOperationTypes { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
             modelBuilder.Entity<OperationType>()
                 .HasMany(ot => ot.Machines)
                 .WithMany(m => m.OperationTypes)
@@ -38,7 +37,7 @@ namespace CostEstimationApp.Data
                 .HasMany(ot => ot.Tools)
                 .WithMany(t => t.OperationTypes)
                 .UsingEntity(j => j.ToTable("OperationTypeTools"));
-            
+
             modelBuilder.Entity<FeatureOperationType>()
                  .HasOne(fot => fot.Feature)
                  .WithMany(f => f.FeatureOperationTypes)
@@ -48,6 +47,12 @@ namespace CostEstimationApp.Data
                 .HasOne(fot => fot.OperationType)
                 .WithMany(ot => ot.FeatureOperationTypes)
                 .HasForeignKey(fot => fot.OperationTypeId);
+
+            // Define the one-to-many relationship between Przedmiot and Feature
+            modelBuilder.Entity<Przedmiot>()
+                .HasOne(p => p.Feature)
+                .WithMany(f => f.Przedmiots)
+                .HasForeignKey(p => p.FeatureId);
 
             // Konfiguracja unikalnego indeksu dla MRR
             modelBuilder.Entity<MRR>()
@@ -67,7 +72,7 @@ namespace CostEstimationApp.Data
                 .WithOne(t => t.Material)
                 .HasForeignKey(m => m.MaterialId)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
             // Konfiguracja relacji dla tabeli Operations
             modelBuilder.Entity<MachineType>()
                 .HasMany(m => m.Machine)
@@ -75,14 +80,13 @@ namespace CostEstimationApp.Data
                 .HasForeignKey(o => o.MachineTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
             // Konfiguracja relacji dla tabeli Operations
             modelBuilder.Entity<Material>()
                 .HasMany(m => m.MRR)
                 .WithOne(a => a.Material)
                 .HasForeignKey(o => o.MaterialId)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
             // Konfiguracja relacji dla tabeli Operations
             modelBuilder.Entity<ToolMaterial>()
                 .HasMany(b => b.MRR)
@@ -90,14 +94,12 @@ namespace CostEstimationApp.Data
                 .HasForeignKey(o => o.ToolMaterialId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
             //Jeden MMR do wielu operacji 
             modelBuilder.Entity<MRR>()
                 .HasMany(a => a.Operation)
                 .WithOne(o => o.MRR)
                 .HasForeignKey(o => o.MRRId)
                 .OnDelete(DeleteBehavior.Restrict);
-
 
             //Jedna maszyna do wielu operacji
             modelBuilder.Entity<Machine>()
@@ -112,7 +114,7 @@ namespace CostEstimationApp.Data
                 .WithOne(o => o.SemiFinishedProduct)
                 .HasForeignKey(o => o.SemiFinishedProductId)
                 .OnDelete(DeleteBehavior.Restrict);
-           
+
             //Jeden półfabrykat do wielu operacji
             modelBuilder.Entity<SemiFinishedProduct>()
                 .HasMany(a => a.Projekts)
@@ -126,14 +128,14 @@ namespace CostEstimationApp.Data
                 .WithOne(o => o.Tool)
                 .HasForeignKey(o => o.ToolId)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
             //Jeden pracownik do wielu operacji 
             modelBuilder.Entity<Worker>()
                 .HasMany(a => a.Operation)
                 .WithOne(o => o.Worker)
                 .HasForeignKey(o => o.WorkerId)
                 .OnDelete(DeleteBehavior.Restrict);
-           
+
             //Jeden OperationSet dla wielu operacji 
             modelBuilder.Entity<OperationSet>()
                 .HasMany(a => a.Operations)

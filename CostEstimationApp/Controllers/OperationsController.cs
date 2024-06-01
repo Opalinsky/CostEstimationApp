@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CostEstimationApp.Data;
 using CostEstimationApp.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CostEstimationApp.Controllers
 {
@@ -20,24 +20,44 @@ namespace CostEstimationApp.Controllers
         // GET: Operations
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Operations
+            int? selectedOperationSetId = HttpContext.Session.GetInt32("SelectedOperationSetId");
+            if (selectedOperationSetId == null)
+            {
+                return RedirectToAction("Index", "OperationSets");
+            }
+
+            var operations = await _context.Operations
                 .Include(o => o.MRR)
                 .Include(o => o.Machine)
                 .Include(o => o.OperationType)
                 .Include(o => o.SemiFinishedProduct)
                 .Include(o => o.Tool)
-                .Include(o => o.Worker);
-            return View(await applicationDbContext.ToListAsync());
+                .Include(o => o.Worker)
+                .Where(o => o.OperationSetId == selectedOperationSetId)
+                .ToListAsync();
+
+            return View(operations);
         }
 
         // GET: Operations/Create
         public async Task<IActionResult> Create()
         {
-            int projectId = int.Parse(HttpContext.Session.GetString("ProjectId"));
+            int? selectedOperationSetId = HttpContext.Session.GetInt32("SelectedOperationSetId");
+            if (selectedOperationSetId == null)
+            {
+                return RedirectToAction("Index", "OperationSets");
+            }
+
+            int? projectId = HttpContext.Session.GetInt32("SelectedProjectId");
+            if (projectId == null)
+            {
+                return RedirectToAction("Index", "Projekts");
+            }
+
             var projectFeatures = await _context.Projekts
                 .Where(p => p.Id == projectId)
                 .SelectMany(p => p.Przedmiots)
-                .SelectMany(p => p.Features)
+                .Select(p => p.Feature)
                 .Distinct()
                 .ToListAsync();
 
@@ -56,8 +76,23 @@ namespace CostEstimationApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,PocketLength,PocketWidth,PocketDepth,DrillDiameter,DrillDepth,FaceMillingDepth,FinishingMillingDepth,FaceArea,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime,FeatureId")] Operation operation)
         {
+            int? projectId = HttpContext.Session.GetInt32("ProjectId");
+            if (projectId == null)
+            {
+                return RedirectToAction("Index", "Projekts");
+            }
+
+            int? selectedOperationSetId = HttpContext.Session.GetInt32("SelectedOperationSetId");
+            if (selectedOperationSetId == null)
+            {
+                return RedirectToAction("Index", "OperationSets");
+            }
+
             if (ModelState.IsValid)
             {
+                operation.ProjektId = projectId.Value;
+                operation.OperationSetId = selectedOperationSetId.Value;
+
                 // Pobierz półfabrykat
                 var semiFinishedProduct = await _context.SemiFinishedProducts
                     .Include(sp => sp.Material)
@@ -197,11 +232,11 @@ namespace CostEstimationApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            int projectId = int.Parse(HttpContext.Session.GetString("ProjectId"));
+            projectId = int.Parse(HttpContext.Session.GetString("ProjectId"));
             var projectFeatures = await _context.Projekts
                 .Where(p => p.Id == projectId)
                 .SelectMany(p => p.Przedmiots)
-                .SelectMany(p => p.Features)
+                .Select(p => p.Feature)
                 .Distinct()
                 .ToListAsync();
 

@@ -1,10 +1,10 @@
 ﻿@model CostEstimationApp.Models.Operation
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Operation";
 }
 
-<h1>Edit</h1>
+<h1>Edit Operation</h1>
 
 <h4>Operation</h4>
 <hr />
@@ -12,27 +12,20 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="FeatureId" class="control-label"></label>
-                <select asp-for="FeatureId" class="form-control" asp-items="ViewBag.FeatureId"></select>
-                <span asp-validation-for="FeatureId" class="text-danger"></span>
-                <button type="button" id="accept-feature" class="btn btn-primary">Zaakceptuj</button>
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OperationTypeId" class="control-label">Operation Type</label>
-                <select asp-for="OperationTypeId" class="form-control" id="operationTypeId"></select>
-                <span asp-validation-for="OperationTypeId" class="text-danger"></span>
+                <label asp-for="SemiFinishedProductId" class="control-label"></label>
+                <select asp-for="SemiFinishedProductId" class="form-control" asp-items="ViewBag.SemiFinishedProductId"></select>
+                <span asp-validation-for="SemiFinishedProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MachineId" class="control-label">Machine</label>
-                <select asp-for="MachineId" class="form-control" id="machineId"></select>
+                <label asp-for="MachineId" class="control-label"></label>
+                <select asp-for="MachineId" class="form-control" asp-items="ViewBag.MachineId"></select>
                 <span asp-validation-for="MachineId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WorkerId" class="control-label"></label>
-                <select asp-for="WorkerId" class="form-control" asp-items="ViewBag.WorkerId"></select>
-                <span asp-validation-for="WorkerId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ToolId" class="control-label"></label>
@@ -40,11 +33,27 @@
                 <span asp-validation-for="ToolId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MRRId" class="control-label"></label>
-                <select asp-for="MRRId" class="form-control" asp-items="ViewBag.MRRId"></select>
-                <span asp-validation-for="MRRId" class="text-danger"></span>
+                <label asp-for="WorkerId" class="control-label"></label>
+                <select asp-for="WorkerId" class="form-control" asp-items="ViewBag.WorkerId"></select>
+                <span asp-validation-for="WorkerId" class="text-danger"></span>
             </div>
-            <!-- Additional fields for operation details -->
+            <div class="form-group">
+                <label asp-for="FeatureId" class="control-label"></label>
+                <select asp-for="FeatureId" class="form-control" asp-items="ViewBag.FeatureId" id="FeatureId"></select>
+                <span asp-validation-for="FeatureId" class="text-danger"></span>
+                <button type="button" id="acceptFeature" class="btn btn-secondary">Zaakceptuj</button>
+            </div>
+            <div class="form-group">
+                <label asp-for="OperationTypeId" class="control-label">Operation Types</label>
+                <select asp-for="OperationTypeId" class="form-control" asp-items="ViewBag.OperationTypeId" id="OperationTypeId"></select>
+                <span asp-validation-for="OperationTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CuttingLength" class="control-label"></label>
+                <input asp-for="CuttingLength" class="form-control" />
+                <span asp-validation-for="CuttingLength" class="text-danger"></span>
+            </div>
+            <!-- Add other fields as needed -->
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -57,41 +66,26 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-
+    <partial name="_ValidationScriptsPartial" />
     <script>
-        document.getElementById("accept-feature").addEventListener("click", function () {
-            var featureId = document.getElementById("FeatureId").value;
-            if (featureId) {
+        $(document).ready(function () {
+            $('#acceptFeature').click(function () {
+                var featureId = $('#FeatureId').val();
                 $.ajax({
-                    url: '@Url.Action("GetOperationsAndMachinesByFeature")',
-                    type: 'POST',
-                    data: { featureId: featureId },
+                    url: '@Url.Action("GetOperationTypesByFeature", "Operations")/' + featureId,
+                    type: 'GET',
                     success: function (data) {
-                        var operationTypeSelect = document.getElementById("operationTypeId");
-                        var machineSelect = document.getElementById("machineId");
-
-                        operationTypeSelect.innerHTML = '';
-                        machineSelect.innerHTML = '';
-
-                        data.operationTypes.forEach(function (operationType) {
-                            var option = document.createElement("option");
-                            option.value = operationType.id;
-                            option.text = operationType.name;
-                            operationTypeSelect.appendChild(option);
-                        });
-
-                        data.machines.forEach(function (machine) {
-                            var option = document.createElement("option");
-                            option.value = machine.id;
-                            option.text = machine.name;
-                            machineSelect.appendChild(option);
+                        var operationTypeSelect = $('#OperationTypeId');
+                        operationTypeSelect.empty();
+                        $.each(data, function (i, item) {
+                            operationTypeSelect.append($('<option>', {
+                                value: item.id,
+                                text: item.name
+                            }));
                         });
                     }
                 });
-            }
+            });
         });
     </script>
 }

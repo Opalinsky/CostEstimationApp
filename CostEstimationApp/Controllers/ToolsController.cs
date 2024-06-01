@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,9 +22,7 @@ namespace CostEstimationApp.Controllers
         // GET: Tools
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Tools
-                .Include(t => t.ToolMaterial)
-                .Include(t => t.OperationTypes);
+            var applicationDbContext = _context.Tools.Include(t => t.ToolMaterial);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,7 +36,6 @@ namespace CostEstimationApp.Controllers
 
             var tool = await _context.Tools
                 .Include(t => t.ToolMaterial)
-                .Include(t => t.OperationTypes)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tool == null)
             {
@@ -50,46 +49,23 @@ namespace CostEstimationApp.Controllers
         public IActionResult Create()
         {
             ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name");
-            ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name");
             return View();
         }
 
         // POST: Tools/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,VitalityPerEdge,AmountOfEdges,CostPerHour,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,AmountOfEdges,VitalityPerEdge,CostPerHour,ToolMaterialId")] Tool tool)
         {
             if (ModelState.IsValid)
             {
-                if (tool.VitalityPerEdge > 0 && tool.AmountOfEdges > 0)
-                {
-                    tool.CostPerHour = (tool.Price / (tool.VitalityPerEdge * tool.AmountOfEdges)) * 60;
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Vitality per edge and amount of edges must be greater than zero.");
-                    ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
-                    ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
-                    return View(tool);
-                }
-                if (OperationTypeIds != null)
-                {
-                    tool.OperationTypes = new List<OperationType>();
-                    foreach (var operationTypeId in OperationTypeIds)
-                    {
-                        var operationType = await _context.OperationTypes.FindAsync(operationTypeId);
-                        if (operationType != null)
-                        {
-                            tool.OperationTypes.Add(operationType);
-                        }
-                    }
-                }
                 _context.Add(tool);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
-            ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
             return View(tool);
         }
 
@@ -101,23 +77,21 @@ namespace CostEstimationApp.Controllers
                 return NotFound();
             }
 
-            var tool = await _context.Tools
-                .Include(t => t.OperationTypes)
-                .FirstOrDefaultAsync(t => t.Id == id);
-
+            var tool = await _context.Tools.FindAsync(id);
             if (tool == null)
             {
                 return NotFound();
             }
             ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
-            ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", tool.OperationTypes.Select(ot => ot.Id));
             return View(tool);
         }
 
         // POST: Tools/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,VitalityPerEdge,AmountOfEdges,CostPerHour,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,AmountOfEdges,VitalityPerEdge,CostPerHour,ToolMaterialId")] Tool tool)
         {
             if (id != tool.Id)
             {
@@ -126,57 +100,9 @@ namespace CostEstimationApp.Controllers
 
             if (ModelState.IsValid)
             {
-                
-                    if (tool.VitalityPerEdge > 0 && tool.AmountOfEdges > 0)
-                    {
-                        tool.CostPerHour = (tool.Price / (tool.VitalityPerEdge * tool.AmountOfEdges)) * 60;
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Vitality per edge and amount of edges must be greater than zero.");
-                        ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
-                        ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
-                        return View(tool);
-                    }
-                    try
+                try
                 {
-                    if (tool.VitalityPerEdge > 0 && tool.AmountOfEdges > 0)
-                    {
-                        tool.CostPerHour = (tool.Price / (tool.VitalityPerEdge * tool.AmountOfEdges)) * 60;
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Vitality per edge and amount of edges must be greater than zero.");
-                        ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
-                        ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
-                        return View(tool);
-                    }
-                    var toolToUpdate = await _context.Tools
-                         .Include(t => t.OperationTypes)
-                         .FirstOrDefaultAsync(t => t.Id == id);
-
-                    if (toolToUpdate == null)
-                    {
-                        return NotFound();
-                    }
-                    toolToUpdate.Name = tool.Name;
-                    toolToUpdate.CostPerHour = tool.CostPerHour;
-                    toolToUpdate.ToolMaterialId = tool.ToolMaterialId;
-                    toolToUpdate.OperationTypes.Clear();
-
-                    if (OperationTypeIds != null)
-                    {
-                        foreach (var operationTypeId in OperationTypeIds)
-                        {
-                            var operationType = await _context.OperationTypes.FindAsync(operationTypeId);
-                            if (operationType != null)
-                            {
-                                toolToUpdate.OperationTypes.Add(operationType);
-                            }
-                        }
-                    }
-
-                    _context.Update(toolToUpdate);
+                    _context.Update(tool);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -193,7 +119,6 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
-            ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
             return View(tool);
         }
 
@@ -207,8 +132,7 @@ namespace CostEstimationApp.Controllers
 
             var tool = await _context.Tools
                 .Include(t => t.ToolMaterial)
-                .Include(t => t.OperationTypes)
-                .FirstOrDefaultAsync(t => t.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (tool == null)
             {
                 return NotFound();
@@ -231,14 +155,14 @@ namespace CostEstimationApp.Controllers
             {
                 _context.Tools.Remove(tool);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ToolExists(int id)
         {
-            return (_context.Tools?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Tools?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

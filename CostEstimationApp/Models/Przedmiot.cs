@@ -15,6 +15,9 @@ public class Przedmiot
     public List<Proces> Process { get; set; } = new List<Proces>();
     //public List<OperationType> OperationTypes { get; set; } = new List<OperationType>();
 
+    // Define the relationship between Przedmiot and Feature
+    //public List<Feature> Features { get; set; } = new List<Feature>();
+
     [Required(ErrorMessage = "Projekt is required.")]
     [ForeignKey("FeatureId")]
     public int FeatureId { get; set; }

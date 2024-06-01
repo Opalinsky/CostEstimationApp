@@ -24,35 +24,23 @@ public class OperationSetsController : Controller
 
         var operationSets = await _context.OperationSets
             .Include(os => os.Operations)
+            .Include(os => os.Projekt)  // Include the Projekt for displaying the Projekt name
             .Where(os => os.ProjektId == selectedProjectId)
             .ToListAsync();
 
         return View(operationSets);
     }
 
-    // GET: OperationSets/Details/5
-    public async Task<IActionResult> Details(int? id)
-    {
-        if (id == null || _context.OperationSets == null)
-        {
-            return NotFound();
-        }
-
-        var operationSet = await _context.OperationSets
-            .Include(os => os.Operations)
-            .FirstOrDefaultAsync(m => m.Id == id);
-        if (operationSet == null)
-        {
-            return NotFound();
-        }
-
-        return View(operationSet);
-    }
-
     // GET: OperationSets/Create
     public IActionResult Create()
     {
-        ViewBag.Operations = new MultiSelectList(_context.Operations, "Id", "Name");
+        int? selectedProjectId = HttpContext.Session.GetInt32("SelectedProjectId");
+        if (selectedProjectId == null)
+        {
+            return RedirectToAction("Index", "Projekts");
+        }
+
+        ViewBag.Operations = new MultiSelectList(_context.Operations.Where(o => o.ProjektId == selectedProjectId), "Id", "Name");
         return View();
     }
 
@@ -61,14 +49,14 @@ public class OperationSetsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Id,Name")] OperationSet operationSet, int[] selectedOperations)
     {
+        int? selectedProjectId = HttpContext.Session.GetInt32("SelectedProjectId");
+        if (selectedProjectId == null)
+        {
+            return RedirectToAction("Index", "Projekts");
+        }
+
         if (ModelState.IsValid)
         {
-            int? selectedProjectId = HttpContext.Session.GetInt32("SelectedProjectId");
-            if (selectedProjectId == null)
-            {
-                return RedirectToAction("Index", "Projekts");
-            }
-
             operationSet.ProjektId = selectedProjectId.Value;
             _context.Add(operationSet);
             await _context.SaveChangesAsync();
@@ -87,16 +75,15 @@ public class OperationSetsController : Controller
                 await _context.SaveChangesAsync();
             }
 
-            // Oblicz całkowity koszt zestawu operacji
+            // Calculate total cost
             var selectedOps = _context.Operations
                 .Include(o => o.Worker)
                 .Where(o => selectedOperations.Contains(o.Id))
                 .ToList();
 
-            operationSet.MachineCost = _context.Operations.Where(o => selectedOperations.Contains(o.Id)).Sum(o => o.MachineCost);
-            operationSet.ToolCost = _context.Operations.Where(o => selectedOperations.Contains(o.Id)).Sum(o => o.ToolCost);
-            operationSet.WorkerCost = _context.Operations.Where(o => selectedOperations.Contains(o.Id)).Sum(o => o.WorkerCost);
-
+            operationSet.MachineCost = selectedOps.Sum(o => o.MachineCost);
+            operationSet.ToolCost = selectedOps.Sum(o => o.ToolCost);
+            operationSet.WorkerCost = selectedOps.Sum(o => o.WorkerCost);
             operationSet.TotalCost = operationSet.MachineCost + operationSet.ToolCost + operationSet.WorkerCost;
 
             _context.Update(operationSet);
@@ -104,93 +91,14 @@ public class OperationSetsController : Controller
 
             return RedirectToAction(nameof(Index));
         }
-        ViewBag.Operations = new MultiSelectList(_context.Operations, "Id", "Name");
+        ViewBag.Operations = new MultiSelectList(_context.Operations.Where(o => o.ProjektId == selectedProjectId), "Id", "Name");
         return View(operationSet);
     }
 
-    // GET: OperationSets/Edit/5
-    public async Task<IActionResult> Edit(int? id)
+    // GET: OperationSets/Select/5
+    public async Task<IActionResult> Select(int? id)
     {
-        if (id == null || _context.OperationSets == null)
-        {
-            return NotFound();
-        }
-
-        var operationSet = await _context.OperationSets
-            .Include(os => os.Operations)
-            .FirstOrDefaultAsync(os => os.Id == id);
-        if (operationSet == null)
-        {
-            return NotFound();
-        }
-
-        ViewBag.Operations = new MultiSelectList(_context.Operations, "Id", "Name", operationSet.Operations.Select(o => o.Id));
-        return View(operationSet);
-    }
-
-    // POST: OperationSets/Edit/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] OperationSet operationSet, int[] selectedOperations)
-    {
-        if (id != operationSet.Id)
-        {
-            return NotFound();
-        }
-
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                var operationSetToUpdate = await _context.OperationSets
-                    .Include(os => os.Operations)
-                    .FirstOrDefaultAsync(os => os.Id == id);
-
-                if (operationSetToUpdate == null)
-                {
-                    return NotFound();
-                }
-
-                operationSetToUpdate.Operations.Clear();
-                foreach (var operationId in selectedOperations)
-                {
-                    var operation = await _context.Operations.FindAsync(operationId);
-                    if (operation != null)
-                    {
-                        operationSetToUpdate.Operations.Add(operation);
-                    }
-                }
-
-                // Oblicz koszty dla zestawu operacji
-                operationSetToUpdate.TotalCost = operationSetToUpdate.Operations.Sum(o => o.TotalCost);
-                operationSetToUpdate.MachineCost = operationSetToUpdate.Operations.Sum(o => o.MachineCost);
-                operationSetToUpdate.ToolCost = operationSetToUpdate.Operations.Sum(o => o.ToolCost);
-                operationSetToUpdate.WorkerCost = operationSetToUpdate.Operations.Sum(o => o.WorkerCost);
-
-                _context.Update(operationSetToUpdate);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OperationSetExists(operationSet.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
-        }
-        ViewBag.Operations = new MultiSelectList(_context.Operations, "Id", "Name", selectedOperations);
-        return View(operationSet);
-    }
-
-    // GET: OperationSets/Delete/5
-    public async Task<IActionResult> Delete(int? id)
-    {
-        if (id == null || _context.OperationSets == null)
+        if (id == null)
         {
             return NotFound();
         }
@@ -202,30 +110,9 @@ public class OperationSetsController : Controller
             return NotFound();
         }
 
-        return View(operationSet);
+        HttpContext.Session.SetInt32("SelectedOperationSetId", operationSet.Id);
+        return RedirectToAction("Index", "Operations");
     }
 
-    // POST: OperationSets/Delete/5
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        if (_context.OperationSets == null)
-        {
-            return Problem("Entity set 'ApplicationDbContext.OperationSets' is null.");
-        }
-        var operationSet = await _context.OperationSets.FindAsync(id);
-        if (operationSet != null)
-        {
-            _context.OperationSets.Remove(operationSet);
-        }
-
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
-
-    private bool OperationSetExists(int id)
-    {
-        return (_context.OperationSets?.Any(e => e.Id == id)).GetValueOrDefault();
-    }
+    // Other methods...
 }

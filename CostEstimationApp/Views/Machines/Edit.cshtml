@@ -1,10 +1,10 @@
 ﻿@model CostEstimationApp.Models.Machine
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Machine";
 }
 
-<h1>Edit</h1>
+<h1>Edit Machine</h1>
 
 <h4>Machine</h4>
 <hr />
@@ -30,15 +30,16 @@
             </div>
             <div class="form-group">
                 <label>Operation Types</label>
-                <div>
+               @*  <div>
                     @foreach (var operationType in (MultiSelectList)ViewBag.OperationTypeIds)
                     {
                         <div>
-                            <input type="checkbox" name="OperationTypeIds" value="@operationType.Value" id="operationType_@operationType.Value" @(Model.OperationTypes.Any(ot => ot.Id == int.Parse(operationType.Value)) ? "checked" : "") />
+                            <input type="checkbox" name="OperationTypeIds" value="@operationType.Value" id="operationType_@operationType.Value"
+                            @(ViewData["SelectedOperationTypeIds"].Contains(operationType.Value) ? "checked" : "") />
                             <label for="operationType_@operationType.Value">@operationType.Text</label>
                         </div>
-                    } 
-                </div>
+                    }
+                </div> *@
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -52,5 +53,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
 }

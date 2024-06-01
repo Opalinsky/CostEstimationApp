@@ -18,7 +18,11 @@ namespace CostEstimationApp.Models
         [ForeignKey("MachineId")]
         public int MachineId { get; set; }
         public Machine? Machine { get; set; }
-        
+
+        [ForeignKey("ProjektId")]
+        public int ProjektId { get; set; }
+        public Projekt? Projekt { get; set; }
+
         [Required(ErrorMessage = "Machine type is required.")]
         [ForeignKey("FeatureId")]
         public int FeatureId { get; set; }

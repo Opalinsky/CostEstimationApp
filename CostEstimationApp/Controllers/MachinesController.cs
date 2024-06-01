@@ -29,7 +29,7 @@ namespace CostEstimationApp.Controllers
         // GET: Machines/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Machines == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -61,9 +61,8 @@ namespace CostEstimationApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (OperationTypeIds != null)
+                if (OperationTypeIds != null && OperationTypeIds.Length > 0)
                 {
-                    machine.OperationTypes = new List<OperationType>();
                     foreach (var operationTypeId in OperationTypeIds)
                     {
                         var operationType = await _context.OperationTypes.FindAsync(operationTypeId);
@@ -86,7 +85,7 @@ namespace CostEstimationApp.Controllers
         // GET: Machines/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Machines == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -94,12 +93,10 @@ namespace CostEstimationApp.Controllers
             var machine = await _context.Machines
                 .Include(m => m.OperationTypes)
                 .FirstOrDefaultAsync(m => m.Id == id);
-
             if (machine == null)
             {
                 return NotFound();
             }
-
             ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof", machine.MachineTypeId);
             ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", machine.OperationTypes.Select(ot => ot.Id));
             return View(machine);
@@ -131,9 +128,9 @@ namespace CostEstimationApp.Controllers
                     machineToUpdate.Name = machine.Name;
                     machineToUpdate.CostPerHour = machine.CostPerHour;
                     machineToUpdate.MachineTypeId = machine.MachineTypeId;
-                    machineToUpdate.OperationTypes.Clear();
 
-                    if (OperationTypeIds != null)
+                    machineToUpdate.OperationTypes.Clear();
+                    if (OperationTypeIds != null && OperationTypeIds.Length > 0)
                     {
                         foreach (var operationTypeId in OperationTypeIds)
                         {
@@ -169,7 +166,7 @@ namespace CostEstimationApp.Controllers
         // GET: Machines/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Machines == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -191,23 +188,18 @@ namespace CostEstimationApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Machines == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Machines' is null.");
-            }
             var machine = await _context.Machines.FindAsync(id);
             if (machine != null)
             {
                 _context.Machines.Remove(machine);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MachineExists(int id)
         {
-            return (_context.Machines?.Any(e => e.Id == id)).GetValueOrDefault();
+            return _context.Machines.Any(e => e.Id == id);
         }
     }
 }

@@ -16,5 +16,6 @@ public class Projekt
     public SemiFinishedProduct? SemiFinishedProduct { get; set; }
 
     public List<OperationSet> OperationSets { get; set; } = new List<OperationSet>();
+    public List<Operation> Operations { get; set; } = new List<Operation>();
 
 }
