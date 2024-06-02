@@ -4,6 +4,7 @@ using CostEstimationApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CostEstimationApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240601225352_Aktualizacja")]
+    partial class Aktualizacja
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,10 +49,10 @@ namespace CostEstimationApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("FeatureId")
+                    b.Property<int?>("FeatureId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OperationTypeId")
+                    b.Property<int?>("OperationTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -622,15 +624,11 @@ namespace CostEstimationApp.Migrations
                 {
                     b.HasOne("CostEstimationApp.Models.Feature", "Feature")
                         .WithMany("FeatureOperationTypes")
-                        .HasForeignKey("FeatureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FeatureId");
 
                     b.HasOne("CostEstimationApp.Models.OperationType", "OperationType")
                         .WithMany("FeatureOperationTypes")
-                        .HasForeignKey("OperationTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OperationTypeId");
 
                     b.Navigation("Feature");
 
@@ -693,7 +691,7 @@ namespace CostEstimationApp.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("CostEstimationApp.Models.OperationType", "OperationType")
-                        .WithMany("Operations")
+                        .WithMany()
                         .HasForeignKey("OperationTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -701,7 +699,7 @@ namespace CostEstimationApp.Migrations
                     b.HasOne("Projekt", "Projekt")
                         .WithMany("Operations")
                         .HasForeignKey("ProjektId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CostEstimationApp.Models.SemiFinishedProduct", "SemiFinishedProduct")
@@ -892,8 +890,6 @@ namespace CostEstimationApp.Migrations
             modelBuilder.Entity("CostEstimationApp.Models.OperationType", b =>
                 {
                     b.Navigation("FeatureOperationTypes");
-
-                    b.Navigation("Operations");
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.SemiFinishedProduct", b =>

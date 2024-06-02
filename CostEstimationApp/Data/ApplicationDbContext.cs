@@ -47,12 +47,23 @@ namespace CostEstimationApp.Data
                 .HasOne(fot => fot.OperationType)
                 .WithMany(ot => ot.FeatureOperationTypes)
                 .HasForeignKey(fot => fot.OperationTypeId);
+            
+            modelBuilder.Entity<Operation>()
+                .HasOne(fot => fot.OperationType)
+                .WithMany(ot => ot.Operations)
+                .HasForeignKey(fot => fot.OperationTypeId);
 
             // Define the one-to-many relationship between Przedmiot and Feature
             modelBuilder.Entity<Przedmiot>()
                 .HasOne(p => p.Feature)
                 .WithMany(f => f.Przedmiots)
                 .HasForeignKey(p => p.FeatureId);
+
+            modelBuilder.Entity<Operation>()
+              .HasOne(p => p.Feature)
+              .WithMany(f => f.Operations)
+              .HasForeignKey(p => p.FeatureId);
+
 
             // Konfiguracja unikalnego indeksu dla MRR
             modelBuilder.Entity<MRR>()
@@ -99,6 +110,12 @@ namespace CostEstimationApp.Data
                 .HasMany(a => a.Operation)
                 .WithOne(o => o.MRR)
                 .HasForeignKey(o => o.MRRId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Projekt>()
+                .HasMany(a => a.Operations)
+                .WithOne(o => o.Projekt)
+                .HasForeignKey(o => o.ProjektId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             //Jedna maszyna do wielu operacji

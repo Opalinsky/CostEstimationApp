@@ -251,16 +251,26 @@ namespace CostEstimationApp.Controllers
         }
 
         // GET: Operations/OperationTypesByFeature/5
-        public async Task<IActionResult> GetOperationTypesByFeature(int featureId)
+        [HttpGet]
+        public async Task<IActionResult> GetOperationTypesByFeature()
         {
+            int featureId = 2; // Twardo zakodowany featureId do testów
+
             var operationTypes = await _context.FeatureOperationTypes
                 .Where(fot => fot.FeatureId == featureId)
                 .Select(fot => fot.OperationType)
                 .ToListAsync();
 
+            Console.WriteLine($"Feature ID: {featureId}");
+            Console.WriteLine($"Operation Types Count: {operationTypes.Count}");
+
+            foreach (var ot in operationTypes)
+            {
+                Console.WriteLine($"Operation Type: {ot.Name}");
+            }
+
             return Json(operationTypes.Select(ot => new { id = ot.Id, name = ot.Name }));
         }
 
-        // Inne metody kontrolera...
     }
 }

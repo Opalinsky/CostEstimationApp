@@ -7,12 +7,12 @@ namespace CostEstimationApp.Models
     {
         public int Id { get; set; }
 
-        [ForeignKey("Feature")]
-        public int? FeatureId { get; set; }
-        public Feature? Feature { get; set; } = null!;
+        [ForeignKey("FeatureId")]
+        public int FeatureId { get; set; }
+        public Feature? Feature { get; set; } 
 
-        [ForeignKey("OperationType")]
-        public int? OperationTypeId { get; set; }
-        public OperationType? OperationType { get; set; } = null!;
+        [ForeignKey("OperationTypeId")]
+        public int OperationTypeId { get; set; }
+        public OperationType? OperationType { get; set; }
     }
 }
