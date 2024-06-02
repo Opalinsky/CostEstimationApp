@@ -40,30 +40,6 @@ namespace CostEstimationApp.Controllers
             return View(operations);
         }
 
-        // GET: Operations/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var operation = await _context.Operations
-                .Include(o => o.MRR)
-                .Include(o => o.Machine)
-                .Include(o => o.OperationType)
-                .Include(o => o.SemiFinishedProduct)
-                .Include(o => o.Tool)
-                .Include(o => o.Worker)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (operation == null)
-            {
-                return NotFound();
-            }
-
-            return View(operation);
-        }
-
         // GET: Operations/Create
         public async Task<IActionResult> Create()
         {
@@ -279,46 +255,38 @@ namespace CostEstimationApp.Controllers
             return View(operation);
         }
 
-        // GET: Operations/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Operations/GetOperationTypesByFeature
+        [HttpGet]
+        public async Task<IActionResult> GetOperationTypesByFeature(int featureId)
         {
-            if (id == null)
+            Console.WriteLine($"Received Feature ID: {featureId}");
+
+            var operationTypes = await _context.FeatureOperationTypes
+                .Where(fot => fot.FeatureId == featureId)
+                .Select(fot => fot.OperationType)
+                .ToListAsync();
+
+            Console.WriteLine($"Operation Types Count: {operationTypes.Count}");
+
+            var operationTypeIds = operationTypes.Select(ot => ot.Id).ToList();
+
+            var machines = await _context.Machines
+                .Where(m => m.OperationTypes.Any(ot => operationTypeIds.Contains(ot.Id)))
+                .ToListAsync();
+
+            var tools = await _context.Tools
+                .Where(t => t.OperationTypes.Any(ot => operationTypeIds.Contains(ot.Id)))
+                .ToListAsync();
+
+            Console.WriteLine($"Machines Count: {machines.Count}");
+            Console.WriteLine($"Tools Count: {tools.Count}");
+
+            return Json(new
             {
-                return NotFound();
-            }
-
-            var operation = await _context.Operations
-                .Include(o => o.MRR)
-                .Include(o => o.Machine)
-                .Include(o => o.OperationType)
-                .Include(o => o.SemiFinishedProduct)
-                .Include(o => o.Tool)
-                .Include(o => o.Worker)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (operation == null)
-            {
-                return NotFound();
-            }
-
-            return View(operation);
-        }
-
-        // POST: Operations/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var operation = await _context.Operations.FindAsync(id);
-            _context.Operations.Remove(operation);
-            await _context.SaveChangesAsync();
-
-            // Aktualizacja kosztów OperationSet
-            if (operation.OperationSetId != null)
-            {
-                await UpdateOperationSetCosts((int)operation.OperationSetId);
-            }
-
-            return RedirectToAction(nameof(Index));
+                operationTypes = operationTypes.Select(ot => new { id = ot.Id, name = ot.Name }),
+                machines = machines.Select(m => new { id = m.Id, name = m.Name }),
+                tools = tools.Select(t => new { id = t.Id, name = t.Name })
+            });
         }
 
         // Metoda do aktualizacji kosztów OperationSet
