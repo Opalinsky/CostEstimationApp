@@ -55,9 +55,8 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction("Index", "Projekts");
             }
 
-            var projectFeatures = await _context.Projekts
-                .Where(p => p.Id == projectId)
-                .SelectMany(p => p.Przedmiots)
+            var projectFeatures = await _context.Przedmiots
+                .Where(p => p.ProjektId == projectId)
                 .Select(p => p.Feature)
                 .Distinct()
                 .ToListAsync();
@@ -165,9 +164,11 @@ namespace CostEstimationApp.Controllers
                     return NotFound();
                 }
                 operation.OperationType = operationType;
+
+                // Pobierz Przedmiot dla operacji
                 var przedmiot = await _context.Przedmiots
-                .Where(p => p.ProjektId == projectId && p.FeatureId == operation.FeatureId)
-                .FirstOrDefaultAsync();
+                    .Where(p => p.ProjektId == projectId && p.FeatureId == operation.FeatureId)
+                    .FirstOrDefaultAsync();
 
                 if (przedmiot == null)
                 {
@@ -177,6 +178,10 @@ namespace CostEstimationApp.Controllers
                 else
                 {
                     Console.WriteLine($"Przedmiot found with FaceMillingDepth: {przedmiot.FaceMillingDepth}");
+                    if (!przedmiot.FaceMillingDepth.HasValue)
+                    {
+                        Console.WriteLine("FaceMillingDepth is null");
+                    }
                 }
 
                 // Obliczenia dla typu operacji
@@ -207,9 +212,10 @@ namespace CostEstimationApp.Controllers
                 }
                 else if (operation.OperationType.Name == "Face Milling")
                 {
+                    Console.WriteLine($"FaceMillingDepth from przedmiot: {przedmiot.FaceMillingDepth}");
                     operation.LengthAfterOperation = operation.LengthBeforeOperation;
                     operation.WidthAfterOperation = operation.WidthBeforeOperation;
-                    operation.HeightAfterOperation = operation.HeightBeforeOperation - przedmiot.FaceMillingDepth.GetValueOrDefault(); 
+                    operation.HeightAfterOperation = operation.HeightBeforeOperation - przedmiot.FaceMillingDepth.GetValueOrDefault();
                     operation.VolumeToRemove = operation.LengthBeforeOperation * operation.WidthBeforeOperation * przedmiot.FaceMillingDepth.GetValueOrDefault();
                 }
                 else if (operation.OperationType.Name == "Finishing Milling")
@@ -250,10 +256,9 @@ namespace CostEstimationApp.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            projectId = int.Parse(HttpContext.Session.GetString("SelectedProjectId"));
-            var projectFeatures = await _context.Projekts
-                .Where(p => p.Id == projectId)
-                .SelectMany(p => p.Przedmiots)
+
+            var projectFeatures = await _context.Przedmiots
+                .Where(p => p.ProjektId == projectId)
                 .Select(p => p.Feature)
                 .Distinct()
                 .ToListAsync();
