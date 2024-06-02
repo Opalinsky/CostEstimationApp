@@ -76,7 +76,7 @@ namespace CostEstimationApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,PocketLength,PocketWidth,PocketDepth,DrillDiameter,DrillDepth,FaceMillingDepth,FinishingMillingDepth,FaceArea,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime,FeatureId")] Operation operation)
         {
-            int? projectId = HttpContext.Session.GetInt32("ProjectId");
+            int? projectId = HttpContext.Session.GetInt32("SelectedProjectId");
             if (projectId == null)
             {
                 return RedirectToAction("Index", "Projekts");
@@ -232,7 +232,7 @@ namespace CostEstimationApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            projectId = int.Parse(HttpContext.Session.GetString("ProjectId"));
+            projectId = int.Parse(HttpContext.Session.GetString("SelectedProjectId"));
             var projectFeatures = await _context.Projekts
                 .Where(p => p.Id == projectId)
                 .SelectMany(p => p.Przedmiots)
