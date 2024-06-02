@@ -158,22 +158,11 @@
         $(document).ready(function () {
             $('#acceptFeatureButton').click(function () {
                 var featureId = $('#FeatureId').val();
-                $.getJSON('/Operations/GetOperationTypesByFeature/' + featureId, function (data) {
+                $.getJSON('/Operations/GetOperationTypesByFeature', { featureId: featureId }, function (data) {
                     var operationTypeSelect = $('#OperationTypeId');
                     operationTypeSelect.empty();
                     $.each(data, function (index, item) {
                         operationTypeSelect.append($('<option>', {
-                            value: item.id,
-                            text: item.name
-                        }));
-                    });
-                });
-
-                $.getJSON('/Machines/GetMachinesByFeature/' + featureId, function (data) {
-                    var machineSelect = $('#MachineId');
-                    machineSelect.empty();
-                    $.each(data, function (index, item) {
-                        machineSelect.append($('<option>', {
                             value: item.id,
                             text: item.name
                         }));

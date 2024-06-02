@@ -145,6 +145,7 @@ namespace CostEstimationApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            
             if (_context.Process == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Process'  is null.");

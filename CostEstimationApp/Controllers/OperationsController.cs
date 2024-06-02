@@ -250,27 +250,25 @@ namespace CostEstimationApp.Controllers
             return View(operation);
         }
 
-        // GET: Operations/OperationTypesByFeature/5
+        // GET: Operations/GetOperationTypesByFeature
         [HttpGet]
-        public async Task<IActionResult> GetOperationTypesByFeature()
+        public async Task<IActionResult> GetOperationTypesByFeature(int featureId)
         {
-            int featureId = 2; // Twardo zakodowany featureId do testów
+            Console.WriteLine($"Received Feature ID: {featureId}");
 
             var operationTypes = await _context.FeatureOperationTypes
                 .Where(fot => fot.FeatureId == featureId)
                 .Select(fot => fot.OperationType)
                 .ToListAsync();
 
-            Console.WriteLine($"Feature ID: {featureId}");
             Console.WriteLine($"Operation Types Count: {operationTypes.Count}");
 
             foreach (var ot in operationTypes)
             {
-                Console.WriteLine($"Operation Type: {ot.Name}");
+                Console.WriteLine($"Operation Type: {ot.Id}, Name: {ot.Name}");
             }
 
             return Json(operationTypes.Select(ot => new { id = ot.Id, name = ot.Name }));
         }
-
     }
 }
