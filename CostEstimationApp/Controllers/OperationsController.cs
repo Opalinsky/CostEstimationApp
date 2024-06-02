@@ -263,12 +263,25 @@ namespace CostEstimationApp.Controllers
 
             Console.WriteLine($"Operation Types Count: {operationTypes.Count}");
 
-            foreach (var ot in operationTypes)
-            {
-                Console.WriteLine($"Operation Type: {ot.Id}, Name: {ot.Name}");
-            }
+            var operationTypeIds = operationTypes.Select(ot => ot.Id).ToList();
 
-            return Json(operationTypes.Select(ot => new { id = ot.Id, name = ot.Name }));
+            var machines = await _context.Machines
+                .Where(m => m.OperationTypes.Any(ot => operationTypeIds.Contains(ot.Id)))
+                .ToListAsync();
+
+            var tools = await _context.Tools
+                .Where(t => t.OperationTypes.Any(ot => operationTypeIds.Contains(ot.Id)))
+                .ToListAsync();
+
+            Console.WriteLine($"Machines Count: {machines.Count}");
+            Console.WriteLine($"Tools Count: {tools.Count}");
+
+            return Json(new
+            {
+                operationTypes = operationTypes.Select(ot => new { id = ot.Id, name = ot.Name }),
+                machines = machines.Select(m => new { id = m.Id, name = m.Name }),
+                tools = tools.Select(t => new { id = t.Id, name = t.Name })
+            });
         }
     }
 }

@@ -49,23 +49,35 @@ namespace CostEstimationApp.Controllers
         public IActionResult Create()
         {
             ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name");
+            ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name");
             return View();
         }
 
         // POST: Tools/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,AmountOfEdges,VitalityPerEdge,CostPerHour,ToolMaterialId")] Tool tool)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,AmountOfEdges,VitalityPerEdge,CostPerHour,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
         {
             if (ModelState.IsValid)
             {
+                if (OperationTypeIds != null && OperationTypeIds.Length > 0)
+                {
+                    foreach (var operationTypeId in OperationTypeIds)
+                    {
+                        var operationType = await _context.OperationTypes.FindAsync(operationTypeId);
+                        if (operationType != null)
+                        {
+                            tool.OperationTypes.Add(operationType);
+                        }
+                    }
+                }
+
                 _context.Add(tool);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
+            ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
             return View(tool);
         }
 
@@ -77,21 +89,22 @@ namespace CostEstimationApp.Controllers
                 return NotFound();
             }
 
-            var tool = await _context.Tools.FindAsync(id);
+            var tool = await _context.Tools
+                .Include(t => t.OperationTypes)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (tool == null)
             {
                 return NotFound();
             }
             ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
+            ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", tool.OperationTypes.Select(ot => ot.Id));
             return View(tool);
         }
 
         // POST: Tools/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,AmountOfEdges,VitalityPerEdge,CostPerHour,ToolMaterialId")] Tool tool)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,AmountOfEdges,VitalityPerEdge,CostPerHour,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
         {
             if (id != tool.Id)
             {
@@ -102,7 +115,36 @@ namespace CostEstimationApp.Controllers
             {
                 try
                 {
-                    _context.Update(tool);
+                    var toolToUpdate = await _context.Tools
+                        .Include(t => t.OperationTypes)
+                        .FirstOrDefaultAsync(t => t.Id == id);
+
+                    if (toolToUpdate == null)
+                    {
+                        return NotFound();
+                    }
+
+                    toolToUpdate.Name = tool.Name;
+                    toolToUpdate.Price = tool.Price;
+                    toolToUpdate.AmountOfEdges = tool.AmountOfEdges;
+                    toolToUpdate.VitalityPerEdge = tool.VitalityPerEdge;
+                    toolToUpdate.CostPerHour = tool.CostPerHour;
+                    toolToUpdate.ToolMaterialId = tool.ToolMaterialId;
+
+                    toolToUpdate.OperationTypes.Clear();
+                    if (OperationTypeIds != null && OperationTypeIds.Length > 0)
+                    {
+                        foreach (var operationTypeId in OperationTypeIds)
+                        {
+                            var operationType = await _context.OperationTypes.FindAsync(operationTypeId);
+                            if (operationType != null)
+                            {
+                                toolToUpdate.OperationTypes.Add(operationType);
+                            }
+                        }
+                    }
+
+                    _context.Update(toolToUpdate);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -119,6 +161,7 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
+            ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
             return View(tool);
         }
 
@@ -132,6 +175,7 @@ namespace CostEstimationApp.Controllers
 
             var tool = await _context.Tools
                 .Include(t => t.ToolMaterial)
+                .Include(t => t.OperationTypes)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tool == null)
             {
@@ -155,14 +199,14 @@ namespace CostEstimationApp.Controllers
             {
                 _context.Tools.Remove(tool);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ToolExists(int id)
         {
-          return (_context.Tools?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Tools?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

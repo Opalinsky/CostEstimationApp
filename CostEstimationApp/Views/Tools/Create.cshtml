@@ -1,10 +1,10 @@
 ﻿@model CostEstimationApp.Models.Tool
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Tool";
 }
 
-<h1>Create</h1>
+<h1>Create Tool</h1>
 
 <h4>Tool</h4>
 <hr />
@@ -18,6 +18,21 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountOfEdges" class="control-label"></label>
+                <input asp-for="AmountOfEdges" class="form-control" />
+                <span asp-validation-for="AmountOfEdges" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VitalityPerEdge" class="control-label"></label>
+                <input asp-for="VitalityPerEdge" class="form-control" />
+                <span asp-validation-for="VitalityPerEdge" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="CostPerHour" class="control-label"></label>
                 <input asp-for="CostPerHour" class="form-control" />
                 <span asp-validation-for="CostPerHour" class="text-danger"></span>
@@ -28,7 +43,7 @@
                 <span asp-validation-for="ToolMaterialId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Operation Types</label>
+                <label>Operation Types</label>
                 <div>
                     @foreach (var operationType in (MultiSelectList)ViewBag.OperationTypeIds)
                     {

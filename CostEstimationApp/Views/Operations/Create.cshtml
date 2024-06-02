@@ -50,7 +50,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="ToolId" class="control-label"></label>
-                <select asp-for="ToolId" class="form-control" asp-items="ViewBag.ToolId"></select>
+                <div id="toolContainer">
+                    <select asp-for="ToolId" class="form-control">
+                        <option value="">-- Wybierz narzędzie --</option>
+                    </select>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="CuttingLength" class="control-label"></label>
@@ -161,8 +165,26 @@
                 $.getJSON('/Operations/GetOperationTypesByFeature', { featureId: featureId }, function (data) {
                     var operationTypeSelect = $('#OperationTypeId');
                     operationTypeSelect.empty();
-                    $.each(data, function (index, item) {
+                    $.each(data.operationTypes, function (index, item) {
                         operationTypeSelect.append($('<option>', {
+                            value: item.id,
+                            text: item.name
+                        }));
+                    });
+
+                    var machineSelect = $('#MachineId');
+                    machineSelect.empty();
+                    $.each(data.machines, function (index, item) {
+                        machineSelect.append($('<option>', {
+                            value: item.id,
+                            text: item.name
+                        }));
+                    });
+
+                    var toolSelect = $('#ToolId');
+                    toolSelect.empty();
+                    $.each(data.tools, function (index, item) {
+                        toolSelect.append($('<option>', {
                             value: item.id,
                             text: item.name
                         }));
