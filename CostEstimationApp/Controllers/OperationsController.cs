@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -230,6 +231,10 @@ namespace CostEstimationApp.Controllers
 
                 _context.Add(operation);
                 await _context.SaveChangesAsync();
+
+                // Aktualizacja kosztów OperationSet
+                await UpdateOperationSetCosts(operation.OperationSetId);
+
                 return RedirectToAction(nameof(Index));
             }
             projectId = int.Parse(HttpContext.Session.GetString("SelectedProjectId"));
@@ -282,6 +287,25 @@ namespace CostEstimationApp.Controllers
                 machines = machines.Select(m => new { id = m.Id, name = m.Name }),
                 tools = tools.Select(t => new { id = t.Id, name = t.Name })
             });
+        }
+
+        // Metoda do aktualizacji kosztów OperationSet
+        private async Task UpdateOperationSetCosts(int operationSetId)
+        {
+            var operationSet = await _context.OperationSets
+                .Include(os => os.Operations)
+                .FirstOrDefaultAsync(os => os.Id == operationSetId);
+
+            if (operationSet != null)
+            {
+                operationSet.MachineCost = operationSet.Operations.Sum(o => o.MachineCost);
+                operationSet.ToolCost = operationSet.Operations.Sum(o => o.ToolCost);
+                operationSet.WorkerCost = operationSet.Operations.Sum(o => o.WorkerCost);
+                operationSet.TotalCost = operationSet.MachineCost + operationSet.ToolCost + operationSet.WorkerCost;
+
+                _context.Update(operationSet);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

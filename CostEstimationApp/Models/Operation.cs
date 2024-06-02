@@ -49,7 +49,7 @@ namespace CostEstimationApp.Models
         public MRR? MRR { get; set; }
 
         [ForeignKey("OperationSet")]
-        public int? OperationSetId { get; set; }
+        public int OperationSetId { get; set; }
         public OperationSet? OperationSet { get; set; }
 
         // Fields for CuttingOperation
