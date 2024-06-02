@@ -1,10 +1,10 @@
 ﻿@model CostEstimationApp.Models.Operation
 
 @{
-    ViewData["Title"] = "Operation Details";
+    ViewData["Title"] = "Details";
 }
 
-<h1>Operation Details</h1>
+<h1>Details</h1>
 
 <div>
     <h4>Operation</h4>
@@ -17,31 +17,31 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SemiFinishedProduct)
+            @Html.DisplayNameFor(model => model.SemiFinishedProductId)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SemiFinishedProduct.Id)
+            @Html.DisplayFor(model => model.SemiFinishedProductId)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Machine)
+            @Html.DisplayNameFor(model => model.Machine.Name)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Machine.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Tool)
+            @Html.DisplayNameFor(model => model.Tool.Name)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Tool.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Worker)
+            @Html.DisplayNameFor(model => model.Worker.LastName)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Worker.LastName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OperationType)
+            @Html.DisplayNameFor(model => model.OperationType.Name)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.OperationType.Name)

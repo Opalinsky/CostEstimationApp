@@ -11,125 +11,53 @@
     <h4>Operation</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SemiFinishedProduct)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SemiFinishedProduct.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Machine)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SemiFinishedProductId)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SemiFinishedProductId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Machine.Name)
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Machine.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Worker)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tool.Name)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Worker.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tool.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tool)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Worker.LastName)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tool.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Worker.LastName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OperationType)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OperationType.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.OperationType.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MRR)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalCost)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MRR.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CuttingLength)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CuttingLength)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CuttingWidth)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CuttingWidth)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CuttingDepth)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CuttingDepth)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DrillDiameter)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DrillDiameter)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DrillDepth)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DrillDepth)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LengthBeforeOperation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LengthBeforeOperation)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WidthBeforeOperation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WidthBeforeOperation)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HeightBeforeOperation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HeightBeforeOperation)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LengthAfterOperation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LengthAfterOperation)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WidthAfterOperation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WidthAfterOperation)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HeightAfterOperation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HeightAfterOperation)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VolumeToRemove)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VolumeToRemove)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MachiningTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MachiningTime)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalCost)
         </dd>
     </dl>
-    
-    <form asp-action="Delete">
+
+    <form asp-action="DeleteConfirmed">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index">Cancel</a>
     </form>
 </div>
