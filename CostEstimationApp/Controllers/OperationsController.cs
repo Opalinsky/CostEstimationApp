@@ -165,6 +165,19 @@ namespace CostEstimationApp.Controllers
                     return NotFound();
                 }
                 operation.OperationType = operationType;
+                var przedmiot = await _context.Przedmiots
+                .Where(p => p.ProjektId == projectId && p.FeatureId == operation.FeatureId)
+                .FirstOrDefaultAsync();
+
+                if (przedmiot == null)
+                {
+                    Console.WriteLine("Przedmiot not found!");
+                    return NotFound();
+                }
+                else
+                {
+                    Console.WriteLine($"Przedmiot found with FaceMillingDepth: {przedmiot.FaceMillingDepth}");
+                }
 
                 // Obliczenia dla typu operacji
                 if (operation.OperationType.Name == "Cutting")
@@ -196,8 +209,8 @@ namespace CostEstimationApp.Controllers
                 {
                     operation.LengthAfterOperation = operation.LengthBeforeOperation;
                     operation.WidthAfterOperation = operation.WidthBeforeOperation;
-                    operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.FaceMillingDepth.GetValueOrDefault();
-                    operation.VolumeToRemove = operation.LengthBeforeOperation * operation.WidthBeforeOperation * operation.FaceMillingDepth.GetValueOrDefault();
+                    operation.HeightAfterOperation = operation.HeightBeforeOperation - przedmiot.FaceMillingDepth.GetValueOrDefault(); 
+                    operation.VolumeToRemove = operation.LengthBeforeOperation * operation.WidthBeforeOperation * przedmiot.FaceMillingDepth.GetValueOrDefault();
                 }
                 else if (operation.OperationType.Name == "Finishing Milling")
                 {
