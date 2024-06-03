@@ -77,7 +77,7 @@ public class OperationSetsController : Controller
 
             // Calculate total cost
             var selectedOps = _context.Operations
-                .Include(o => o.Worker)
+                //.Include(o => o.Worker)
                 .Where(o => selectedOperations.Contains(o.Id))
                 .ToList();
 

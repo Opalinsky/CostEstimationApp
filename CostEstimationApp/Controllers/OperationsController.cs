@@ -33,8 +33,6 @@ namespace CostEstimationApp.Controllers
                 .Include(o => o.OperationType)
                 .Include(o => o.SemiFinishedProduct)
                 .Include(o => o.Tool)
-                .Include(o => o.Worker)
-                .Where(o => o.OperationSetId == selectedOperationSetId)
                 .ToListAsync();
 
             return View(operations);
@@ -66,7 +64,6 @@ namespace CostEstimationApp.Controllers
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name");
             ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id");
             ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id");
-            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id");
             ViewData["FeatureId"] = new SelectList(projectFeatures, "Id", "Name");
             return View();
         }
@@ -74,7 +71,7 @@ namespace CostEstimationApp.Controllers
         // POST: Operations/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,SemiFinishedProductId,MachineId,WorkerId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,PocketLength,PocketWidth,PocketDepth,DrillDiameter,DrillDepth,FaceMillingDepth,FinishingMillingDepth,FaceArea,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime,FeatureId")] Operation operation)
+        public async Task<IActionResult> Create([Bind("Id,Name,SemiFinishedProductId,MachineId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,PocketLength,PocketWidth,PocketDepth,DrillDiameter,DrillDepth,FaceMillingDepth,FinishingMillingDepth,FaceArea,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime,FeatureId")] Operation operation)
         {
             int? projectId = HttpContext.Session.GetInt32("SelectedProjectId");
             if (projectId == null)
@@ -195,13 +192,14 @@ namespace CostEstimationApp.Controllers
                 }
                 else if (operation.OperationType.Name == "Drilling")
                 {
-                    var radius = operation.DrillDiameter.GetValueOrDefault() / 2;
-                    operation.VolumeToRemove = (decimal)Math.PI * radius * radius * operation.DrillDepth.GetValueOrDefault();
+                    var radius = przedmiot.DrillDiameter.GetValueOrDefault() / 2; // operation.DrillDiameter.GetValueOrDefault()
+                    operation.VolumeToRemove = przedmiot.DrillApplicationCount.GetValueOrDefault() * (decimal)Math.PI * radius * radius * przedmiot.DrillDepth.GetValueOrDefault(); //operation.DrillDepth.GetValueOrDefault();
                     operation.LengthAfterOperation = operation.LengthBeforeOperation;
                     operation.WidthAfterOperation = operation.WidthBeforeOperation;
                     operation.HeightAfterOperation = operation.HeightBeforeOperation;
-                    operation.FaceArea = operation.FaceArea - (decimal)Math.PI * radius * radius;
+                    operation.FaceArea = operation.FaceArea - (decimal)Math.PI * przedmiot.DrillApplicationCount.GetValueOrDefault() * radius * radius;
                 }
+
                 else if (operation.OperationType.Name == "Pocket Milling")
                 {
                     operation.VolumeToRemove = operation.PocketLength.GetValueOrDefault() * operation.PocketWidth.GetValueOrDefault() * operation.PocketDepth.GetValueOrDefault();
@@ -229,13 +227,14 @@ namespace CostEstimationApp.Controllers
                 // Pobierz koszt maszyny, pracownika i narzędzia
                 var machine = await _context.Machines
                     .Include(m => m.MachineType) // Pobierz powiązany MachineType
+                    .Include(m => m.Worker) // Pobierz powiązanego operatora
                     .FirstOrDefaultAsync(m => m.Id == operation.MachineId);
-                if (machine == null || machine.MachineType == null)
+                if (machine == null || machine.MachineType == null || machine.Worker == null)
                 {
                     return NotFound();
                 }
 
-                var worker = await _context.Workers.FirstOrDefaultAsync(w => w.Id == operation.WorkerId);
+                var worker = machine.Worker; // Pobierz operatora powiązanego z maszyną
                 if (worker == null)
                 {
                     return NotFound();
@@ -245,7 +244,7 @@ namespace CostEstimationApp.Controllers
                 operation.MachineCost = (machine.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime);
                 operation.WorkerCost = (worker.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime + (decimal)machine.MachineType.AuxiliaryTime);
                 operation.ToolCost = tool.CostPerHour * operation.MachiningTime;
-
+                Console.WriteLine($"Worker Cost: {worker.CostPerHour}");
                 operation.TotalCost = operation.MachineCost + operation.WorkerCost + operation.ToolCost;
 
                 _context.Add(operation);
@@ -268,7 +267,6 @@ namespace CostEstimationApp.Controllers
             ViewData["OperationTypeId"] = new SelectList(_context.OperationTypes, "Id", "Name", operation.OperationTypeId);
             ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", operation.SemiFinishedProductId);
             ViewData["ToolId"] = new SelectList(_context.Tools, "Id", "Id", operation.ToolId);
-            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Id", operation.WorkerId);
             ViewData["FeatureId"] = new SelectList(projectFeatures, "Id", "Name", operation.FeatureId);
             return View(operation);
         }

@@ -56,7 +56,7 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,CostPerHour")] Worker worker)
+        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour")] Worker worker)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,CostPerHour")] Worker worker)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CostPerHour")] Worker worker)
         {
             if (id != worker.Id)
             {

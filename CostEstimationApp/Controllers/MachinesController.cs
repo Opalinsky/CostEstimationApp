@@ -22,7 +22,8 @@ namespace CostEstimationApp.Controllers
         {
             var applicationDbContext = _context.Machines
                 .Include(m => m.MachineType)
-                .Include(m => m.OperationTypes);
+                .Include(m => m.OperationTypes)
+                .Include(m => m.Worker);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -37,6 +38,7 @@ namespace CostEstimationApp.Controllers
             var machine = await _context.Machines
                 .Include(m => m.MachineType)
                 .Include(m => m.OperationTypes)
+                .Include(m => m.Worker)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (machine == null)
             {
@@ -50,6 +52,7 @@ namespace CostEstimationApp.Controllers
         public IActionResult Create()
         {
             ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof");
+            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Name");
             ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name");
             return View();
         }
@@ -57,7 +60,7 @@ namespace CostEstimationApp.Controllers
         // POST: Machines/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour,MachineTypeId")] Machine machine, int[] OperationTypeIds)
+        public async Task<IActionResult> Create([Bind("Id,Name,CostPerHour,MachineTypeId,WorkerId")] Machine machine, int[] OperationTypeIds)
         {
             if (ModelState.IsValid)
             {
@@ -78,6 +81,7 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof", machine.MachineTypeId);
+            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Name", machine.WorkerId);
             ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
             return View(machine);
         }
@@ -98,6 +102,7 @@ namespace CostEstimationApp.Controllers
                 return NotFound();
             }
             ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof", machine.MachineTypeId);
+            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Name", machine.WorkerId);
             ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", machine.OperationTypes.Select(ot => ot.Id));
             return View(machine);
         }
@@ -105,7 +110,7 @@ namespace CostEstimationApp.Controllers
         // POST: Machines/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CostPerHour,MachineTypeId")] Machine machine, int[] OperationTypeIds)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CostPerHour,MachineTypeId,WorkerId")] Machine machine, int[] OperationTypeIds)
         {
             if (id != machine.Id)
             {
@@ -159,6 +164,7 @@ namespace CostEstimationApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof", machine.MachineTypeId);
+            ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Name", machine.WorkerId);
             ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
             return View(machine);
         }

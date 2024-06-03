@@ -19,6 +19,11 @@ namespace CostEstimationApp.Models
         public int MachineTypeId { get; set; }
         public MachineType? MachineType { get; set; }
 
+        [Required(ErrorMessage = "Machine type is required.")]
+        [ForeignKey("WorkerId")]
+        public int WorkerId { get; set; }
+        public Worker? Worker { get; set; }
+
         public List<OperationType> OperationTypes { get; set; } = new List<OperationType>();
         public List<Operation> Operations { get; set; } = new List<Operation>();
 

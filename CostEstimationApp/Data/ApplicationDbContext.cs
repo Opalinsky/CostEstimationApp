@@ -148,7 +148,7 @@ namespace CostEstimationApp.Data
 
             //Jeden pracownik do wielu operacji 
             modelBuilder.Entity<Worker>()
-                .HasMany(a => a.Operation)
+                .HasMany(a => a.Machines)
                 .WithOne(o => o.Worker)
                 .HasForeignKey(o => o.WorkerId)
                 .OnDelete(DeleteBehavior.Restrict);

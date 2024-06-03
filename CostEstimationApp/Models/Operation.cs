@@ -28,11 +28,6 @@ namespace CostEstimationApp.Models
         public int FeatureId { get; set; }
         public Feature? Feature { get; set; }
 
-        [Required(ErrorMessage = "Worker type is required.")]
-        [ForeignKey("WorkerId")]
-        public int WorkerId { get; set; }
-        public Worker? Worker { get; set; }
-
         [Required(ErrorMessage = "Tool type is required.")]
         [ForeignKey("ToolId")]
         public int ToolId { get; set; }
