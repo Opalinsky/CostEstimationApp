@@ -33,6 +33,7 @@ namespace CostEstimationApp.Controllers
                 .Include(o => o.OperationType)
                 .Include(o => o.SemiFinishedProduct)
                 .Include(o => o.Tool)
+                .Where(o => o.OperationSetId == selectedOperationSetId)
                 .ToListAsync();
 
             return View(operations);
@@ -182,13 +183,12 @@ namespace CostEstimationApp.Controllers
                 }
 
                 // Obliczenia dla typu operacji
-                if (operation.OperationType.Name == "Cutting")
+                if (operation.OperationType.Name == "Slot Milling")
                 {
                     operation.LengthAfterOperation = operation.LengthBeforeOperation - operation.CuttingLength.GetValueOrDefault();
                     operation.WidthAfterOperation = operation.WidthBeforeOperation - operation.CuttingWidth.GetValueOrDefault();
                     operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.CuttingDepth.GetValueOrDefault();
                     operation.VolumeToRemove = operation.CuttingLength.GetValueOrDefault() * operation.CuttingWidth.GetValueOrDefault() * operation.CuttingDepth.GetValueOrDefault();
-                    operation.FaceArea = operation.FaceArea - operation.CuttingLength.GetValueOrDefault() * operation.CuttingWidth.GetValueOrDefault();
                 }
                 else if (operation.OperationType.Name == "Drilling")
                 {
@@ -202,11 +202,11 @@ namespace CostEstimationApp.Controllers
 
                 else if (operation.OperationType.Name == "Pocket Milling")
                 {
-                    operation.VolumeToRemove = operation.PocketLength.GetValueOrDefault() * operation.PocketWidth.GetValueOrDefault() * operation.PocketDepth.GetValueOrDefault();
+                    operation.VolumeToRemove = przedmiot.PocketLength.GetValueOrDefault() * przedmiot.PocketWidth.GetValueOrDefault() * przedmiot.PocketDepth.GetValueOrDefault();
                     operation.LengthAfterOperation = operation.LengthBeforeOperation;
                     operation.WidthAfterOperation = operation.WidthBeforeOperation;
                     operation.HeightAfterOperation = operation.HeightBeforeOperation;
-                    operation.FaceArea = operation.FaceArea - operation.PocketLength.GetValueOrDefault() * operation.PocketWidth.GetValueOrDefault();
+                    operation.FaceArea = operation.FaceArea - przedmiot.PocketLength.GetValueOrDefault() * przedmiot.PocketWidth.GetValueOrDefault();
                 }
                 else if (operation.OperationType.Name == "Face Milling")
                 {
@@ -219,7 +219,7 @@ namespace CostEstimationApp.Controllers
                 else if (operation.OperationType.Name == "Finishing Milling")
                 {
                     operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.FinishingMillingDepth.GetValueOrDefault();
-                    operation.VolumeToRemove = operation.FinishingMillingDepth.GetValueOrDefault() * operation.FaceArea;
+                    operation.VolumeToRemove = przedmiot.FinishingMillingDepth.GetValueOrDefault() * operation.FaceArea;
                 }
 
                 operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
@@ -239,11 +239,12 @@ namespace CostEstimationApp.Controllers
                 {
                     return NotFound();
                 }
+
                 // Użyj AdditionalTime z MachineType
                 operation.MachineCost = (machine.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime);
-                operation.WorkerCost = (worker.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime + (decimal)machine.MachineType.AuxiliaryTime) + ((worker.CostPerHour/3600) * (operation.SetUpTime ?? 0));
+                operation.WorkerCost = (worker.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime + (decimal)machine.MachineType.AuxiliaryTime) + (worker.CostPerHour * operation.SetUpTime.GetValueOrDefault());
                 operation.ToolCost = tool.CostPerHour * operation.MachiningTime;
-                Console.WriteLine($"Worker Cost: {operation.SetUpTime}");
+                Console.WriteLine($"Worker Cost: {worker.CostPerHour}");
                 operation.TotalCost = operation.MachineCost + operation.WorkerCost + operation.ToolCost;
 
                 _context.Add(operation);

@@ -15,7 +15,6 @@ public class Projekt
     public int SemiFinishedProductId { get; set; }
     public SemiFinishedProduct? SemiFinishedProduct { get; set; }
 
-    public decimal? TotalValue { get; set; }
     public List<OperationSet> OperationSets { get; set; } = new List<OperationSet>();
     public List<Operation> Operations { get; set; } = new List<Operation>();
 

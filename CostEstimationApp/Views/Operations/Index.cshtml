@@ -5,7 +5,9 @@
 }
 
 <h1>Operations Index</h1>
-
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -39,7 +41,7 @@
         }
     </tbody>
 </table>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
+</li>
+<li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="OperationSets" asp-action="Index">Powrót do listy operacji</a>
+</li>

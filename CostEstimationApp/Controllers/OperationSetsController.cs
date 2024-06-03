@@ -76,18 +76,7 @@ public class OperationSetsController : Controller
             }
 
             // Calculate total cost
-            var selectedOps = _context.Operations
-                //.Include(o => o.Worker)
-                .Where(o => selectedOperations.Contains(o.Id))
-                .ToList();
-
-            operationSet.MachineCost = selectedOps.Sum(o => o.MachineCost);
-            operationSet.ToolCost = selectedOps.Sum(o => o.ToolCost);
-            operationSet.WorkerCost = selectedOps.Sum(o => o.WorkerCost);
-            operationSet.TotalCost = operationSet.MachineCost + operationSet.ToolCost + operationSet.WorkerCost;
-
-            _context.Update(operationSet);
-            await _context.SaveChangesAsync();
+            await UpdateOperationSetCosts(operationSet.Id);
 
             return RedirectToAction(nameof(Index));
         }
@@ -114,5 +103,22 @@ public class OperationSetsController : Controller
         return RedirectToAction("Index", "Operations");
     }
 
-    // Other methods...
+    // Method to update OperationSet costs
+    private async Task UpdateOperationSetCosts(int operationSetId)
+    {
+        var operationSet = await _context.OperationSets
+            .Include(os => os.Operations)
+            .FirstOrDefaultAsync(os => os.Id == operationSetId);
+
+        if (operationSet != null)
+        {
+            operationSet.MachineCost = operationSet.Operations.Sum(o => o.MachineCost);
+            operationSet.ToolCost = operationSet.Operations.Sum(o => o.ToolCost);
+            operationSet.WorkerCost = operationSet.Operations.Sum(o => o.WorkerCost);
+            operationSet.TotalCost = operationSet.MachineCost + operationSet.ToolCost + operationSet.WorkerCost;
+
+            _context.Update(operationSet);
+            await _context.SaveChangesAsync();
+        }
+    }
 }

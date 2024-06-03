@@ -56,10 +56,16 @@ namespace CostEstimationApp.Controllers
         // POST: Tools/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,AmountOfEdges,VitalityPerEdge,CostPerHour,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,AmountOfEdges,VitalityPerEdge,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
         {
             if (ModelState.IsValid)
             {
+                // Obliczanie CostPerHour
+                if (tool.AmountOfEdges > 0 && tool.VitalityPerEdge > 0)
+                {
+                    tool.CostPerHour = tool.Price / (tool.AmountOfEdges * tool.VitalityPerEdge);
+                }
+
                 if (OperationTypeIds != null && OperationTypeIds.Length > 0)
                 {
                     foreach (var operationTypeId in OperationTypeIds)
@@ -104,7 +110,7 @@ namespace CostEstimationApp.Controllers
         // POST: Tools/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,AmountOfEdges,VitalityPerEdge,CostPerHour,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,AmountOfEdges,VitalityPerEdge,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
         {
             if (id != tool.Id)
             {
@@ -128,8 +134,13 @@ namespace CostEstimationApp.Controllers
                     toolToUpdate.Price = tool.Price;
                     toolToUpdate.AmountOfEdges = tool.AmountOfEdges;
                     toolToUpdate.VitalityPerEdge = tool.VitalityPerEdge;
-                    toolToUpdate.CostPerHour = tool.CostPerHour;
                     toolToUpdate.ToolMaterialId = tool.ToolMaterialId;
+
+                    // Obliczanie CostPerHour
+                    if (tool.AmountOfEdges > 0 && tool.VitalityPerEdge > 0)
+                    {
+                        toolToUpdate.CostPerHour = tool.Price / (tool.AmountOfEdges * tool.VitalityPerEdge);
+                    }
 
                     toolToUpdate.OperationTypes.Clear();
                     if (OperationTypeIds != null && OperationTypeIds.Length > 0)

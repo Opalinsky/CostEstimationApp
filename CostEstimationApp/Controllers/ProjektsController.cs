@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -35,16 +36,11 @@ namespace CostEstimationApp.Controllers
 
             var projekt = await _context.Projekts
                 .Include(p => p.SemiFinishedProduct)
-                .Include(p => p.OperationSets)
-                .ThenInclude(os => os.Operations)
-                .ThenInclude(o => o.SemiFinishedProduct)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (projekt == null)
             {
                 return NotFound();
             }
-
-            await CalculateTotalValue(projekt.Id);
 
             return View(projekt);
         }
@@ -65,9 +61,6 @@ namespace CostEstimationApp.Controllers
             {
                 _context.Add(projekt);
                 await _context.SaveChangesAsync();
-
-                await CalculateTotalValue(projekt.Id);
-
                 return RedirectToAction(nameof(Index));
             }
             ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", projekt.SemiFinishedProductId);
@@ -107,8 +100,6 @@ namespace CostEstimationApp.Controllers
                 {
                     _context.Update(projekt);
                     await _context.SaveChangesAsync();
-
-                    await CalculateTotalValue(projekt.Id);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -187,33 +178,6 @@ namespace CostEstimationApp.Controllers
 
             HttpContext.Session.SetInt32("SelectedProjectId", projekt.Id);
             return RedirectToAction("Index", "Przedmiots");
-        }
-
-        // Metoda obliczająca TotalValue
-        private async Task CalculateTotalValue(int projektId)
-        {
-            var projekt = await _context.Projekts
-                .Include(p => p.OperationSets)
-                .ThenInclude(os => os.Operations)
-                .ThenInclude(o => o.SemiFinishedProduct)
-                .FirstOrDefaultAsync(p => p.Id == projektId);
-
-            if (projekt == null) return;
-
-            decimal totalValue = 0;
-
-            foreach (var operationSet in projekt.OperationSets)
-            {
-                totalValue += operationSet.TotalCost;
-                foreach (var operation in operationSet.Operations)
-                {
-                    totalValue += operation.SemiFinishedProduct.Price * projekt.Quantity;
-                }
-            }
-
-            projekt.TotalValue = totalValue;
-            _context.Update(projekt);
-            await _context.SaveChangesAsync();
         }
     }
 }

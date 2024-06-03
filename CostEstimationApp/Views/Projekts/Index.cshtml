@@ -32,9 +32,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.SemiFinishedProduct)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalValue)
-            </th>
         </tr>
     </thead>
     <tbody>
@@ -48,9 +45,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SemiFinishedProduct.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalValue)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
