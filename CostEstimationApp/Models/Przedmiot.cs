@@ -22,7 +22,15 @@ public class Przedmiot
     [ForeignKey("FeatureId")]
     public int FeatureId { get; set; }
     public Feature? Feature { get; set; }
+    public decimal LengthBeforeOperation { get; set; }
+    public decimal WidthBeforeOperation { get; set; }
+    public decimal HeightBeforeOperation { get; set; }
 
+    public decimal LengthAfterOperation { get; set; }
+    public decimal WidthAfterOperation { get; set; }
+    public decimal HeightAfterOperation { get; set; }
+    
+    public  bool HasPreviousFeature { get; set; }
     // Pola opcjonalne dla cech
     //public decimal? CuttingLength { get; set; }
     //public decimal? CuttingWidth { get; set; }

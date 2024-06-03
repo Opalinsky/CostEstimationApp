@@ -88,6 +88,7 @@ namespace CostEstimationApp.Controllers
 
             if (ModelState.IsValid)
             {
+                
                 operation.ProjektId = projectId.Value;
                 operation.OperationSetId = selectedOperationSetId.Value;
 
@@ -132,9 +133,10 @@ namespace CostEstimationApp.Controllers
                 }
 
                 operation.MRRId = mrr.Id;
+               
 
                 // Pobierz wymiary z poprzedniej operacji, jeśli istnieje
-                var previousOperation = await _context.Operations
+                    var previousOperation = await _context.Operations
                     .Where(o => o.SemiFinishedProductId == operation.SemiFinishedProductId)
                     .OrderByDescending(o => o.Id)
                     .FirstOrDefaultAsync();
@@ -211,10 +213,12 @@ namespace CostEstimationApp.Controllers
                 else if (operation.OperationType.Name == "Face Milling")
                 {
                     Console.WriteLine($"FaceMillingDepth from przedmiot: {przedmiot.FaceMillingDepth}");
+                    operation.VolumeToRemove = operation.LengthBeforeOperation * operation.WidthBeforeOperation * przedmiot.FaceMillingDepth.GetValueOrDefault();
                     operation.LengthAfterOperation = operation.LengthBeforeOperation;
                     operation.WidthAfterOperation = operation.WidthBeforeOperation;
                     operation.HeightAfterOperation = operation.HeightBeforeOperation - przedmiot.FaceMillingDepth.GetValueOrDefault();
-                    operation.VolumeToRemove = operation.LengthBeforeOperation * operation.WidthBeforeOperation * przedmiot.FaceMillingDepth.GetValueOrDefault();
+                    
+
                 }
                 else if (operation.OperationType.Name == "Finishing Milling")
                 {
@@ -222,7 +226,17 @@ namespace CostEstimationApp.Controllers
                     operation.VolumeToRemove = przedmiot.FinishingMillingDepth.GetValueOrDefault() * operation.FaceArea;
                 }
 
+                Console.WriteLine($"length before: {operation.LengthBeforeOperation}");
+                Console.WriteLine($"length after: {operation.LengthAfterOperation}");
+                Console.WriteLine($"Width before: {operation.WidthBeforeOperation}");
+                Console.WriteLine($"Width after: {operation.WidthAfterOperation}");
+                Console.WriteLine($"Height before: {operation.HeightBeforeOperation}");
+                Console.WriteLine($"Height after: {operation.HeightAfterOperation}");
+                Console.WriteLine($"Volume to remove: {operation.VolumeToRemove}");
+
                 operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
+                Console.WriteLine($"MRR is2: {mrr.Rate}");
+                Console.WriteLine($"Machining time is: {operation.MachiningTime}");
 
                 // Pobierz koszt maszyny, pracownika i narzędzia
                 var machine = await _context.Machines
@@ -239,14 +253,22 @@ namespace CostEstimationApp.Controllers
                 {
                     return NotFound();
                 }
+                Console.WriteLine($"Worker Id is: {worker.Id}");
 
                 // Użyj AdditionalTime z MachineType
                 operation.MachineCost = (machine.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime);
-                operation.WorkerCost = (worker.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime + (decimal)machine.MachineType.AuxiliaryTime) + (worker.CostPerHour * operation.SetUpTime.GetValueOrDefault());
-                operation.ToolCost = tool.CostPerHour * operation.MachiningTime;
-                Console.WriteLine($"Worker Cost: {worker.CostPerHour}");
-                operation.TotalCost = operation.MachineCost + operation.WorkerCost + operation.ToolCost;
 
+                operation.WorkerCost = (worker.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime + (decimal)machine.MachineType.AuxiliaryTime) + (worker.CostPerHour * operation.SetUpTime.GetValueOrDefault());
+                
+                operation.ToolCost = tool.CostPerHour * operation.MachiningTime;
+                
+                Console.WriteLine($"Machine cost is: {operation.MachineCost}");
+                Console.WriteLine($"Worker cost is: {operation.WorkerCost}");
+                Console.WriteLine($"Tool cost is: {operation.ToolCost}");
+
+                operation.TotalCost = operation.MachineCost + operation.WorkerCost + operation.ToolCost;
+                Console.WriteLine($"Total cost is: {operation.TotalCost}");
+                
                 _context.Add(operation);
                 await _context.SaveChangesAsync();
 

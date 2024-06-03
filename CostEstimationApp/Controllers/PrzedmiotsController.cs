@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CostEstimationApp.Data;
 using CostEstimationApp.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Build.Evaluation;
 
 namespace CostEstimationApp.Controllers
 {
@@ -74,7 +75,7 @@ namespace CostEstimationApp.Controllers
         // POST: Przedmiots/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,FeatureId,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount")] Przedmiot przedmiot)
+        public async Task<IActionResult> Create([Bind("Id,Name,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount")] Przedmiot przedmiot)
         {
             int? selectedProjectId = HttpContext.Session.GetInt32("SelectedProjectId");
             if (selectedProjectId == null)
@@ -84,6 +85,87 @@ namespace CostEstimationApp.Controllers
 
             if (ModelState.IsValid)
             {
+                // Pobierz projekt wraz z półfabrykatem
+                var projekt = await _context.Projekts
+                    .Include(p => p.SemiFinishedProduct)
+                    .FirstOrDefaultAsync(p => p.Id == selectedProjectId);
+
+                if (projekt == null || projekt.SemiFinishedProduct == null)
+                {
+                    return NotFound("Projekt or SemiFinishedProduct not found.");
+                }
+
+                var semiFinishedProduct = projekt.SemiFinishedProduct;
+
+                // Pobierz wymiary z poprzedniej cechy (Feature), jeśli istnieje
+                var previousFeature = await _context.Przedmiots
+                    .Where(p => p.ProjektId == selectedProjectId && p.HasPreviousFeature)
+                    .OrderByDescending(p => p.Id)
+                    .FirstOrDefaultAsync();
+
+                if (previousFeature != null)
+                {
+                    przedmiot.LengthBeforeOperation = previousFeature.LengthAfterOperation;
+                    przedmiot.WidthBeforeOperation = previousFeature.WidthAfterOperation;
+                    przedmiot.HeightBeforeOperation = previousFeature.HeightAfterOperation;
+                }
+                else
+                {
+                    przedmiot.LengthBeforeOperation = semiFinishedProduct.DimensionX;
+                    przedmiot.WidthBeforeOperation = semiFinishedProduct.DimensionY;
+                    przedmiot.HeightBeforeOperation = semiFinishedProduct.DimensionZ;
+                }
+
+                // Aktualizacja wymiarów na podstawie typu operacji (Feature)
+                var feature = await _context.Features.FindAsync(przedmiot.FeatureId);
+                if (feature == null)
+                {
+                    return NotFound("Feature not found.");
+                }
+
+                switch (feature.Name)
+                {
+                    case "Wiercenie":
+                        // Wiercenie nie zmienia wymiarów zewnętrznych
+                        przedmiot.LengthAfterOperation = przedmiot.LengthBeforeOperation;
+                        przedmiot.WidthAfterOperation = przedmiot.WidthBeforeOperation;
+                        przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation;
+                        break;
+                    case "Frezowanie Czołowe":
+                        // Frezowanie powierzchni czołowej zmniejsza wysokość
+                        przedmiot.LengthAfterOperation = przedmiot.LengthBeforeOperation;
+                        przedmiot.WidthAfterOperation = przedmiot.WidthBeforeOperation;
+                        przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation - przedmiot.FaceMillingDepth.GetValueOrDefault();
+                        break;
+                    case "Pocket Milling":
+                        // Frezowanie kieszeni nie zmienia wymiarów zewnętrznych
+                        przedmiot.LengthAfterOperation = przedmiot.LengthBeforeOperation;
+                        przedmiot.WidthAfterOperation = przedmiot.WidthBeforeOperation;
+                        przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation;
+                        break;
+                    case "Slot Milling":
+                        // Frezowanie szczelin zmniejsza odpowiednie wymiary
+                        przedmiot.LengthAfterOperation = przedmiot.LengthBeforeOperation - przedmiot.PocketLength.GetValueOrDefault();
+                        przedmiot.WidthAfterOperation = przedmiot.WidthBeforeOperation - przedmiot.PocketWidth.GetValueOrDefault();
+                        przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation - przedmiot.PocketDepth.GetValueOrDefault();
+                        break;
+                    case "Frezowanie Czołowe Wykańczające":
+                        // Frezowanie wykończeniowe zmniejsza wysokość
+                        przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation - przedmiot.FinishingMillingDepth.GetValueOrDefault();
+                        break;
+                        // Dodaj inne typy operacji według potrzeb
+                }
+
+
+                Console.WriteLine($"Length Before: {przedmiot.LengthBeforeOperation}");
+                Console.WriteLine($"Length After: {przedmiot.LengthAfterOperation}");
+                Console.WriteLine($"Length Before: {przedmiot.WidthBeforeOperation}");
+                Console.WriteLine($"Length After: {przedmiot.WidthAfterOperation}");
+                Console.WriteLine($"Length Before: {przedmiot.HeightBeforeOperation}");
+                Console.WriteLine($"Length After: {przedmiot.HeightAfterOperation}");
+
+
+
                 przedmiot.ProjektId = selectedProjectId.Value;
                 _context.Add(przedmiot);
                 await _context.SaveChangesAsync();
@@ -116,7 +198,7 @@ namespace CostEstimationApp.Controllers
         // POST: Przedmiots/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ProjektId,FeatureId,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount")] Przedmiot przedmiot)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ProjektId,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount")] Przedmiot przedmiot)
         {
             if (id != przedmiot.Id)
             {
