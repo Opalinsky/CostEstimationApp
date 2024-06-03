@@ -71,7 +71,7 @@ namespace CostEstimationApp.Controllers
         // POST: Operations/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,SemiFinishedProductId,MachineId,ToolId,OperationTypeId,MRRId,CuttingLength,CuttingWidth,CuttingDepth,PocketLength,PocketWidth,PocketDepth,DrillDiameter,DrillDepth,FaceMillingDepth,FinishingMillingDepth,FaceArea,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime,FeatureId")] Operation operation)
+        public async Task<IActionResult> Create([Bind("Id,Name,SemiFinishedProductId,MachineId,ToolId,OperationTypeId,MRRId,SetUpTime,CuttingLength,CuttingWidth,CuttingDepth,PocketLength,PocketWidth,PocketDepth,DrillDiameter,DrillDepth,FaceMillingDepth,FinishingMillingDepth,FaceArea,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,VolumeToRemove,MachiningTime,FeatureId")] Operation operation)
         {
             int? projectId = HttpContext.Session.GetInt32("SelectedProjectId");
             if (projectId == null)
@@ -239,12 +239,11 @@ namespace CostEstimationApp.Controllers
                 {
                     return NotFound();
                 }
-
                 // Użyj AdditionalTime z MachineType
                 operation.MachineCost = (machine.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime);
-                operation.WorkerCost = (worker.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime + (decimal)machine.MachineType.AuxiliaryTime);
+                operation.WorkerCost = (worker.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime + (decimal)machine.MachineType.AuxiliaryTime) + ((worker.CostPerHour/3600) * (operation.SetUpTime ?? 0));
                 operation.ToolCost = tool.CostPerHour * operation.MachiningTime;
-                Console.WriteLine($"Worker Cost: {worker.CostPerHour}");
+                Console.WriteLine($"Worker Cost: {operation.SetUpTime}");
                 operation.TotalCost = operation.MachineCost + operation.WorkerCost + operation.ToolCost;
 
                 _context.Add(operation);

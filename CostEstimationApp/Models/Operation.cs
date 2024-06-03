@@ -47,6 +47,7 @@ namespace CostEstimationApp.Models
         public int OperationSetId { get; set; }
         public OperationSet? OperationSet { get; set; }
 
+        public decimal? SetUpTime  { get; set; }
         // Fields for CuttingOperation
         public decimal? CuttingLength { get; set; }
         public decimal? CuttingWidth { get; set; }

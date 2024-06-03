@@ -57,6 +57,11 @@
                 </div>
             </div>
             <div class="form-group">
+                <label asp-for="SetUpTime" class="control-label"></label>
+                <input asp-for="SetUpTime" class="form-control" />
+                <span asp-validation-for="SetUpTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="CuttingLength" class="control-label"></label>
                 <input asp-for="CuttingLength" class="form-control" />
                 <span asp-validation-for="CuttingLength" class="text-danger"></span>
