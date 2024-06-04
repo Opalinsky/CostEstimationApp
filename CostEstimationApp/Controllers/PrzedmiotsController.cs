@@ -75,7 +75,7 @@ namespace CostEstimationApp.Controllers
         // POST: Przedmiots/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount")] Przedmiot przedmiot)
+        public async Task<IActionResult> Create([Bind("Id,Name,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount,VolumeToRemove,VolumeToRemoveFinish")] Przedmiot przedmiot)
         {
             int? selectedProjectId = HttpContext.Session.GetInt32("SelectedProjectId");
             if (selectedProjectId == null)
@@ -127,15 +127,19 @@ namespace CostEstimationApp.Controllers
                 {
                     case "Wiercenie":
                         // Wiercenie nie zmienia wymiarów zewnętrznych
+                        var radius = przedmiot.DrillDiameter.GetValueOrDefault() / 2;
+                        przedmiot.VolumeToRemove = przedmiot.DrillApplicationCount.GetValueOrDefault() * (decimal)Math.PI * radius * radius * przedmiot.DrillDepth.GetValueOrDefault();
                         przedmiot.LengthAfterOperation = przedmiot.LengthBeforeOperation;
                         przedmiot.WidthAfterOperation = przedmiot.WidthBeforeOperation;
                         przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation;
                         break;
                     case "Frezowanie Czołowe":
                         // Frezowanie powierzchni czołowej zmniejsza wysokość
+                        przedmiot.VolumeToRemove = przedmiot.FaceMillingDepth.GetValueOrDefault() * przedmiot.LengthBeforeOperation * przedmiot.WidthBeforeOperation;
+                        przedmiot.VolumeToRemoveFinish = przedmiot.FinishingMillingDepth.GetValueOrDefault() * przedmiot.LengthBeforeOperation * przedmiot.WidthBeforeOperation;
                         przedmiot.LengthAfterOperation = przedmiot.LengthBeforeOperation;
                         przedmiot.WidthAfterOperation = przedmiot.WidthBeforeOperation;
-                        przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation - przedmiot.FaceMillingDepth.GetValueOrDefault();
+                        przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation - przedmiot.FaceMillingDepth.GetValueOrDefault() - przedmiot.FinishingMillingDepth.GetValueOrDefault();
                         break;
                     case "Pocket Milling":
                         // Frezowanie kieszeni nie zmienia wymiarów zewnętrznych
@@ -163,6 +167,8 @@ namespace CostEstimationApp.Controllers
                 Console.WriteLine($"Length After: {przedmiot.WidthAfterOperation}");
                 Console.WriteLine($"Length Before: {przedmiot.HeightBeforeOperation}");
                 Console.WriteLine($"Length After: {przedmiot.HeightAfterOperation}");
+                Console.WriteLine($"Volume to Remove: {przedmiot.VolumeToRemove}");
+                Console.WriteLine($"Volume to Remove: {przedmiot.VolumeToRemoveFinish}");
 
 
 
@@ -198,7 +204,7 @@ namespace CostEstimationApp.Controllers
         // POST: Przedmiots/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ProjektId,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount")] Przedmiot przedmiot)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ProjektId,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount,VolumeToRemove,VolumeToRemoveFinish")] Przedmiot przedmiot)
         {
             if (id != przedmiot.Id)
             {

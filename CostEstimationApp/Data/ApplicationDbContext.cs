@@ -27,6 +27,70 @@ namespace CostEstimationApp.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<MachineType>().HasData(
+               new MachineType
+               {
+                   Id = 1,
+                   Typeof = "Automatyczna",
+                   AdditionalTime = 0.2,
+                   AuxiliaryTime = 0.1
+               },
+               new MachineType
+               {
+                   Id = 2,
+                   Typeof = "Manualna",
+                   AdditionalTime = 0.1,
+                   AuxiliaryTime = 0.2
+               }
+           );
+            modelBuilder.Entity<Material>().HasData(
+                new Material
+                {
+                    Id = 1,
+                    Name = "Material1",
+                    PricePerKg = 8,
+                    Density = 0.1m
+                }
+            );
+            modelBuilder.Entity<ToolMaterial>().HasData(
+                new ToolMaterial
+                {
+                    Id = 1,
+                    Name = "Stal Szybkotnąca",
+                }
+            );
+            modelBuilder.Entity<Worker>().HasData(
+                new Worker
+                {
+                    Id = 1,
+                    Name = "Pracownika1",
+                    CostPerHour = 50,
+                }
+            );
+            modelBuilder.Entity<Feature>().HasData(
+                new Feature
+                {
+                    Id = 1,
+                    Name = "Frezowanie Czołowe",
+                },
+                new Feature
+                {
+                    Id = 2,
+                    Name = "Wiercenie",
+                }
+            );
+            modelBuilder.Entity<OperationType>().HasData(
+                new OperationType
+                {
+                    Id = 1,
+                    Name = "Face Milling",
+                },
+                new OperationType
+                {
+                    Id = 2,
+                    Name = "Finishing Milling",
+                }
+            );
 
             modelBuilder.Entity<OperationType>()
                 .HasMany(ot => ot.Machines)

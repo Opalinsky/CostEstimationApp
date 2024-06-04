@@ -212,18 +212,18 @@ namespace CostEstimationApp.Controllers
                 }
                 else if (operation.OperationType.Name == "Face Milling")
                 {
-                    Console.WriteLine($"FaceMillingDepth from przedmiot: {przedmiot.FaceMillingDepth}");
-                    operation.VolumeToRemove = operation.LengthBeforeOperation * operation.WidthBeforeOperation * przedmiot.FaceMillingDepth.GetValueOrDefault();
-                    operation.LengthAfterOperation = operation.LengthBeforeOperation;
-                    operation.WidthAfterOperation = operation.WidthBeforeOperation;
-                    operation.HeightAfterOperation = operation.HeightBeforeOperation - przedmiot.FaceMillingDepth.GetValueOrDefault();
-                    
+                    Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
+                    //operation.VolumeToRemove = operation.LengthBeforeOperation * operation.WidthBeforeOperation * przedmiot.FaceMillingDepth.GetValueOrDefault();
+                    //operation.LengthAfterOperation = operation.LengthBeforeOperation;
+                    //operation.WidthAfterOperation = operation.WidthBeforeOperation;
+                    //operation.HeightAfterOperation = operation.HeightBeforeOperation - przedmiot.FaceMillingDepth.GetValueOrDefault();
+                    operation.VolumeToRemove = przedmiot.VolumeToRemove;
 
                 }
                 else if (operation.OperationType.Name == "Finishing Milling")
                 {
-                    operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.FinishingMillingDepth.GetValueOrDefault();
-                    operation.VolumeToRemove = przedmiot.FinishingMillingDepth.GetValueOrDefault() * operation.FaceArea;
+                    //operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.FinishingMillingDepth.GetValueOrDefault();
+                    operation.VolumeToRemove = przedmiot.VolumeToRemoveFinish;
                 }
 
                 Console.WriteLine($"length before: {operation.LengthBeforeOperation}");

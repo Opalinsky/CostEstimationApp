@@ -12,11 +12,12 @@
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
-            <th>@Html.DisplayNameFor(model => model.SemiFinishedProduct)</th>
-            <th>@Html.DisplayNameFor(model => model.Machine)</th>
+@*          <th>@Html.DisplayNameFor(model => model.SemiFinishedProduct)</th>
+ *@         <th>@Html.DisplayNameFor(model => model.Machine)</th>
             <th>@Html.DisplayNameFor(model => model.Tool)</th>
             <th>@Html.DisplayNameFor(model => model.SetUpTime)</th>
             <th>@Html.DisplayNameFor(model => model.OperationType)</th>
+            <th>@Html.DisplayNameFor(model => model.MachiningTime)</th>
             <th>@Html.DisplayNameFor(model => model.TotalCost)</th>
             <th></th>
         </tr>
@@ -26,11 +27,12 @@
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.SemiFinishedProduct.Id)</td>
-                <td>@Html.DisplayFor(modelItem => item.Machine.Name)</td>
+@*                 <td>@Html.DisplayFor(modelItem => item.SemiFinishedProduct.Id)</td>
+ *@             <td>@Html.DisplayFor(modelItem => item.Machine.Name)</td>
                 <td>@Html.DisplayFor(modelItem => item.Tool.Name)</td>
                 <td>@Html.DisplayFor(modelItem => item.SetUpTime)</td>
                 <td>@Html.DisplayFor(modelItem => item.OperationType.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.MachiningTime)</td>
                 <td>@Html.DisplayFor(modelItem => item.TotalCost)</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -52,6 +52,9 @@ public class Przedmiot
     public decimal? WhichSurface { get; set; }
     public decimal? SlotApplicationCount { get; set; }
 
+    public decimal VolumeToRemove { get; set; }
+    public decimal VolumeToRemoveFinish { get; set; }
+
     //https://procestechnologiczny.com.pl/frezowanie-podstawy-podzial-definicje/
     //Opcje frezowania
 }

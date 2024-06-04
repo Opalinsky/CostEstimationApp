@@ -4,6 +4,7 @@ using CostEstimationApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CostEstimationApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240604185224_migracjaNowa")]
+    partial class migracjaNowa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,18 +39,6 @@ namespace CostEstimationApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Features");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Frezowanie Czołowe"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Wiercenie"
-                        });
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.FeatureOperationType", b =>
@@ -125,22 +115,6 @@ namespace CostEstimationApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MachineTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AdditionalTime = 0.20000000000000001,
-                            AuxiliaryTime = 0.10000000000000001,
-                            Typeof = "Automatyczna"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AdditionalTime = 0.10000000000000001,
-                            AuxiliaryTime = 0.20000000000000001,
-                            Typeof = "Manualna"
-                        });
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.Material", b =>
@@ -164,15 +138,6 @@ namespace CostEstimationApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Materials");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Density = 0.1m,
-                            Name = "Material1",
-                            PricePerKg = 8m
-                        });
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.MRR", b =>
@@ -385,18 +350,6 @@ namespace CostEstimationApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OperationTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Face Milling"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Finishing Milling"
-                        });
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.SemiFinishedProduct", b =>
@@ -481,13 +434,6 @@ namespace CostEstimationApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ToolMaterials");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Stal Szybkotnąca"
-                        });
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.Worker", b =>
@@ -508,14 +454,6 @@ namespace CostEstimationApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Workers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CostPerHour = 50m,
-                            Name = "Pracownika1"
-                        });
                 });
 
             modelBuilder.Entity("MachineOperationType", b =>
