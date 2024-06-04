@@ -328,6 +328,83 @@ namespace CostEstimationApp.Controllers
             });
         }
 
+    
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var operation = await _context.Operations
+                .Include(o => o.MRR)
+                .Include(o => o.Machine)
+                .Include(o => o.OperationType)
+                .Include(o => o.SemiFinishedProduct)
+                .Include(o => o.Tool)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (operation == null)
+            {
+                return NotFound();
+            }
+
+            return View(operation);
+        }
+        // GET: Operations/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var operation = await _context.Operations
+                .Include(o => o.MRR)
+                .Include(o => o.Machine)
+                .Include(o => o.OperationType)
+                .Include(o => o.SemiFinishedProduct)
+                .Include(o => o.Tool)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (operation == null)
+            {
+                return NotFound();
+            }
+
+            return View(operation);
+        }
+        
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            try
+            {
+                var operation = await _context.Operations.FindAsync(id);
+                if (operation == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Operations.Remove(operation);
+                await _context.SaveChangesAsync();
+
+                // Aktualizacja kosztów OperationSet po usunięciu operacji
+                await UpdateOperationSetCosts(operation.OperationSetId);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // Rekord został zmodyfikowany lub usunięty przez inny proces.
+                // Możesz dodać dodatkowe logowanie lub obsługę błędów tutaj.
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
 
         // Metoda do aktualizacji kosztów OperationSet
         private async Task UpdateOperationSetCosts(int operationSetId)
