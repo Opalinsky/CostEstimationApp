@@ -297,35 +297,37 @@ namespace CostEstimationApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetOperationTypesByFeature(int featureId)
         {
-            Console.WriteLine($"Received Feature ID: {featureId}");
-
             var operationTypes = await _context.FeatureOperationTypes
                 .Where(fot => fot.FeatureId == featureId)
                 .Select(fot => fot.OperationType)
                 .ToListAsync();
 
-            Console.WriteLine($"Operation Types Count: {operationTypes.Count}");
+            return Json(new
+            {
+                operationTypes = operationTypes.Select(ot => new { id = ot.Id, name = ot.Name })
+            });
+        }
 
-            var operationTypeIds = operationTypes.Select(ot => ot.Id).ToList();
 
+        // GET: Operations/GetMachinesAndToolsByOperationType
+        [HttpGet]
+        public async Task<IActionResult> GetMachinesAndToolsByOperationType(int operationTypeId)
+        {
             var machines = await _context.Machines
-                .Where(m => m.OperationTypes.Any(ot => operationTypeIds.Contains(ot.Id)))
+                .Where(m => m.OperationTypes.Any(ot => ot.Id == operationTypeId))
                 .ToListAsync();
 
             var tools = await _context.Tools
-                .Where(t => t.OperationTypes.Any(ot => operationTypeIds.Contains(ot.Id)))
+                .Where(t => t.OperationTypes.Any(ot => ot.Id == operationTypeId))
                 .ToListAsync();
-
-            Console.WriteLine($"Machines Count: {machines.Count}");
-            Console.WriteLine($"Tools Count: {tools.Count}");
 
             return Json(new
             {
-                operationTypes = operationTypes.Select(ot => new { id = ot.Id, name = ot.Name }),
                 machines = machines.Select(m => new { id = m.Id, name = m.Name }),
                 tools = tools.Select(t => new { id = t.Id, name = t.Name })
             });
         }
+
 
         // Metoda do aktualizacji kosztów OperationSet
         private async Task UpdateOperationSetCosts(int operationSetId)

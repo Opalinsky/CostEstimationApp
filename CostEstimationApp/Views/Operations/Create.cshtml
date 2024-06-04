@@ -37,6 +37,9 @@
                 </div>
             </div>
             <div class="form-group">
+                <button type="button" class="btn btn-primary" id="acceptOperationTypeButton">Zaakceptuj Operation Type</button>
+            </div>
+            <div class="form-group">
                 <label asp-for="MachineId" class="control-label">Machine</label>
                 <div id="machineContainer">
                     <select asp-for="MachineId" class="form-control">
@@ -163,6 +166,7 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
+
     <script>
         $(document).ready(function () {
             $('#acceptFeatureButton').click(function () {
@@ -176,7 +180,12 @@
                             text: item.name
                         }));
                     });
+                });
+            });
 
+            $('#acceptOperationTypeButton').click(function () {
+                var operationTypeId = $('#OperationTypeId').val();
+                $.getJSON('/Operations/GetMachinesAndToolsByOperationType', { operationTypeId: operationTypeId }, function (data) {
                     var machineSelect = $('#MachineId');
                     machineSelect.empty();
                     $.each(data.machines, function (index, item) {
@@ -198,4 +207,6 @@
             });
         });
     </script>
+
+
 }
