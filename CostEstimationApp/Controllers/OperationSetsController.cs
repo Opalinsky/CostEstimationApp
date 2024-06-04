@@ -102,6 +102,71 @@ public class OperationSetsController : Controller
         HttpContext.Session.SetInt32("SelectedOperationSetId", operationSet.Id);
         return RedirectToAction("Index", "Operations");
     }
+    // GET: OperationSets/Details/5
+    public async Task<IActionResult> Details(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var operationSet = await _context.OperationSets
+            .Include(os => os.Operations)
+            .Include(os => os.Projekt)
+            .FirstOrDefaultAsync(m => m.Id == id);
+        if (operationSet == null)
+        {
+            return NotFound();
+        }
+
+        return View(operationSet);
+    }
+    // GET: OperationSets/Delete/5
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var operationSet = await _context.OperationSets
+            .Include(os => os.Operations)
+            .Include(os => os.Projekt)
+            .FirstOrDefaultAsync(m => m.Id == id);
+        if (operationSet == null)
+        {
+            return NotFound();
+        }
+
+        return View(operationSet);
+    }
+
+    // POST: OperationSets/Delete/5
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var operationSet = await _context.OperationSets
+            .Include(os => os.Operations)
+            .FirstOrDefaultAsync(os => os.Id == id);
+
+        if (operationSet != null)
+        {
+            // Usuń powiązane operacje
+            var operations = operationSet.Operations.ToList();
+            foreach (var operation in operations)
+            {
+                _context.Operations.Remove(operation);
+            }
+
+            _context.OperationSets.Remove(operationSet);
+            await _context.SaveChangesAsync();
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+
+
 
     // Method to update OperationSet costs
     private async Task UpdateOperationSetCosts(int operationSetId)
