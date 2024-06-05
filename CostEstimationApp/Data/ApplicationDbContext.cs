@@ -91,6 +91,12 @@ namespace CostEstimationApp.Data
                     Name = "Finishing Milling",
                 }
             );
+            //// Relacja Operation -> Przedmiot
+            //modelBuilder.Entity<Operation>()
+            //    .HasOne(o => o.Przedmiot)
+            //    .WithMany(p => p.Operations)
+            //    .HasForeignKey(o => o.PrzedmiotId)
+            //    .OnDelete(DeleteBehavior.Restrict); // Tutaj dodajemy DeleteBehavior.Restrict
 
             modelBuilder.Entity<OperationType>()
                 .HasMany(ot => ot.Machines)

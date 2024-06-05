@@ -4,7 +4,7 @@
 
 namespace CostEstimationApp.Migrations
 {
-    public partial class Aktualizacja : Migration
+    public partial class Init2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

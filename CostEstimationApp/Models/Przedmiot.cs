@@ -55,6 +55,8 @@ public class Przedmiot
     public decimal VolumeToRemove { get; set; }
     public decimal VolumeToRemoveFinish { get; set; }
 
+    //public List<Operation> Operations { get; set; } = new List<Operation>();
+
     //https://procestechnologiczny.com.pl/frezowanie-podstawy-podzial-definicje/
     //Opcje frezowania
 }

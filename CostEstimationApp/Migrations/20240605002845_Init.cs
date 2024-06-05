@@ -4,7 +4,7 @@
 
 namespace CostEstimationApp.Migrations
 {
-    public partial class InitalMigration : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -83,34 +83,12 @@ namespace CostEstimationApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CostPerHour = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Workers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Machines",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CostPerHour = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    MachineTypeId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Machines", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Machines_MachineTypes_MachineTypeId",
-                        column: x => x.MachineTypeId,
-                        principalTable: "MachineTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -143,8 +121,8 @@ namespace CostEstimationApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FeatureId = table.Column<int>(type: "int", nullable: true),
-                    OperationTypeId = table.Column<int>(type: "int", nullable: true)
+                    FeatureId = table.Column<int>(type: "int", nullable: false),
+                    OperationTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -153,12 +131,14 @@ namespace CostEstimationApp.Migrations
                         name: "FK_FeatureOperationTypes_Features_FeatureId",
                         column: x => x.FeatureId,
                         principalTable: "Features",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FeatureOperationTypes_OperationTypes_OperationTypeId",
                         column: x => x.OperationTypeId,
                         principalTable: "OperationTypes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -213,27 +193,31 @@ namespace CostEstimationApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OperationTypeMachines",
+                name: "Machines",
                 columns: table => new
                 {
-                    MachinesId = table.Column<int>(type: "int", nullable: false),
-                    OperationTypesId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CostPerHour = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    MachineTypeId = table.Column<int>(type: "int", nullable: false),
+                    WorkerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OperationTypeMachines", x => new { x.MachinesId, x.OperationTypesId });
+                    table.PrimaryKey("PK_Machines", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OperationTypeMachines_Machines_MachinesId",
-                        column: x => x.MachinesId,
-                        principalTable: "Machines",
+                        name: "FK_Machines_MachineTypes_MachineTypeId",
+                        column: x => x.MachineTypeId,
+                        principalTable: "MachineTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_OperationTypeMachines_OperationTypes_OperationTypesId",
-                        column: x => x.OperationTypesId,
-                        principalTable: "OperationTypes",
+                        name: "FK_Machines_Workers_WorkerId",
+                        column: x => x.WorkerId,
+                        principalTable: "Workers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -282,6 +266,30 @@ namespace CostEstimationApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OperationTypeMachines",
+                columns: table => new
+                {
+                    MachinesId = table.Column<int>(type: "int", nullable: false),
+                    OperationTypesId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OperationTypeMachines", x => new { x.MachinesId, x.OperationTypesId });
+                    table.ForeignKey(
+                        name: "FK_OperationTypeMachines_Machines_MachinesId",
+                        column: x => x.MachinesId,
+                        principalTable: "Machines",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OperationTypeMachines_OperationTypes_OperationTypesId",
+                        column: x => x.OperationTypesId,
+                        principalTable: "OperationTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Przedmiots",
                 columns: table => new
                 {
@@ -290,6 +298,13 @@ namespace CostEstimationApp.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProjektId = table.Column<int>(type: "int", nullable: false),
                     FeatureId = table.Column<int>(type: "int", nullable: false),
+                    LengthBeforeOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    WidthBeforeOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    HeightBeforeOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    LengthAfterOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    WidthAfterOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    HeightAfterOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    HasPreviousFeature = table.Column<bool>(type: "bit", nullable: false),
                     DrillDiameter = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     DrillDepth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     DrillApplicationCount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
@@ -302,7 +317,9 @@ namespace CostEstimationApp.Migrations
                     AddFinishingOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     SlotHeight = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     WhichSurface = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    SlotApplicationCount = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                    SlotApplicationCount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    VolumeToRemove = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    VolumeToRemoveFinish = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -393,11 +410,11 @@ namespace CostEstimationApp.Migrations
                     MachineId = table.Column<int>(type: "int", nullable: false),
                     ProjektId = table.Column<int>(type: "int", nullable: false),
                     FeatureId = table.Column<int>(type: "int", nullable: false),
-                    WorkerId = table.Column<int>(type: "int", nullable: false),
                     ToolId = table.Column<int>(type: "int", nullable: false),
                     OperationTypeId = table.Column<int>(type: "int", nullable: false),
                     MRRId = table.Column<int>(type: "int", nullable: false),
-                    OperationSetId = table.Column<int>(type: "int", nullable: true),
+                    OperationSetId = table.Column<int>(type: "int", nullable: false),
+                    SetUpTime = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CuttingLength = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CuttingWidth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CuttingDepth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
@@ -460,7 +477,7 @@ namespace CostEstimationApp.Migrations
                         column: x => x.ProjektId,
                         principalTable: "Projekts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Operations_SemiFinishedProducts_SemiFinishedProductId",
                         column: x => x.SemiFinishedProductId,
@@ -473,13 +490,49 @@ namespace CostEstimationApp.Migrations
                         principalTable: "Tools",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Operations_Workers_WorkerId",
-                        column: x => x.WorkerId,
-                        principalTable: "Workers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Features",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Frezowanie Czołowe" },
+                    { 2, "Wiercenie" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MachineTypes",
+                columns: new[] { "Id", "AdditionalTime", "AuxiliaryTime", "Typeof" },
+                values: new object[,]
+                {
+                    { 1, 0.20000000000000001, 0.10000000000000001, "Automatyczna" },
+                    { 2, 0.10000000000000001, 0.20000000000000001, "Manualna" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Materials",
+                columns: new[] { "Id", "Density", "Name", "PricePerKg" },
+                values: new object[] { 1, 0.1m, "Material1", 8m });
+
+            migrationBuilder.InsertData(
+                table: "OperationTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Face Milling" },
+                    { 2, "Finishing Milling" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ToolMaterials",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "Stal Szybkotnąca" });
+
+            migrationBuilder.InsertData(
+                table: "Workers",
+                columns: new[] { "Id", "CostPerHour", "Name" },
+                values: new object[] { 1, 50m, "Pracownika1" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_FeatureOperationTypes_FeatureId",
@@ -495,6 +548,11 @@ namespace CostEstimationApp.Migrations
                 name: "IX_Machines_MachineTypeId",
                 table: "Machines",
                 column: "MachineTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Machines_WorkerId",
+                table: "Machines",
+                column: "WorkerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MRRs_MaterialId_ToolMaterialId",
@@ -546,11 +604,6 @@ namespace CostEstimationApp.Migrations
                 name: "IX_Operations_ToolId",
                 table: "Operations",
                 column: "ToolId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Operations_WorkerId",
-                table: "Operations",
-                column: "WorkerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OperationSets_ProcesId",

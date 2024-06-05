@@ -88,7 +88,7 @@ namespace CostEstimationApp.Controllers
 
             if (ModelState.IsValid)
             {
-                
+
                 operation.ProjektId = projectId.Value;
                 operation.OperationSetId = selectedOperationSetId.Value;
 
@@ -133,10 +133,9 @@ namespace CostEstimationApp.Controllers
                 }
 
                 operation.MRRId = mrr.Id;
-               
 
                 // Pobierz wymiary z poprzedniej operacji, jeśli istnieje
-                    var previousOperation = await _context.Operations
+                var previousOperation = await _context.Operations
                     .Where(o => o.SemiFinishedProductId == operation.SemiFinishedProductId)
                     .OrderByDescending(o => o.Id)
                     .FirstOrDefaultAsync();
@@ -259,16 +258,16 @@ namespace CostEstimationApp.Controllers
                 operation.MachineCost = (machine.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime);
 
                 operation.WorkerCost = (worker.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime + (decimal)machine.MachineType.AuxiliaryTime) + (worker.CostPerHour * operation.SetUpTime.GetValueOrDefault());
-                
+
                 operation.ToolCost = tool.CostPerHour * operation.MachiningTime;
-                
+
                 Console.WriteLine($"Machine cost is: {operation.MachineCost}");
                 Console.WriteLine($"Worker cost is: {operation.WorkerCost}");
                 Console.WriteLine($"Tool cost is: {operation.ToolCost}");
 
                 operation.TotalCost = operation.MachineCost + operation.WorkerCost + operation.ToolCost;
                 Console.WriteLine($"Total cost is: {operation.TotalCost}");
-                
+
                 _context.Add(operation);
                 await _context.SaveChangesAsync();
 
@@ -308,7 +307,6 @@ namespace CostEstimationApp.Controllers
             });
         }
 
-
         // GET: Operations/GetMachinesAndToolsByOperationType
         [HttpGet]
         public async Task<IActionResult> GetMachinesAndToolsByOperationType(int operationTypeId)
@@ -328,7 +326,7 @@ namespace CostEstimationApp.Controllers
             });
         }
 
-    
+        // GET: Operations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -351,6 +349,7 @@ namespace CostEstimationApp.Controllers
 
             return View(operation);
         }
+
         // GET: Operations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -374,7 +373,7 @@ namespace CostEstimationApp.Controllers
 
             return View(operation);
         }
-        
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -402,9 +401,6 @@ namespace CostEstimationApp.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-
-
 
         // Metoda do aktualizacji kosztów OperationSet
         private async Task UpdateOperationSetCosts(int operationSetId)

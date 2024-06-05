@@ -47,10 +47,6 @@
                     </select>
                 </div>
             </div>
-            @* <div class="form-group">
-                <label asp-for="WorkerId" class="control-label"></label>
-                <select asp-for="WorkerId" class="form-control" asp-items="ViewBag.WorkerId"></select>
-            </div> *@
             <div class="form-group">
                 <label asp-for="ToolId" class="control-label"></label>
                 <div id="toolContainer">
@@ -64,96 +60,6 @@
                 <input asp-for="SetUpTime" class="form-control" />
                 <span asp-validation-for="SetUpTime" class="text-danger"></span>
             </div>
-   @*          <div class="form-group">
-                <label asp-for="CuttingLength" class="control-label"></label>
-                <input asp-for="CuttingLength" class="form-control" />
-                <span asp-validation-for="CuttingLength" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CuttingWidth" class="control-label"></label>
-                <input asp-for="CuttingWidth" class="form-control" />
-                <span asp-validation-for="CuttingWidth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CuttingDepth" class="control-label"></label>
-                <input asp-for="CuttingDepth" class="form-control" />
-                <span asp-validation-for="CuttingDepth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DrillDiameter" class="control-label"></label>
-                <input asp-for="DrillDiameter" class="form-control" />
-                <span asp-validation-for="DrillDiameter" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DrillDepth" class="control-label"></label>
-                <input asp-for="DrillDepth" class="form-control" />
-                <span asp-validation-for="DrillDepth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PocketLength" class="control-label"></label>
-                <input asp-for="PocketLength" class="form-control" />
-                <span asp-validation-for="PocketLength" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PocketWidth" class="control-label"></label>
-                <input asp-for="PocketWidth" class="form-control" />
-                <span asp-validation-for="PocketWidth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PocketDepth" class="control-label"></label>
-                <input asp-for="PocketDepth" class="form-control" />
-                <span asp-validation-for="PocketDepth" class="text-danger"></span>
-            </div>
- *@            @*  <div class="form-group">
-            <label asp-for="FaceMillingDepth" class="control-label"></label>
-            <input asp-for="FaceMillingDepth" class="form-control" />
-            <span asp-validation-for="FaceMillingDepth" class="text-danger"></span>
-            </div> 
-            <div class="form-group">
-                <label asp-for="FinishingMillingDepth" class="control-label"></label>
-                <input asp-for="FinishingMillingDepth" class="form-control" />
-                <span asp-validation-for="FinishingMillingDepth" class="text-danger"></span>
-            </div>
-             <div class="form-group">
-            <label asp-for="LengthBeforeOperation" class="control-label"></label>
-            <input asp-for="LengthBeforeOperation" class="form-control" />
-            <span asp-validation-for="LengthBeforeOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-            <label asp-for="WidthBeforeOperation" class="control-label"></label>
-            <input asp-for="WidthBeforeOperation" class="form-control" />
-            <span asp-validation-for="WidthBeforeOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-            <label asp-for="HeightBeforeOperation" class="control-label"></label>
-            <input asp-for="HeightBeforeOperation" class="form-control" />
-            <span asp-validation-for="HeightBeforeOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-            <label asp-for="LengthAfterOperation" class="control-label"></label>
-            <input asp-for="LengthAfterOperation" class="form-control" />
-            <span asp-validation-for="LengthAfterOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-            <label asp-for="WidthAfterOperation" class="control-label"></label>
-            <input asp-for="WidthAfterOperation" class="form-control" />
-            <span asp-validation-for="WidthAfterOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-            <label asp-for="HeightAfterOperation" class="control-label"></label>
-            <input asp-for="HeightAfterOperation" class="form-control" />
-            <span asp-validation-for="HeightAfterOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-            <label asp-for="VolumeToRemove" class="control-label"></label>
-            <input asp-for="VolumeToRemove" class="form-control" />
-            <span asp-validation-for="VolumeToRemove" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-            <label asp-for="MachiningTime" class="control-label"></label>
-            <input asp-for="MachiningTime" class="form-control" />
-            <span asp-validation-for="MachiningTime" class="text-danger"></span>
-            </div> *@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -165,7 +71,6 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
 
     <script>
         $(document).ready(function () {
@@ -207,6 +112,4 @@
             });
         });
     </script>
-
-
 }
