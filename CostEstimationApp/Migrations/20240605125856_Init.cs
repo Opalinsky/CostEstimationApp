@@ -9,6 +9,19 @@ namespace CostEstimationApp.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AccuracyClasses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccuracyClasses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Features",
                 columns: table => new
                 {
@@ -62,6 +75,19 @@ namespace CostEstimationApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OperationTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SurfaceRoughnesses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SurfaceRoughnesses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -298,6 +324,8 @@ namespace CostEstimationApp.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProjektId = table.Column<int>(type: "int", nullable: false),
                     FeatureId = table.Column<int>(type: "int", nullable: false),
+                    AccuracyClassId = table.Column<int>(type: "int", nullable: false),
+                    SurfaceRoughnessId = table.Column<int>(type: "int", nullable: false),
                     LengthBeforeOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     WidthBeforeOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     HeightBeforeOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -325,6 +353,12 @@ namespace CostEstimationApp.Migrations
                 {
                     table.PrimaryKey("PK_Przedmiots", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Przedmiots_AccuracyClasses_AccuracyClassId",
+                        column: x => x.AccuracyClassId,
+                        principalTable: "AccuracyClasses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Przedmiots_Features_FeatureId",
                         column: x => x.FeatureId,
                         principalTable: "Features",
@@ -334,6 +368,12 @@ namespace CostEstimationApp.Migrations
                         name: "FK_Przedmiots_Projekts_ProjektId",
                         column: x => x.ProjektId,
                         principalTable: "Projekts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Przedmiots_SurfaceRoughnesses_SurfaceRoughnessId",
+                        column: x => x.SurfaceRoughnessId,
+                        principalTable: "SurfaceRoughnesses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -465,7 +505,7 @@ namespace CostEstimationApp.Migrations
                         column: x => x.OperationSetId,
                         principalTable: "OperationSets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Operations_OperationTypes_OperationTypeId",
                         column: x => x.OperationTypeId,
@@ -641,6 +681,11 @@ namespace CostEstimationApp.Migrations
                 column: "SemiFinishedProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Przedmiots_AccuracyClassId",
+                table: "Przedmiots",
+                column: "AccuracyClassId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Przedmiots_FeatureId",
                 table: "Przedmiots",
                 column: "FeatureId");
@@ -649,6 +694,11 @@ namespace CostEstimationApp.Migrations
                 name: "IX_Przedmiots_ProjektId",
                 table: "Przedmiots",
                 column: "ProjektId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Przedmiots_SurfaceRoughnessId",
+                table: "Przedmiots",
+                column: "SurfaceRoughnessId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SemiFinishedProducts_MaterialId",
@@ -706,10 +756,16 @@ namespace CostEstimationApp.Migrations
                 name: "Workers");
 
             migrationBuilder.DropTable(
+                name: "AccuracyClasses");
+
+            migrationBuilder.DropTable(
                 name: "Features");
 
             migrationBuilder.DropTable(
                 name: "Projekts");
+
+            migrationBuilder.DropTable(
+                name: "SurfaceRoughnesses");
 
             migrationBuilder.DropTable(
                 name: "SemiFinishedProducts");

@@ -23,7 +23,8 @@ namespace CostEstimationApp.Data
         public DbSet<Proces> Process { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<FeatureOperationType> FeatureOperationTypes { get; set; }
-
+        public DbSet<AccuracyClass> AccuracyClasses { get; set; }
+        public DbSet<SurfaceRoughness> SurfaceRoughnesses { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -97,6 +98,15 @@ namespace CostEstimationApp.Data
             //    .WithMany(p => p.Operations)
             //    .HasForeignKey(o => o.PrzedmiotId)
             //    .OnDelete(DeleteBehavior.Restrict); // Tutaj dodajemy DeleteBehavior.Restrict
+            modelBuilder.Entity<Przedmiot>()
+                .HasOne(p => p.AccuracyClass)
+                .WithMany(ac => ac.Przedmiots)
+                .HasForeignKey(p => p.AccuracyClassId);
+
+            modelBuilder.Entity<Przedmiot>()
+                .HasOne(p => p.SurfaceRoughness)
+                .WithMany(sr => sr.Przedmiots)
+                .HasForeignKey(p => p.SurfaceRoughnessId);
 
             modelBuilder.Entity<OperationType>()
                 .HasMany(ot => ot.Machines)
@@ -234,7 +244,7 @@ namespace CostEstimationApp.Data
                 .HasMany(a => a.Operations)
                 .WithOne(o => o.OperationSet)
                 .HasForeignKey(o => o.OperationSetId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

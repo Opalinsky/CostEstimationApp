@@ -29,6 +29,12 @@
                 @Html.DisplayNameFor(model => model.VolumeToRemoveFinish)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.AccuracyClass)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SurfaceRoughness)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DrillDiameter)
             </th>
             <th>
@@ -88,6 +94,12 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.VolumeToRemoveFinish)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccuracyClass.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SurfaceRoughness.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DrillDiameter)

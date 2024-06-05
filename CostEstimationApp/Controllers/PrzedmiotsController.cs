@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using CostEstimationApp.Data;
 using CostEstimationApp.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Build.Evaluation;
 
 namespace CostEstimationApp.Controllers
 {
@@ -33,6 +32,8 @@ namespace CostEstimationApp.Controllers
             var applicationDbContext = _context.Przedmiots
                 .Include(p => p.Feature)
                 .Include(p => p.Projekt)
+                .Include(p => p.AccuracyClass)
+                .Include(p => p.SurfaceRoughness)
                 .Where(p => p.ProjektId == selectedProjectId);
 
             return View(await applicationDbContext.ToListAsync());
@@ -49,6 +50,8 @@ namespace CostEstimationApp.Controllers
             var przedmiot = await _context.Przedmiots
                 .Include(p => p.Feature)
                 .Include(p => p.Projekt)
+                .Include(p => p.AccuracyClass)
+                .Include(p => p.SurfaceRoughness)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (przedmiot == null)
             {
@@ -69,13 +72,15 @@ namespace CostEstimationApp.Controllers
 
             ViewData["FeatureId"] = new SelectList(_context.Features, "Id", "Name");
             ViewData["ProjektId"] = new SelectList(_context.Projekts, "Id", "Id", selectedProjectId);
+            ViewData["AccuracyClassId"] = new SelectList(_context.AccuracyClasses, "Id", "Name");
+            ViewData["SurfaceRoughnessId"] = new SelectList(_context.SurfaceRoughnesses, "Id", "Name");
             return View();
         }
 
         // POST: Przedmiots/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount,VolumeToRemove,VolumeToRemoveFinish")] Przedmiot przedmiot)
+        public async Task<IActionResult> Create([Bind("Id,Name,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount,VolumeToRemove,VolumeToRemoveFinish,AccuracyClassId,SurfaceRoughnessId")] Przedmiot przedmiot)
         {
             int? selectedProjectId = HttpContext.Session.GetInt32("SelectedProjectId");
             if (selectedProjectId == null)
@@ -160,17 +165,14 @@ namespace CostEstimationApp.Controllers
                         // Dodaj inne typy operacji według potrzeb
                 }
 
-
                 Console.WriteLine($"Length Before: {przedmiot.LengthBeforeOperation}");
                 Console.WriteLine($"Length After: {przedmiot.LengthAfterOperation}");
-                Console.WriteLine($"Length Before: {przedmiot.WidthBeforeOperation}");
-                Console.WriteLine($"Length After: {przedmiot.WidthAfterOperation}");
-                Console.WriteLine($"Length Before: {przedmiot.HeightBeforeOperation}");
-                Console.WriteLine($"Length After: {przedmiot.HeightAfterOperation}");
+                Console.WriteLine($"Width Before: {przedmiot.WidthBeforeOperation}");
+                Console.WriteLine($"Width After: {przedmiot.WidthAfterOperation}");
+                Console.WriteLine($"Height Before: {przedmiot.HeightBeforeOperation}");
+                Console.WriteLine($"Height After: {przedmiot.HeightAfterOperation}");
                 Console.WriteLine($"Volume to Remove: {przedmiot.VolumeToRemove}");
-                Console.WriteLine($"Volume to Remove: {przedmiot.VolumeToRemoveFinish}");
-
-
+                Console.WriteLine($"Volume to Remove Finish: {przedmiot.VolumeToRemoveFinish}");
 
                 przedmiot.ProjektId = selectedProjectId.Value;
                 _context.Add(przedmiot);
@@ -180,6 +182,8 @@ namespace CostEstimationApp.Controllers
 
             ViewData["FeatureId"] = new SelectList(_context.Features, "Id", "Name", przedmiot.FeatureId);
             ViewData["ProjektId"] = new SelectList(_context.Projekts, "Id", "Id", przedmiot.ProjektId);
+            ViewData["AccuracyClassId"] = new SelectList(_context.AccuracyClasses, "Id", "Name", przedmiot.AccuracyClassId);
+            ViewData["SurfaceRoughnessId"] = new SelectList(_context.SurfaceRoughnesses, "Id", "Name", przedmiot.SurfaceRoughnessId);
             return View(przedmiot);
         }
 
@@ -198,13 +202,15 @@ namespace CostEstimationApp.Controllers
             }
             ViewData["FeatureId"] = new SelectList(_context.Features, "Id", "Name", przedmiot.FeatureId);
             ViewData["ProjektId"] = new SelectList(_context.Projekts, "Id", "Id", przedmiot.ProjektId);
+            ViewData["AccuracyClassId"] = new SelectList(_context.AccuracyClasses, "Id", "Name", przedmiot.AccuracyClassId);
+            ViewData["SurfaceRoughnessId"] = new SelectList(_context.SurfaceRoughnesses, "Id", "Name", przedmiot.SurfaceRoughnessId);
             return View(przedmiot);
         }
 
         // POST: Przedmiots/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ProjektId,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount,VolumeToRemove,VolumeToRemoveFinish")] Przedmiot przedmiot)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ProjektId,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount,VolumeToRemove,VolumeToRemoveFinish,AccuracyClassId,SurfaceRoughnessId")] Przedmiot przedmiot)
         {
             if (id != przedmiot.Id)
             {
@@ -233,6 +239,8 @@ namespace CostEstimationApp.Controllers
             }
             ViewData["FeatureId"] = new SelectList(_context.Features, "Id", "Name", przedmiot.FeatureId);
             ViewData["ProjektId"] = new SelectList(_context.Projekts, "Id", "Id", przedmiot.ProjektId);
+            ViewData["AccuracyClassId"] = new SelectList(_context.AccuracyClasses, "Id", "Name", przedmiot.AccuracyClassId);
+            ViewData["SurfaceRoughnessId"] = new SelectList(_context.SurfaceRoughnesses, "Id", "Name", przedmiot.SurfaceRoughnessId);
             return View(przedmiot);
         }
 
@@ -247,6 +255,8 @@ namespace CostEstimationApp.Controllers
             var przedmiot = await _context.Przedmiots
                 .Include(p => p.Feature)
                 .Include(p => p.Projekt)
+                .Include(p => p.AccuracyClass)
+                .Include(p => p.SurfaceRoughness)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (przedmiot == null)
             {
@@ -263,7 +273,7 @@ namespace CostEstimationApp.Controllers
         {
             if (_context.Przedmiots == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Przedmiots'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Przedmiots' is null.");
             }
             var przedmiot = await _context.Przedmiots.FindAsync(id);
             if (przedmiot != null)

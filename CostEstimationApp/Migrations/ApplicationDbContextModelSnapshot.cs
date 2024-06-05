@@ -22,6 +22,23 @@ namespace CostEstimationApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("CostEstimationApp.Models.AccuracyClass", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccuracyClasses");
+                });
+
             modelBuilder.Entity("CostEstimationApp.Models.Feature", b =>
                 {
                     b.Property<int>("Id")
@@ -432,6 +449,23 @@ namespace CostEstimationApp.Migrations
                     b.ToTable("SemiFinishedProducts");
                 });
 
+            modelBuilder.Entity("CostEstimationApp.Models.SurfaceRoughness", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SurfaceRoughnesses");
+                });
+
             modelBuilder.Entity("CostEstimationApp.Models.Tool", b =>
                 {
                     b.Property<int>("Id")
@@ -623,6 +657,9 @@ namespace CostEstimationApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AccuracyClassId")
+                        .HasColumnType("int");
+
                     b.Property<decimal?>("AddFinishingMilling")
                         .HasColumnType("decimal(18,2)");
 
@@ -684,6 +721,9 @@ namespace CostEstimationApp.Migrations
                     b.Property<decimal?>("SlotHeight")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("SurfaceRoughnessId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("VolumeToRemove")
                         .HasColumnType("decimal(18,2)");
 
@@ -701,9 +741,13 @@ namespace CostEstimationApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccuracyClassId");
+
                     b.HasIndex("FeatureId");
 
                     b.HasIndex("ProjektId");
+
+                    b.HasIndex("SurfaceRoughnessId");
 
                     b.ToTable("Przedmiots");
                 });
@@ -788,7 +832,7 @@ namespace CostEstimationApp.Migrations
                     b.HasOne("CostEstimationApp.Models.OperationSet", "OperationSet")
                         .WithMany("Operations")
                         .HasForeignKey("OperationSetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CostEstimationApp.Models.OperationType", "OperationType")
@@ -927,6 +971,12 @@ namespace CostEstimationApp.Migrations
 
             modelBuilder.Entity("Przedmiot", b =>
                 {
+                    b.HasOne("CostEstimationApp.Models.AccuracyClass", "AccuracyClass")
+                        .WithMany("Przedmiots")
+                        .HasForeignKey("AccuracyClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CostEstimationApp.Models.Feature", "Feature")
                         .WithMany("Przedmiots")
                         .HasForeignKey("FeatureId")
@@ -939,9 +989,24 @@ namespace CostEstimationApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CostEstimationApp.Models.SurfaceRoughness", "SurfaceRoughness")
+                        .WithMany("Przedmiots")
+                        .HasForeignKey("SurfaceRoughnessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AccuracyClass");
+
                     b.Navigation("Feature");
 
                     b.Navigation("Projekt");
+
+                    b.Navigation("SurfaceRoughness");
+                });
+
+            modelBuilder.Entity("CostEstimationApp.Models.AccuracyClass", b =>
+                {
+                    b.Navigation("Przedmiots");
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.Feature", b =>
@@ -992,6 +1057,11 @@ namespace CostEstimationApp.Migrations
                     b.Navigation("Operation");
 
                     b.Navigation("Projekts");
+                });
+
+            modelBuilder.Entity("CostEstimationApp.Models.SurfaceRoughness", b =>
+                {
+                    b.Navigation("Przedmiots");
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.Tool", b =>

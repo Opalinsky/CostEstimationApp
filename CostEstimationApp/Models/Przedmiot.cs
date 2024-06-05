@@ -13,8 +13,8 @@ public class Przedmiot
     public int ProjektId { get; set; }
     public Projekt? Projekt { get; set; }
     public List<Proces> Process { get; set; } = new List<Proces>();
+    
     //public List<OperationType> OperationTypes { get; set; } = new List<OperationType>();
-
     // Define the relationship between Przedmiot and Feature
     //public List<Feature> Features { get; set; } = new List<Feature>();
 
@@ -22,6 +22,15 @@ public class Przedmiot
     [ForeignKey("FeatureId")]
     public int FeatureId { get; set; }
     public Feature? Feature { get; set; }
+    
+    [ForeignKey("AccuracyClassId")]
+    public int AccuracyClassId { get; set; }
+    public AccuracyClass? AccuracyClass { get; set; }
+
+    [ForeignKey("SurfaceRoughnessId")]
+    public int SurfaceRoughnessId { get; set; }
+    public SurfaceRoughness? SurfaceRoughness { get; set; }
+
     public decimal LengthBeforeOperation { get; set; }
     public decimal WidthBeforeOperation { get; set; }
     public decimal HeightBeforeOperation { get; set; }
