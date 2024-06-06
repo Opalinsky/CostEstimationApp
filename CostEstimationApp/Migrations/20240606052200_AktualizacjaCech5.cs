@@ -4,12 +4,12 @@
 
 namespace CostEstimationApp.Migrations
 {
-    public partial class Init : Migration
+    public partial class AktualizacjaCech5 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AccuracyClasses",
+                name: "AccuracyClass",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -18,7 +18,7 @@ namespace CostEstimationApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccuracyClasses", x => x.Id);
+                    table.PrimaryKey("PK_AccuracyClass", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,6 +32,32 @@ namespace CostEstimationApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Features", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FinishingAccuracyClass",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FinishingAccuracyClass", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FinishingSurfaceRoughness",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FinishingSurfaceRoughness", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -78,7 +104,7 @@ namespace CostEstimationApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SurfaceRoughnesses",
+                name: "SurfaceRoughness",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -87,7 +113,7 @@ namespace CostEstimationApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SurfaceRoughnesses", x => x.Id);
+                    table.PrimaryKey("PK_SurfaceRoughness", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -326,6 +352,8 @@ namespace CostEstimationApp.Migrations
                     FeatureId = table.Column<int>(type: "int", nullable: false),
                     AccuracyClassId = table.Column<int>(type: "int", nullable: false),
                     SurfaceRoughnessId = table.Column<int>(type: "int", nullable: false),
+                    FinishingAccuracyClassId = table.Column<int>(type: "int", nullable: false),
+                    FinishingSurfaceRoughnessId = table.Column<int>(type: "int", nullable: false),
                     LengthBeforeOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     WidthBeforeOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     HeightBeforeOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -336,16 +364,20 @@ namespace CostEstimationApp.Migrations
                     DrillDiameter = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     DrillDepth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     DrillApplicationCount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ReamingDiameter = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ReamingDepth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     FaceMillingDepth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     FinishingMillingDepth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    AddFinishingMilling = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     PocketLength = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     PocketWidth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     PocketDepth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     AddFinishingOperation = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     SlotHeight = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    WhichSurface = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    SlotPlane = table.Column<bool>(type: "bit", nullable: true),
                     SlotApplicationCount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    StepHeight = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    StepWidth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    StepPlane = table.Column<bool>(type: "bit", nullable: true),
                     VolumeToRemove = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     VolumeToRemoveFinish = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
@@ -353,9 +385,9 @@ namespace CostEstimationApp.Migrations
                 {
                     table.PrimaryKey("PK_Przedmiots", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Przedmiots_AccuracyClasses_AccuracyClassId",
+                        name: "FK_Przedmiots_AccuracyClass_AccuracyClassId",
                         column: x => x.AccuracyClassId,
-                        principalTable: "AccuracyClasses",
+                        principalTable: "AccuracyClass",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -365,15 +397,27 @@ namespace CostEstimationApp.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Przedmiots_FinishingAccuracyClass_FinishingAccuracyClassId",
+                        column: x => x.FinishingAccuracyClassId,
+                        principalTable: "FinishingAccuracyClass",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Przedmiots_FinishingSurfaceRoughness_FinishingSurfaceRoughnessId",
+                        column: x => x.FinishingSurfaceRoughnessId,
+                        principalTable: "FinishingSurfaceRoughness",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Przedmiots_Projekts_ProjektId",
                         column: x => x.ProjektId,
                         principalTable: "Projekts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Przedmiots_SurfaceRoughnesses_SurfaceRoughnessId",
+                        name: "FK_Przedmiots_SurfaceRoughness_SurfaceRoughnessId",
                         column: x => x.SurfaceRoughnessId,
-                        principalTable: "SurfaceRoughnesses",
+                        principalTable: "SurfaceRoughness",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -533,12 +577,45 @@ namespace CostEstimationApp.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AccuracyClass",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "IT12" },
+                    { 2, "IT13" },
+                    { 3, "IT14" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Features",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Frezowanie Czołowe" },
-                    { 2, "Wiercenie" }
+                    { 1, "Płaszczyzna Górna" },
+                    { 2, "Otwór" },
+                    { 3, "Kieszeń Zamknięta" },
+                    { 4, "Rowek Przelotowy" },
+                    { 5, "Uskok" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "FinishingAccuracyClass",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "IT5" },
+                    { 2, "IT6" },
+                    { 3, "IT7" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "FinishingSurfaceRoughness",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "N4" },
+                    { 2, "N5" },
+                    { 3, "N6" }
                 });
 
             migrationBuilder.InsertData(
@@ -560,8 +637,24 @@ namespace CostEstimationApp.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Face Milling" },
-                    { 2, "Finishing Milling" }
+                    { 1, "Frezowanie Zgrubne Płaszczyzny Górnej" },
+                    { 2, "Frezowanie Wykańczające Płaszczyzny" },
+                    { 3, "Wiercenie" },
+                    { 4, "Rozwiercanie" },
+                    { 5, "Frezowanie Zgrubne Kieszeni" },
+                    { 6, "Frezowanie Wykańczające Kieszeni" },
+                    { 7, "Frezowanie Rowka" },
+                    { 8, "Frezowanie Uskoku" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "SurfaceRoughness",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "N10" },
+                    { 2, "N11" },
+                    { 3, "N12" }
                 });
 
             migrationBuilder.InsertData(
@@ -691,6 +784,16 @@ namespace CostEstimationApp.Migrations
                 column: "FeatureId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Przedmiots_FinishingAccuracyClassId",
+                table: "Przedmiots",
+                column: "FinishingAccuracyClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Przedmiots_FinishingSurfaceRoughnessId",
+                table: "Przedmiots",
+                column: "FinishingSurfaceRoughnessId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Przedmiots_ProjektId",
                 table: "Przedmiots",
                 column: "ProjektId");
@@ -756,16 +859,22 @@ namespace CostEstimationApp.Migrations
                 name: "Workers");
 
             migrationBuilder.DropTable(
-                name: "AccuracyClasses");
+                name: "AccuracyClass");
 
             migrationBuilder.DropTable(
                 name: "Features");
 
             migrationBuilder.DropTable(
+                name: "FinishingAccuracyClass");
+
+            migrationBuilder.DropTable(
+                name: "FinishingSurfaceRoughness");
+
+            migrationBuilder.DropTable(
                 name: "Projekts");
 
             migrationBuilder.DropTable(
-                name: "SurfaceRoughnesses");
+                name: "SurfaceRoughness");
 
             migrationBuilder.DropTable(
                 name: "SemiFinishedProducts");

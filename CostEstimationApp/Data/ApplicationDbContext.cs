@@ -25,6 +25,10 @@ namespace CostEstimationApp.Data
         public DbSet<FeatureOperationType> FeatureOperationTypes { get; set; }
         public DbSet<AccuracyClass> AccuracyClasses { get; set; }
         public DbSet<SurfaceRoughness> SurfaceRoughnesses { get; set; }
+        public DbSet<AccuracyClass> FinishingAccuracyClasses { get; set; }
+        public DbSet<SurfaceRoughness> FinishingSurfaceRoughnesses { get; set; }
+        public DbSet<CostEstimationApp.Models.FinishingAccuracyClass>? FinishingAccuracyClass { get; set; }
+        public DbSet<CostEstimationApp.Models.FinishingSurfaceRoughness>? FinishingSurfaceRoughness { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -68,28 +72,144 @@ namespace CostEstimationApp.Data
                     CostPerHour = 50,
                 }
             );
-            modelBuilder.Entity<Feature>().HasData(
-                new Feature
-                {
-                    Id = 1,
-                    Name = "Frezowanie Czołowe",
-                },
-                new Feature
-                {
-                    Id = 2,
-                    Name = "Wiercenie",
-                }
-            );
             modelBuilder.Entity<OperationType>().HasData(
                 new OperationType
                 {
                     Id = 1,
-                    Name = "Face Milling",
+                    Name = "Frezowanie Zgrubne Płaszczyzny Górnej",
                 },
                 new OperationType
                 {
                     Id = 2,
-                    Name = "Finishing Milling",
+                    Name = "Frezowanie Wykańczające Płaszczyzny",
+                },
+                new OperationType
+                {
+                    Id = 3,
+                    Name = "Wiercenie",
+                },
+                new OperationType
+                {
+                    Id = 4,
+                    Name = "Rozwiercanie",
+                },
+                new OperationType
+                {
+                    Id = 5,
+                    Name = "Frezowanie Zgrubne Kieszeni",
+                },
+                new OperationType
+                {
+                    Id = 6,
+                    Name = "Frezowanie Wykańczające Kieszeni",
+                },
+                new OperationType
+                {
+                    Id = 7,
+                    Name = "Frezowanie Rowka",
+                },
+                new OperationType
+                {
+                    Id = 8,
+                    Name = "Frezowanie Uskoku",
+                }
+            );
+
+            modelBuilder.Entity<AccuracyClass>().HasData(
+                new AccuracyClass
+                {
+                    Id = 1,
+                    Name = "IT12",
+                },
+                new AccuracyClass
+                {
+                    Id = 2,
+                    Name = "IT13",
+                },
+                new AccuracyClass
+                {
+                    Id = 3,
+                    Name = "IT14",
+                }
+            );
+           
+            modelBuilder.Entity<FinishingAccuracyClass>().HasData(
+               new FinishingAccuracyClass
+               {
+                   Id = 1,
+                   Name = "IT5",
+               },
+               new FinishingAccuracyClass
+               {
+                   Id = 2,
+                   Name = "IT6",
+               },
+               new FinishingAccuracyClass
+               {
+                   Id = 3,
+                   Name = "IT7",
+               }
+            );
+            
+            modelBuilder.Entity<SurfaceRoughness>().HasData(
+               new SurfaceRoughness
+               {
+                   Id = 1,
+                   Name = "N10",
+               },
+               new SurfaceRoughness
+               {
+                   Id = 2,
+                   Name = "N11",
+               },
+               new SurfaceRoughness
+               {
+                   Id = 3,
+                   Name = "N12",
+               }
+           );
+            modelBuilder.Entity<FinishingSurfaceRoughness>().HasData(
+               new FinishingSurfaceRoughness
+               {
+                   Id = 1,
+                   Name = "N4",
+               },
+               new FinishingSurfaceRoughness
+               {
+                   Id = 2,
+                   Name = "N5",
+               },
+               new FinishingSurfaceRoughness
+               {
+                   Id = 3,
+                   Name = "N6",
+               }
+           );
+            modelBuilder.Entity<Feature>().HasData(
+                new Feature
+                {
+                    Id = 1,
+                    Name = "Płaszczyzna Górna",
+                },
+                new Feature
+                {
+                    Id = 2,
+                    Name = "Otwór",
+                },
+                new Feature
+                {
+                    Id = 3,
+                    Name = "Kieszeń Zamknięta",
+                },
+                 new Feature
+                 {
+                     Id = 4,
+                     Name = "Rowek Przelotowy",
+                 },
+                new Feature
+                {
+                    Id = 5,
+                    Name = "Uskok",
                 }
             );
             //// Relacja Operation -> Przedmiot
@@ -107,6 +227,16 @@ namespace CostEstimationApp.Data
                 .HasOne(p => p.SurfaceRoughness)
                 .WithMany(sr => sr.Przedmiots)
                 .HasForeignKey(p => p.SurfaceRoughnessId);
+            
+            modelBuilder.Entity<Przedmiot>()
+               .HasOne(p => p.FinishingAccuracyClass)
+               .WithMany(ac => ac.Przedmiots)
+               .HasForeignKey(p => p.FinishingAccuracyClassId);
+
+            modelBuilder.Entity<Przedmiot>()
+                .HasOne(p => p.FinishingSurfaceRoughness)
+                .WithMany(sr => sr.Przedmiots)
+                .HasForeignKey(p => p.FinishingSurfaceRoughnessId);
 
             modelBuilder.Entity<OperationType>()
                 .HasMany(ot => ot.Machines)
@@ -246,5 +376,6 @@ namespace CostEstimationApp.Data
                 .HasForeignKey(o => o.OperationSetId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
+        
     }
 }

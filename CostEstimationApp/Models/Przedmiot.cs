@@ -30,7 +30,14 @@ public class Przedmiot
     [ForeignKey("SurfaceRoughnessId")]
     public int SurfaceRoughnessId { get; set; }
     public SurfaceRoughness? SurfaceRoughness { get; set; }
+    
+    [ForeignKey("FinishingAccuracyClassId")]
+    public int FinishingAccuracyClassId { get; set; }
+    public FinishingAccuracyClass? FinishingAccuracyClass { get; set; }
 
+    [ForeignKey("FinishingSurfaceRoughnessId")]
+    public int FinishingSurfaceRoughnessId { get; set; }
+    public FinishingSurfaceRoughness? FinishingSurfaceRoughness { get; set; }
     public decimal LengthBeforeOperation { get; set; }
     public decimal WidthBeforeOperation { get; set; }
     public decimal HeightBeforeOperation { get; set; }
@@ -40,17 +47,17 @@ public class Przedmiot
     public decimal HeightAfterOperation { get; set; }
     
     public  bool HasPreviousFeature { get; set; }
-    // Pola opcjonalne dla cech
-    //public decimal? CuttingLength { get; set; }
-    //public decimal? CuttingWidth { get; set; }
-    //public decimal? CuttingDepth { get; set; }
+
     public decimal? DrillDiameter { get; set; }
     public decimal? DrillDepth { get; set; }
     public decimal? DrillApplicationCount { get; set; }
 
+    public decimal? ReamingDiameter { get; set; }
+    public decimal? ReamingDepth { get; set; }
+    
+
     public decimal? FaceMillingDepth { get; set; }
     public decimal? FinishingMillingDepth { get; set; }
-    public decimal? AddFinishingMilling { get; set; }
 
     public decimal? PocketLength { get; set; }
     public decimal? PocketWidth { get; set; }
@@ -58,8 +65,12 @@ public class Przedmiot
     public decimal? AddFinishingOperation { get; set; }
 
     public decimal? SlotHeight { get; set; }
-    public decimal? WhichSurface { get; set; }
+    public bool? SlotPlane { get; set; }
     public decimal? SlotApplicationCount { get; set; }
+
+    public decimal? StepHeight { get; set; }
+    public decimal? StepWidth { get; set; }
+    public bool? StepPlane { get; set; } 
 
     public decimal VolumeToRemove { get; set; }
     public decimal VolumeToRemoveFinish { get; set; }

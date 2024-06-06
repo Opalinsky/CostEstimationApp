@@ -39,6 +39,16 @@
                 <span asp-validation-for="SurfaceRoughnessId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="FinishingAccuracyClassId" class="control-label"></label>
+                <select asp-for="FinishingAccuracyClassId" class="form-control" asp-items="ViewBag.FinishingAccuracyClassId"></select>
+                <span asp-validation-for="FinishingAccuracyClassId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinishingSurfaceRoughnessId" class="control-label"></label>
+                <select asp-for="FinishingSurfaceRoughnessId" class="form-control" asp-items="ViewBag.FinishingSurfaceRoughnessId"></select>
+                <span asp-validation-for="FinishingSurfaceRoughnessId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="DrillDiameter" class="control-label"></label>
                 <input asp-for="DrillDiameter" class="form-control" />
                 <span asp-validation-for="DrillDiameter" class="text-danger"></span>
@@ -62,11 +72,6 @@
                 <label asp-for="FinishingMillingDepth" class="control-label"></label>
                 <input asp-for="FinishingMillingDepth" class="form-control" />
                 <span asp-validation-for="FinishingMillingDepth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AddFinishingMilling" class="control-label"></label>
-                <input asp-for="AddFinishingMilling" class="form-control" />
-                <span asp-validation-for="AddFinishingMilling" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PocketLength" class="control-label"></label>
@@ -94,9 +99,9 @@
                 <span asp-validation-for="SlotHeight" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="WhichSurface" class="control-label"></label>
-                <input asp-for="WhichSurface" class="form-control" />
-                <span asp-validation-for="WhichSurface" class="text-danger"></span>
+                <label asp-for="SlotPlane" class="control-label"></label>
+                <input asp-for="SlotPlane" class="form-control" />
+                <span asp-validation-for="SlotPlane" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SlotApplicationCount" class="control-label"></label>

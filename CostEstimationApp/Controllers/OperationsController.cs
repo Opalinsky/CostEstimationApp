@@ -169,59 +169,47 @@ namespace CostEstimationApp.Controllers
                     .Where(p => p.ProjektId == projectId && p.FeatureId == operation.FeatureId)
                     .FirstOrDefaultAsync();
 
-                if (przedmiot == null)
-                {
-                    Console.WriteLine("Przedmiot not found!");
-                    return NotFound();
-                }
-                else
-                {
-                    Console.WriteLine($"Przedmiot found with FaceMillingDepth: {przedmiot.FaceMillingDepth}");
-                    if (!przedmiot.FaceMillingDepth.HasValue)
-                    {
-                        Console.WriteLine("FaceMillingDepth is null");
-                    }
-                }
 
                 // Obliczenia dla typu operacji
-                if (operation.OperationType.Name == "Slot Milling")
-                {
-                    operation.LengthAfterOperation = operation.LengthBeforeOperation - operation.CuttingLength.GetValueOrDefault();
-                    operation.WidthAfterOperation = operation.WidthBeforeOperation - operation.CuttingWidth.GetValueOrDefault();
-                    operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.CuttingDepth.GetValueOrDefault();
-                    operation.VolumeToRemove = operation.CuttingLength.GetValueOrDefault() * operation.CuttingWidth.GetValueOrDefault() * operation.CuttingDepth.GetValueOrDefault();
-                }
-                else if (operation.OperationType.Name == "Drilling")
-                {
-                    var radius = przedmiot.DrillDiameter.GetValueOrDefault() / 2; // operation.DrillDiameter.GetValueOrDefault()
-                    operation.VolumeToRemove = przedmiot.DrillApplicationCount.GetValueOrDefault() * (decimal)Math.PI * radius * radius * przedmiot.DrillDepth.GetValueOrDefault(); //operation.DrillDepth.GetValueOrDefault();
-                    operation.LengthAfterOperation = operation.LengthBeforeOperation;
-                    operation.WidthAfterOperation = operation.WidthBeforeOperation;
-                    operation.HeightAfterOperation = operation.HeightBeforeOperation;
-                    operation.FaceArea = operation.FaceArea - (decimal)Math.PI * przedmiot.DrillApplicationCount.GetValueOrDefault() * radius * radius;
-                }
-
-                else if (operation.OperationType.Name == "Pocket Milling")
-                {
-                    operation.VolumeToRemove = przedmiot.PocketLength.GetValueOrDefault() * przedmiot.PocketWidth.GetValueOrDefault() * przedmiot.PocketDepth.GetValueOrDefault();
-                    operation.LengthAfterOperation = operation.LengthBeforeOperation;
-                    operation.WidthAfterOperation = operation.WidthBeforeOperation;
-                    operation.HeightAfterOperation = operation.HeightBeforeOperation;
-                    operation.FaceArea = operation.FaceArea - przedmiot.PocketLength.GetValueOrDefault() * przedmiot.PocketWidth.GetValueOrDefault();
-                }
-                else if (operation.OperationType.Name == "Face Milling")
+                if (operation.OperationType.Name == "Frezowanie Zgrubne Płaszczyzny Górnej")
                 {
                     Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
-                    //operation.VolumeToRemove = operation.LengthBeforeOperation * operation.WidthBeforeOperation * przedmiot.FaceMillingDepth.GetValueOrDefault();
-                    //operation.LengthAfterOperation = operation.LengthBeforeOperation;
-                    //operation.WidthAfterOperation = operation.WidthBeforeOperation;
-                    //operation.HeightAfterOperation = operation.HeightBeforeOperation - przedmiot.FaceMillingDepth.GetValueOrDefault();
                     operation.VolumeToRemove = przedmiot.VolumeToRemove;
 
                 }
-                else if (operation.OperationType.Name == "Finishing Milling")
+                else if (operation.OperationType.Name == "Frezowanie Wykańczające Płaszczyzny")
                 {
-                    //operation.HeightAfterOperation = operation.HeightBeforeOperation - operation.FinishingMillingDepth.GetValueOrDefault();
+                    Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemoveFinish}");
+                    operation.VolumeToRemove = przedmiot.VolumeToRemoveFinish;
+                }
+                else if (operation.OperationType.Name == "Wiercenie")
+                {
+                    Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
+                    operation.VolumeToRemove = przedmiot.VolumeToRemove;
+                }
+                else if (operation.OperationType.Name == "Rozwiercanie")
+                {
+                    Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemoveFinish}");
+                    operation.VolumeToRemove = przedmiot.VolumeToRemoveFinish;
+                }
+                else if (operation.OperationType.Name == "Frezowanie Zgrubne Kieszeni")
+                {
+                    Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
+                    operation.VolumeToRemove = przedmiot.VolumeToRemove;
+                }
+                else if (operation.OperationType.Name == "Frezowanie Wykańczające Kieszeni")
+                {
+                    Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemoveFinish}");
+                    operation.VolumeToRemove = przedmiot.VolumeToRemoveFinish;
+                }
+                else if (operation.OperationType.Name == "Frezowanie Rowka")
+                {
+                    Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
+                    operation.VolumeToRemove = przedmiot.VolumeToRemoveFinish;
+                }
+                else if (operation.OperationType.Name == "Frezowanie Uskoku")
+                {
+                    Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
                     operation.VolumeToRemove = przedmiot.VolumeToRemoveFinish;
                 }
 

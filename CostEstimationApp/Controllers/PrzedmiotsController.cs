@@ -34,6 +34,8 @@ namespace CostEstimationApp.Controllers
                 .Include(p => p.Projekt)
                 .Include(p => p.AccuracyClass)
                 .Include(p => p.SurfaceRoughness)
+                .Include(p => p.FinishingAccuracyClass)
+                .Include(p => p.FinishingSurfaceRoughness)
                 .Where(p => p.ProjektId == selectedProjectId);
 
             return View(await applicationDbContext.ToListAsync());
@@ -52,6 +54,8 @@ namespace CostEstimationApp.Controllers
                 .Include(p => p.Projekt)
                 .Include(p => p.AccuracyClass)
                 .Include(p => p.SurfaceRoughness)
+                .Include(p => p.FinishingAccuracyClass)
+                .Include(p => p.FinishingSurfaceRoughness)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (przedmiot == null)
             {
@@ -74,13 +78,15 @@ namespace CostEstimationApp.Controllers
             ViewData["ProjektId"] = new SelectList(_context.Projekts, "Id", "Id", selectedProjectId);
             ViewData["AccuracyClassId"] = new SelectList(_context.AccuracyClasses, "Id", "Name");
             ViewData["SurfaceRoughnessId"] = new SelectList(_context.SurfaceRoughnesses, "Id", "Name");
+            ViewData["FinishingAccuracyClassId"] = new SelectList(_context.FinishingAccuracyClasses, "Id", "Name");
+            ViewData["FinishingSurfaceRoughnessId"] = new SelectList(_context.FinishingSurfaceRoughnesses, "Id", "Name");
             return View();
         }
 
         // POST: Przedmiots/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount,VolumeToRemove,VolumeToRemoveFinish,AccuracyClassId,SurfaceRoughnessId")] Przedmiot przedmiot)
+        public async Task<IActionResult> Create([Bind("Id,Name,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,ReamingDiameter,ReamingDepth,FaceMillingDepth,FinishingMillingDepth,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,SlotPlane,SlotApplicationCount,StepHeight,StepWidth,StepPlane,VolumeToRemove,VolumeToRemoveFinish,AccuracyClassId,SurfaceRoughnessId,FinishingAccuracyClassId,FinishingSurfaceRoughnessId")] Przedmiot przedmiot)
         {
             int? selectedProjectId = HttpContext.Session.GetInt32("SelectedProjectId");
             if (selectedProjectId == null)
@@ -130,39 +136,72 @@ namespace CostEstimationApp.Controllers
 
                 switch (feature.Name)
                 {
-                    case "Wiercenie":
-                        // Wiercenie nie zmienia wymiarów zewnętrznych
-                        var radius = przedmiot.DrillDiameter.GetValueOrDefault() / 2;
-                        przedmiot.VolumeToRemove = przedmiot.DrillApplicationCount.GetValueOrDefault() * (decimal)Math.PI * radius * radius * przedmiot.DrillDepth.GetValueOrDefault();
-                        przedmiot.LengthAfterOperation = przedmiot.LengthBeforeOperation;
-                        przedmiot.WidthAfterOperation = przedmiot.WidthBeforeOperation;
-                        przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation;
-                        break;
-                    case "Frezowanie Czołowe":
-                        // Frezowanie powierzchni czołowej zmniejsza wysokość
+                    case "Płaszczyzna Górna":
+                        // Frezowanie powierzchni czołowej 
                         przedmiot.VolumeToRemove = przedmiot.FaceMillingDepth.GetValueOrDefault() * przedmiot.LengthBeforeOperation * przedmiot.WidthBeforeOperation;
                         przedmiot.VolumeToRemoveFinish = przedmiot.FinishingMillingDepth.GetValueOrDefault() * przedmiot.LengthBeforeOperation * przedmiot.WidthBeforeOperation;
                         przedmiot.LengthAfterOperation = przedmiot.LengthBeforeOperation;
                         przedmiot.WidthAfterOperation = przedmiot.WidthBeforeOperation;
                         przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation - przedmiot.FaceMillingDepth.GetValueOrDefault() - przedmiot.FinishingMillingDepth.GetValueOrDefault();
                         break;
-                    case "Pocket Milling":
-                        // Frezowanie kieszeni nie zmienia wymiarów zewnętrznych
+
+                    case "Otwór":
+                        var radius = przedmiot.DrillDiameter.GetValueOrDefault() / 2;
+                        przedmiot.VolumeToRemove = przedmiot.DrillApplicationCount.GetValueOrDefault() * (decimal)Math.PI * radius * radius * przedmiot.DrillDepth.GetValueOrDefault();
+                        przedmiot.LengthAfterOperation = przedmiot.LengthBeforeOperation;
+                        przedmiot.WidthAfterOperation = przedmiot.WidthBeforeOperation;
+                        przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation;
+
+                        // Dodanie rozwiercania
+                        if (przedmiot.ReamingDiameter.HasValue && przedmiot.ReamingDepth.HasValue)
+                        {
+                            var reamingRadius = przedmiot.ReamingDiameter.GetValueOrDefault() / 2;
+                            przedmiot.VolumeToRemoveFinish += przedmiot.DrillApplicationCount.GetValueOrDefault() * (decimal)Math.PI * reamingRadius * reamingRadius * przedmiot.ReamingDepth.GetValueOrDefault();
+                        }
+                        break;
+
+                    case "Kieszeń Zamknięta":
+                        var pocketVolume = przedmiot.PocketDepth.GetValueOrDefault() * przedmiot.PocketLength.GetValueOrDefault() * przedmiot.PocketWidth.GetValueOrDefault();
+                        przedmiot.VolumeToRemove = pocketVolume;
+
+                        if (przedmiot.AddFinishingOperation.HasValue)
+                        {
+                            var finishingPocketVolume = przedmiot.AddFinishingOperation.GetValueOrDefault() * przedmiot.PocketLength.GetValueOrDefault() * przedmiot.PocketWidth.GetValueOrDefault();
+                            przedmiot.VolumeToRemoveFinish = finishingPocketVolume;
+                        }
+
                         przedmiot.LengthAfterOperation = przedmiot.LengthBeforeOperation;
                         przedmiot.WidthAfterOperation = przedmiot.WidthBeforeOperation;
                         przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation;
                         break;
-                    case "Slot Milling":
-                        // Frezowanie szczelin zmniejsza odpowiednie wymiary
-                        przedmiot.LengthAfterOperation = przedmiot.LengthBeforeOperation - przedmiot.PocketLength.GetValueOrDefault();
-                        przedmiot.WidthAfterOperation = przedmiot.WidthBeforeOperation - przedmiot.PocketWidth.GetValueOrDefault();
-                        przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation - przedmiot.PocketDepth.GetValueOrDefault();
+
+                    case "Rowek Przelotowy":
+                        if (przedmiot.SlotPlane == true)
+                        {
+                            przedmiot.VolumeToRemove = przedmiot.SlotHeight.GetValueOrDefault() * przedmiot.SlotApplicationCount.GetValueOrDefault() * przedmiot.WidthBeforeOperation;
+                            przedmiot.LengthAfterOperation = przedmiot.LengthBeforeOperation - przedmiot.SlotHeight.GetValueOrDefault();
+                        }
+                        else
+                        {
+                            przedmiot.VolumeToRemove = przedmiot.SlotHeight.GetValueOrDefault() * przedmiot.SlotApplicationCount.GetValueOrDefault() * przedmiot.LengthBeforeOperation;
+                            przedmiot.WidthAfterOperation = przedmiot.WidthBeforeOperation - przedmiot.SlotHeight.GetValueOrDefault();
+                        }
+                        przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation;
                         break;
-                    case "Frezowanie Czołowe Wykańczające":
-                        // Frezowanie wykończeniowe zmniejsza wysokość
-                        przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation - przedmiot.FinishingMillingDepth.GetValueOrDefault();
+
+                    case "Uskok":
+                        if (przedmiot.StepPlane == true)
+                        {
+                            przedmiot.VolumeToRemove = przedmiot.StepHeight.GetValueOrDefault() * przedmiot.StepWidth.GetValueOrDefault() * przedmiot.WidthBeforeOperation;
+                            przedmiot.LengthAfterOperation = przedmiot.LengthBeforeOperation - przedmiot.StepHeight.GetValueOrDefault();
+                        }
+                        else
+                        {
+                            przedmiot.VolumeToRemove = przedmiot.StepHeight.GetValueOrDefault() * przedmiot.StepWidth.GetValueOrDefault() * przedmiot.LengthBeforeOperation;
+                            przedmiot.WidthAfterOperation = przedmiot.WidthBeforeOperation - przedmiot.StepWidth.GetValueOrDefault();
+                        }
+                        przedmiot.HeightAfterOperation = przedmiot.HeightBeforeOperation;
                         break;
-                        // Dodaj inne typy operacji według potrzeb
                 }
 
                 Console.WriteLine($"Length Before: {przedmiot.LengthBeforeOperation}");
@@ -184,6 +223,8 @@ namespace CostEstimationApp.Controllers
             ViewData["ProjektId"] = new SelectList(_context.Projekts, "Id", "Id", przedmiot.ProjektId);
             ViewData["AccuracyClassId"] = new SelectList(_context.AccuracyClasses, "Id", "Name", przedmiot.AccuracyClassId);
             ViewData["SurfaceRoughnessId"] = new SelectList(_context.SurfaceRoughnesses, "Id", "Name", przedmiot.SurfaceRoughnessId);
+            ViewData["FinishingAccuracyClassId"] = new SelectList(_context.FinishingAccuracyClasses, "Id", "Name", przedmiot.FinishingAccuracyClassId);
+            ViewData["FinishingSurfaceRoughnessId"] = new SelectList(_context.FinishingSurfaceRoughnesses, "Id", "Name", przedmiot.FinishingSurfaceRoughnessId);
             return View(przedmiot);
         }
 
@@ -204,13 +245,15 @@ namespace CostEstimationApp.Controllers
             ViewData["ProjektId"] = new SelectList(_context.Projekts, "Id", "Id", przedmiot.ProjektId);
             ViewData["AccuracyClassId"] = new SelectList(_context.AccuracyClasses, "Id", "Name", przedmiot.AccuracyClassId);
             ViewData["SurfaceRoughnessId"] = new SelectList(_context.SurfaceRoughnesses, "Id", "Name", przedmiot.SurfaceRoughnessId);
+            ViewData["FinishingAccuracyClassId"] = new SelectList(_context.FinishingAccuracyClasses, "Id", "Name", przedmiot.FinishingAccuracyClassId);
+            ViewData["FinishingSurfaceRoughnessId"] = new SelectList(_context.FinishingSurfaceRoughnesses, "Id", "Name", przedmiot.FinishingSurfaceRoughnessId);
             return View(przedmiot);
         }
 
         // POST: Przedmiots/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ProjektId,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,FaceMillingDepth,FinishingMillingDepth,AddFinishingMilling,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,WhichSurface,SlotApplicationCount,VolumeToRemove,VolumeToRemoveFinish,AccuracyClassId,SurfaceRoughnessId")] Przedmiot przedmiot)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,FeatureId,LengthBeforeOperation,WidthBeforeOperation,HeightBeforeOperation,LengthAfterOperation,WidthAfterOperation,HeightAfterOperation,HasPreviousFeature,DrillDiameter,DrillDepth,DrillApplicationCount,ReamingDiameter,ReamingDepth,FaceMillingDepth,FinishingMillingDepth,PocketLength,PocketWidth,PocketDepth,AddFinishingOperation,SlotHeight,SlotPlane,SlotApplicationCount,StepHeight,StepWidth,StepPlane,VolumeToRemove,VolumeToRemoveFinish,AccuracyClassId,SurfaceRoughnessId,FinishingAccuracyClassId,FinishingSurfaceRoughnessId")] Przedmiot przedmiot)
         {
             if (id != przedmiot.Id)
             {
@@ -241,6 +284,8 @@ namespace CostEstimationApp.Controllers
             ViewData["ProjektId"] = new SelectList(_context.Projekts, "Id", "Id", przedmiot.ProjektId);
             ViewData["AccuracyClassId"] = new SelectList(_context.AccuracyClasses, "Id", "Name", przedmiot.AccuracyClassId);
             ViewData["SurfaceRoughnessId"] = new SelectList(_context.SurfaceRoughnesses, "Id", "Name", przedmiot.SurfaceRoughnessId);
+            ViewData["FinishingAccuracyClassId"] = new SelectList(_context.FinishingAccuracyClasses, "Id", "Name", przedmiot.FinishingAccuracyClassId);
+            ViewData["FinishingSurfaceRoughnessId"] = new SelectList(_context.FinishingSurfaceRoughnesses, "Id", "Name", przedmiot.FinishingSurfaceRoughnessId);
             return View(przedmiot);
         }
 
@@ -257,6 +302,8 @@ namespace CostEstimationApp.Controllers
                 .Include(p => p.Projekt)
                 .Include(p => p.AccuracyClass)
                 .Include(p => p.SurfaceRoughness)
+                .Include(p => p.FinishingAccuracyClass)
+                .Include(p => p.FinishingSurfaceRoughness)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (przedmiot == null)
             {

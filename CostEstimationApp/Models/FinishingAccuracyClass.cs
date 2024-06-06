@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CostEstimationApp.Models
 {
-    public class AccuracyClass
+    public class FinishingAccuracyClass
     {
         [Key]
         public int Id { get; set; }

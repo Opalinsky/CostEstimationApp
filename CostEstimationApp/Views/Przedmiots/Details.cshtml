@@ -40,6 +40,18 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.SurfaceRoughness)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FinishingAccuracyClass)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FinishingAccuracyClass)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FinishingSurfaceRoughness)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FinishingSurfaceRoughness)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.DrillDiameter)
         </dt>
@@ -69,12 +81,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FinishingMillingDepth)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AddFinishingMilling)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AddFinishingMilling)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PocketLength)
@@ -107,10 +113,10 @@
             @Html.DisplayFor(model => model.SlotHeight)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WhichSurface)
+            @Html.DisplayNameFor(model => model.SlotPlane)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WhichSurface)
+            @Html.DisplayFor(model => model.SlotPlane)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.SlotApplicationCount)
