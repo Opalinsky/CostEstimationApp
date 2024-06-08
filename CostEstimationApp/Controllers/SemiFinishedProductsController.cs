@@ -68,7 +68,8 @@ namespace CostEstimationApp.Controllers
 
             // Oblicz objętość i cenę półfabrykatu
             semiFinishedProduct.Volume = semiFinishedProduct.DimensionX * semiFinishedProduct.DimensionY * semiFinishedProduct.DimensionZ;
-            semiFinishedProduct.Price = (decimal)material.Density * semiFinishedProduct.Volume * (decimal)material.PricePerKg;
+            var VolumekgPerm3 = (decimal)semiFinishedProduct.Volume / 1000000000;
+            semiFinishedProduct.Price = (decimal)material.Density * VolumekgPerm3 * (decimal)material.PricePerKg;
 
             if (ModelState.IsValid)
             {

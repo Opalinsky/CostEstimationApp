@@ -167,12 +167,12 @@ public class OperationSetsController : Controller
     }
 
 
-
     // Method to update OperationSet costs
     private async Task UpdateOperationSetCosts(int operationSetId)
     {
         var operationSet = await _context.OperationSets
             .Include(os => os.Operations)
+            .Include(os => os.Projekt) // Include the Projekt
             .FirstOrDefaultAsync(os => os.Id == operationSetId);
 
         if (operationSet != null)
@@ -184,6 +184,26 @@ public class OperationSetsController : Controller
 
             _context.Update(operationSet);
             await _context.SaveChangesAsync();
+
+            // Update project total cost
+            await UpdateProjectCosts(operationSet.ProjektId);
         }
     }
+
+    // Method to update project costs
+    private async Task UpdateProjectCosts(int projektId)
+    {
+        var projekt = await _context.Projekts
+            .Include(p => p.OperationSets)
+            .FirstOrDefaultAsync(p => p.Id == projektId);
+
+        if (projekt != null)
+        {
+            projekt.TotalCost = projekt.OperationSets.Sum(os => os.TotalCost) * projekt.Quantity;
+
+            _context.Update(projekt);
+            await _context.SaveChangesAsync();
+        }
+    }
+
 }

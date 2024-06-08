@@ -7,7 +7,7 @@ public class Projekt
     public int Id { get; set; }
     public string Name { get; set; }
     public int Quantity { get; set; }
-   // public int Value { get; set; }
+
     public List<Przedmiot> Przedmiots { get; set; } = new List<Przedmiot>();
 
     [Required(ErrorMessage = "Półfabrykat is required.")]
@@ -17,5 +17,7 @@ public class Projekt
 
     public List<OperationSet> OperationSets { get; set; } = new List<OperationSet>();
     public List<Operation> Operations { get; set; } = new List<Operation>();
-
+    public decimal OperationCost { get; set; }
+    public decimal SemiFinishedProductCost { get; set; }
+    public decimal TotalCost { get; set; }
 }

@@ -57,6 +57,19 @@ namespace CostEstimationApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var semiFinishedProduct = await _context.SemiFinishedProducts
+                    .FirstOrDefaultAsync(s => s.Id == projekt.SemiFinishedProductId);
+
+                if (semiFinishedProduct == null)
+                {
+                    ModelState.AddModelError("", "Invalid SemiFinishedProduct.");
+                    ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", projekt.SemiFinishedProductId);
+                    return View(projekt);
+                }
+
+                projekt.SemiFinishedProductCost = semiFinishedProduct.Price * projekt.Quantity;
+                //projekt.TotalCost = projekt.SemiFinishedProductCost;
+
                 _context.Add(projekt);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -96,6 +109,19 @@ namespace CostEstimationApp.Controllers
             {
                 try
                 {
+                    var semiFinishedProduct = await _context.SemiFinishedProducts
+                        .FirstOrDefaultAsync(s => s.Id == projekt.SemiFinishedProductId);
+
+                    if (semiFinishedProduct == null)
+                    {
+                        ModelState.AddModelError("", "Invalid SemiFinishedProduct.");
+                        ViewData["SemiFinishedProductId"] = new SelectList(_context.SemiFinishedProducts, "Id", "Id", projekt.SemiFinishedProductId);
+                        return View(projekt);
+                    }
+
+                    projekt.SemiFinishedProductCost = semiFinishedProduct.Price * projekt.Quantity;
+                    projekt.TotalCost = projekt.SemiFinishedProductCost;
+
                     _context.Update(projekt);
                     await _context.SaveChangesAsync();
                 }
@@ -176,6 +202,24 @@ namespace CostEstimationApp.Controllers
 
             HttpContext.Session.SetInt32("SelectedProjectId", projekt.Id);
             return RedirectToAction("Index", "Przedmiots");
+        }
+
+        // Method to update project costs
+        private async Task UpdateProjectCosts(int projektId)
+        {
+            var projekt = await _context.Projekts
+                .Include(p => p.OperationSets)
+                .Include(p => p.SemiFinishedProduct)
+                .FirstOrDefaultAsync(p => p.Id == projektId);
+
+            if (projekt != null)
+            {
+                projekt.OperationCost = projekt.OperationSets.Sum(os => os.TotalCost);
+                projekt.TotalCost = (projekt.OperationCost + projekt.SemiFinishedProductCost) * projekt.Quantity;
+
+                _context.Update(projekt);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

@@ -12,7 +12,6 @@ public class Przedmiot
     [ForeignKey("ProjektId")]
     public int ProjektId { get; set; }
     public Projekt? Projekt { get; set; }
-    public List<Proces> Process { get; set; } = new List<Proces>();
     
     //public List<OperationType> OperationTypes { get; set; } = new List<OperationType>();
     // Define the relationship between Przedmiot and Feature
@@ -27,17 +26,6 @@ public class Przedmiot
     public int AccuracyClassId { get; set; }
     public AccuracyClass? AccuracyClass { get; set; }
 
-    [ForeignKey("SurfaceRoughnessId")]
-    public int SurfaceRoughnessId { get; set; }
-    public SurfaceRoughness? SurfaceRoughness { get; set; }
-    
-    [ForeignKey("FinishingAccuracyClassId")]
-    public int FinishingAccuracyClassId { get; set; }
-    public FinishingAccuracyClass? FinishingAccuracyClass { get; set; }
-
-    [ForeignKey("FinishingSurfaceRoughnessId")]
-    public int FinishingSurfaceRoughnessId { get; set; }
-    public FinishingSurfaceRoughness? FinishingSurfaceRoughness { get; set; }
     public decimal LengthBeforeOperation { get; set; }
     public decimal WidthBeforeOperation { get; set; }
     public decimal HeightBeforeOperation { get; set; }
@@ -51,7 +39,7 @@ public class Przedmiot
     public decimal? DrillDiameter { get; set; }
     public decimal? DrillDepth { get; set; }
     public decimal? DrillApplicationCount { get; set; }
-
+    public decimal? DrillingDepthFinish { get; set; }
     public decimal? ReamingDiameter { get; set; }
     public decimal? ReamingDepth { get; set; }
     
@@ -65,10 +53,12 @@ public class Przedmiot
     public decimal? AddFinishingOperation { get; set; }
 
     public decimal? SlotHeight { get; set; }
+    public decimal? SlotHeightFinish { get; set; }
     public bool? SlotPlane { get; set; }
     public decimal? SlotApplicationCount { get; set; }
 
     public decimal? StepHeight { get; set; }
+    public decimal? StepHeightFinish { get; set; }
     public decimal? StepWidth { get; set; }
     public bool? StepPlane { get; set; } 
 

@@ -140,21 +140,6 @@ namespace CostEstimationApp.Controllers
                     .OrderByDescending(o => o.Id)
                     .FirstOrDefaultAsync();
 
-                if (previousOperation != null)
-                {
-                    operation.LengthBeforeOperation = previousOperation.LengthAfterOperation;
-                    operation.WidthBeforeOperation = previousOperation.WidthAfterOperation;
-                    operation.HeightBeforeOperation = previousOperation.HeightAfterOperation;
-                    operation.FaceArea = previousOperation.FaceArea;
-                }
-                else
-                {
-                    operation.LengthBeforeOperation = semiFinishedProduct.DimensionX;
-                    operation.WidthBeforeOperation = semiFinishedProduct.DimensionY;
-                    operation.HeightBeforeOperation = semiFinishedProduct.DimensionZ;
-                    operation.FaceArea = semiFinishedProduct.DimensionX * semiFinishedProduct.DimensionY;
-                }
-
                 // Pobierz OperationType
                 var operationType = await _context.OperationTypes
                     .FirstOrDefaultAsync(ot => ot.Id == operation.OperationTypeId);
@@ -169,60 +154,84 @@ namespace CostEstimationApp.Controllers
                     .Where(p => p.ProjektId == projectId && p.FeatureId == operation.FeatureId)
                     .FirstOrDefaultAsync();
 
-
+                Console.WriteLine(mrr.Rate);
+                Console.WriteLine(mrr.RateFinish);
                 // Obliczenia dla typu operacji
                 if (operation.OperationType.Name == "Frezowanie Zgrubne Płaszczyzny Górnej")
                 {
                     Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
                     operation.VolumeToRemove = przedmiot.VolumeToRemove;
-
+                    operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
                 }
                 else if (operation.OperationType.Name == "Frezowanie Wykańczające Płaszczyzny")
                 {
-                    Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemoveFinish}");
-                    operation.VolumeToRemove = przedmiot.VolumeToRemoveFinish;
+                    Console.WriteLine($"volume to remove finish: {przedmiot.VolumeToRemoveFinish}");
+                    operation.VolumeToRemoveFinish = przedmiot.VolumeToRemoveFinish;
+                    operation.MachiningTime = operation.VolumeToRemoveFinish / mrr.RateFinish;
                 }
-                else if (operation.OperationType.Name == "Wiercenie")
+                else if (operation.OperationType.Name == "Wiercenie Zgrubne")
                 {
                     Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
                     operation.VolumeToRemove = przedmiot.VolumeToRemove;
+                    operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
+
+                }
+                else if (operation.OperationType.Name == "Wiercenie Wykańczające")
+                {
+                    Console.WriteLine($"volume to remove finish: {przedmiot.VolumeToRemoveFinish}");
+                    operation.VolumeToRemoveFinish = przedmiot.VolumeToRemoveFinish;
+                    operation.MachiningTime = operation.VolumeToRemoveFinish / mrr.RateFinish;
                 }
                 else if (operation.OperationType.Name == "Rozwiercanie")
                 {
-                    Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemoveFinish}");
-                    operation.VolumeToRemove = przedmiot.VolumeToRemoveFinish;
+                    Console.WriteLine($"volume to remove finish: {przedmiot.VolumeToRemoveFinish}");
+                    operation.VolumeToRemoveFinish = przedmiot.VolumeToRemoveFinish;
+                    operation.MachiningTime = operation.VolumeToRemoveFinish / mrr.RateFinish;
                 }
                 else if (operation.OperationType.Name == "Frezowanie Zgrubne Kieszeni")
                 {
                     Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
                     operation.VolumeToRemove = przedmiot.VolumeToRemove;
+                    operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
+
                 }
                 else if (operation.OperationType.Name == "Frezowanie Wykańczające Kieszeni")
                 {
-                    Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemoveFinish}");
-                    operation.VolumeToRemove = przedmiot.VolumeToRemoveFinish;
+                    Console.WriteLine($"volume to remove finish: {przedmiot.VolumeToRemoveFinish}");
+                    operation.VolumeToRemoveFinish = przedmiot.VolumeToRemoveFinish;
+                    operation.MachiningTime = operation.VolumeToRemoveFinish / mrr.RateFinish;
                 }
-                else if (operation.OperationType.Name == "Frezowanie Rowka")
+                else if (operation.OperationType.Name == "Frezowanie Zgrubnie Rowka")
                 {
                     Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
                     operation.VolumeToRemove = przedmiot.VolumeToRemoveFinish;
+                    operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
+
                 }
-                else if (operation.OperationType.Name == "Frezowanie Uskoku")
+                else if (operation.OperationType.Name == "Frezowanie Wykańczająco Rowka")
+                {
+                    Console.WriteLine($"volume to remove finish: {przedmiot.VolumeToRemoveFinish}");
+                    operation.VolumeToRemoveFinish = przedmiot.VolumeToRemoveFinish;
+                    operation.MachiningTime = operation.VolumeToRemoveFinish / mrr.RateFinish;
+                }
+                else if (operation.OperationType.Name == "Frezowanie Zgrubnie Uskoku")
                 {
                     Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
                     operation.VolumeToRemove = przedmiot.VolumeToRemoveFinish;
+                    operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
+
+                }
+                else if (operation.OperationType.Name == "Frezowanie Wykańczająco Uskoku")
+                {
+                    Console.WriteLine($"volume to remove finish: {przedmiot.VolumeToRemoveFinish}");
+                    operation.VolumeToRemoveFinish = przedmiot.VolumeToRemoveFinish;
+                    operation.MachiningTime = operation.VolumeToRemoveFinish / mrr.RateFinish;
                 }
 
-                Console.WriteLine($"length before: {operation.LengthBeforeOperation}");
-                Console.WriteLine($"length after: {operation.LengthAfterOperation}");
-                Console.WriteLine($"Width before: {operation.WidthBeforeOperation}");
-                Console.WriteLine($"Width after: {operation.WidthAfterOperation}");
-                Console.WriteLine($"Height before: {operation.HeightBeforeOperation}");
-                Console.WriteLine($"Height after: {operation.HeightAfterOperation}");
                 Console.WriteLine($"Volume to remove: {operation.VolumeToRemove}");
 
-                operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
-                Console.WriteLine($"MRR is2: {mrr.Rate}");
+                //operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
+                Console.WriteLine($"MRR is: {mrr.RateFinish}");
                 Console.WriteLine($"Machining time is: {operation.MachiningTime}");
 
                 // Pobierz koszt maszyny, pracownika i narzędzia
@@ -395,6 +404,7 @@ namespace CostEstimationApp.Controllers
         {
             var operationSet = await _context.OperationSets
                 .Include(os => os.Operations)
+                .Include(os => os.Projekt)
                 .FirstOrDefaultAsync(os => os.Id == operationSetId);
 
             if (operationSet != null)
@@ -406,7 +416,25 @@ namespace CostEstimationApp.Controllers
 
                 _context.Update(operationSet);
                 await _context.SaveChangesAsync();
+                await UpdateProjectCosts(operationSet.ProjektId);
+
             }
         }
+
+        private async Task UpdateProjectCosts(int projektId)
+        {
+            var projekt = await _context.Projekts
+                .Include(p => p.OperationSets)
+                .FirstOrDefaultAsync(p => p.Id == projektId);
+
+            if (projekt != null)
+            {
+                projekt.TotalCost = projekt.OperationSets.Sum(os => os.TotalCost) * projekt.Quantity;
+
+                _context.Update(projekt);
+                await _context.SaveChangesAsync();
+            }
+        }
+
     }
 }

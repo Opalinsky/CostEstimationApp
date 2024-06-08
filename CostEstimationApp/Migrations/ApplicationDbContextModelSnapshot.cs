@@ -36,23 +36,73 @@ namespace CostEstimationApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AccuracyClass");
+                    b.ToTable("AccuracyClasses");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Name = "IT12"
+                            Name = "IT1"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "IT13"
+                            Name = "IT2"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "IT14"
+                            Name = "IT3"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "IT4"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "IT5"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "IT6"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "IT7"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "IT8"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "IT9"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "IT10"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "IT11"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "IT12"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "IT13"
                         });
                 });
 
@@ -123,74 +173,6 @@ namespace CostEstimationApp.Migrations
                     b.ToTable("FeatureOperationTypes");
                 });
 
-            modelBuilder.Entity("CostEstimationApp.Models.FinishingAccuracyClass", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FinishingAccuracyClass");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "IT5"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "IT6"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "IT7"
-                        });
-                });
-
-            modelBuilder.Entity("CostEstimationApp.Models.FinishingSurfaceRoughness", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FinishingSurfaceRoughness");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "N4"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "N5"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "N6"
-                        });
-                });
-
             modelBuilder.Entity("CostEstimationApp.Models.Machine", b =>
                 {
                     b.Property<int>("Id")
@@ -256,7 +238,7 @@ namespace CostEstimationApp.Migrations
                             Id = 2,
                             AdditionalTime = 0.10000000000000001,
                             AuxiliaryTime = 0.20000000000000001,
-                            Typeof = "Manualna"
+                            Typeof = "Konwencjonalna"
                         });
                 });
 
@@ -286,8 +268,8 @@ namespace CostEstimationApp.Migrations
                         new
                         {
                             Id = 1,
-                            Density = 0.1m,
-                            Name = "Material1",
+                            Density = 7850m,
+                            Name = "Stal",
                             PricePerKg = 8m
                         });
                 });
@@ -304,6 +286,9 @@ namespace CostEstimationApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("RateFinish")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ToolMaterialId")
@@ -327,44 +312,8 @@ namespace CostEstimationApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<decimal?>("CuttingDepth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("CuttingLength")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("CuttingWidth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("DrillDepth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("DrillDiameter")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FaceArea")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("FaceMillingDepth")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("FeatureId")
                         .HasColumnType("int");
-
-                    b.Property<decimal?>("FinishingMillingDepth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("HeightAfterOperation")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("HeightBeforeOperation")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("LengthAfterOperation")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("LengthBeforeOperation")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("MRRId")
                         .HasColumnType("int");
@@ -388,15 +337,6 @@ namespace CostEstimationApp.Migrations
                     b.Property<int>("OperationTypeId")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("PocketDepth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("PocketLength")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("PocketWidth")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("ProjektId")
                         .HasColumnType("int");
 
@@ -418,10 +358,7 @@ namespace CostEstimationApp.Migrations
                     b.Property<decimal>("VolumeToRemove")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("WidthAfterOperation")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("WidthBeforeOperation")
+                    b.Property<decimal>("VolumeToRemoveFinish")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("WorkerCost")
@@ -463,9 +400,6 @@ namespace CostEstimationApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProcesId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProjektId")
                         .HasColumnType("int");
 
@@ -479,8 +413,6 @@ namespace CostEstimationApp.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProcesId");
 
                     b.HasIndex("ProjektId");
 
@@ -517,32 +449,47 @@ namespace CostEstimationApp.Migrations
                         new
                         {
                             Id = 3,
-                            Name = "Wiercenie"
+                            Name = "Wiercenie Zgrubne"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Rozwiercanie"
+                            Name = "Wiercenie Wykańczające"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Frezowanie Zgrubne Kieszeni"
+                            Name = "Rozwiercanie"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "Frezowanie Wykańczające Kieszeni"
+                            Name = "Frezowanie Zgrubne Kieszeni"
                         },
                         new
                         {
                             Id = 7,
-                            Name = "Frezowanie Rowka"
+                            Name = "Frezowanie Wykańczające Kieszeni"
                         },
                         new
                         {
                             Id = 8,
-                            Name = "Frezowanie Uskoku"
+                            Name = "Frezowanie Zgrubnie Rowka"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Frezowanie Wykańczająco Rowka"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Frezowanie Zgrubnie Uskoku"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Frezowanie Wykańczająco Uskoku"
                         });
                 });
 
@@ -577,40 +524,6 @@ namespace CostEstimationApp.Migrations
                     b.HasIndex("MaterialId");
 
                     b.ToTable("SemiFinishedProducts");
-                });
-
-            modelBuilder.Entity("CostEstimationApp.Models.SurfaceRoughness", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SurfaceRoughness");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "N10"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "N11"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "N12"
-                        });
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.Tool", b =>
@@ -729,48 +642,6 @@ namespace CostEstimationApp.Migrations
                     b.ToTable("OperationTypeTools", (string)null);
                 });
 
-            modelBuilder.Entity("Proces", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<decimal>("MachineCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("PreparationTime")
-                        .HasColumnType("decimal(18,12)");
-
-                    b.Property<int?>("PrzedmiotId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("ToolCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalCost")
-                        .HasColumnType("decimal(18,12)");
-
-                    b.Property<decimal>("WorkerCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("WorkerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PrzedmiotId");
-
-                    b.HasIndex("WorkerId");
-
-                    b.ToTable("Process");
-                });
-
             modelBuilder.Entity("Projekt", b =>
                 {
                     b.Property<int>("Id")
@@ -783,11 +654,20 @@ namespace CostEstimationApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("OperationCost")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("SemiFinishedProductCost")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("SemiFinishedProductId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("TotalCost")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -819,20 +699,17 @@ namespace CostEstimationApp.Migrations
                     b.Property<decimal?>("DrillDiameter")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal?>("DrillingDepthFinish")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal?>("FaceMillingDepth")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("FeatureId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FinishingAccuracyClassId")
-                        .HasColumnType("int");
-
                     b.Property<decimal?>("FinishingMillingDepth")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("FinishingSurfaceRoughnessId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("HasPreviousFeature")
                         .HasColumnType("bit");
@@ -877,10 +754,16 @@ namespace CostEstimationApp.Migrations
                     b.Property<decimal?>("SlotHeight")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal?>("SlotHeightFinish")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<bool?>("SlotPlane")
                         .HasColumnType("bit");
 
                     b.Property<decimal?>("StepHeight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("StepHeightFinish")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool?>("StepPlane")
@@ -888,9 +771,6 @@ namespace CostEstimationApp.Migrations
 
                     b.Property<decimal?>("StepWidth")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SurfaceRoughnessId")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("VolumeToRemove")
                         .HasColumnType("decimal(18,2)");
@@ -910,13 +790,7 @@ namespace CostEstimationApp.Migrations
 
                     b.HasIndex("FeatureId");
 
-                    b.HasIndex("FinishingAccuracyClassId");
-
-                    b.HasIndex("FinishingSurfaceRoughnessId");
-
                     b.HasIndex("ProjektId");
-
-                    b.HasIndex("SurfaceRoughnessId");
 
                     b.ToTable("Przedmiots");
                 });
@@ -1047,10 +921,6 @@ namespace CostEstimationApp.Migrations
 
             modelBuilder.Entity("CostEstimationApp.Models.OperationSet", b =>
                 {
-                    b.HasOne("Proces", null)
-                        .WithMany("OperationSets")
-                        .HasForeignKey("ProcesId");
-
                     b.HasOne("Projekt", "Projekt")
                         .WithMany("OperationSets")
                         .HasForeignKey("ProjektId")
@@ -1112,21 +982,6 @@ namespace CostEstimationApp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Proces", b =>
-                {
-                    b.HasOne("Przedmiot", null)
-                        .WithMany("Process")
-                        .HasForeignKey("PrzedmiotId");
-
-                    b.HasOne("CostEstimationApp.Models.Worker", "Worker")
-                        .WithMany()
-                        .HasForeignKey("WorkerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Worker");
-                });
-
             modelBuilder.Entity("Projekt", b =>
                 {
                     b.HasOne("CostEstimationApp.Models.SemiFinishedProduct", "SemiFinishedProduct")
@@ -1152,27 +1007,9 @@ namespace CostEstimationApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CostEstimationApp.Models.FinishingAccuracyClass", "FinishingAccuracyClass")
-                        .WithMany("Przedmiots")
-                        .HasForeignKey("FinishingAccuracyClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CostEstimationApp.Models.FinishingSurfaceRoughness", "FinishingSurfaceRoughness")
-                        .WithMany("Przedmiots")
-                        .HasForeignKey("FinishingSurfaceRoughnessId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Projekt", "Projekt")
                         .WithMany("Przedmiots")
                         .HasForeignKey("ProjektId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CostEstimationApp.Models.SurfaceRoughness", "SurfaceRoughness")
-                        .WithMany("Przedmiots")
-                        .HasForeignKey("SurfaceRoughnessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1180,13 +1017,7 @@ namespace CostEstimationApp.Migrations
 
                     b.Navigation("Feature");
 
-                    b.Navigation("FinishingAccuracyClass");
-
-                    b.Navigation("FinishingSurfaceRoughness");
-
                     b.Navigation("Projekt");
-
-                    b.Navigation("SurfaceRoughness");
                 });
 
             modelBuilder.Entity("CostEstimationApp.Models.AccuracyClass", b =>
@@ -1200,16 +1031,6 @@ namespace CostEstimationApp.Migrations
 
                     b.Navigation("Operations");
 
-                    b.Navigation("Przedmiots");
-                });
-
-            modelBuilder.Entity("CostEstimationApp.Models.FinishingAccuracyClass", b =>
-                {
-                    b.Navigation("Przedmiots");
-                });
-
-            modelBuilder.Entity("CostEstimationApp.Models.FinishingSurfaceRoughness", b =>
-                {
                     b.Navigation("Przedmiots");
                 });
 
@@ -1254,11 +1075,6 @@ namespace CostEstimationApp.Migrations
                     b.Navigation("Projekts");
                 });
 
-            modelBuilder.Entity("CostEstimationApp.Models.SurfaceRoughness", b =>
-                {
-                    b.Navigation("Przedmiots");
-                });
-
             modelBuilder.Entity("CostEstimationApp.Models.Tool", b =>
                 {
                     b.Navigation("Operation");
@@ -1276,11 +1092,6 @@ namespace CostEstimationApp.Migrations
                     b.Navigation("Machines");
                 });
 
-            modelBuilder.Entity("Proces", b =>
-                {
-                    b.Navigation("OperationSets");
-                });
-
             modelBuilder.Entity("Projekt", b =>
                 {
                     b.Navigation("OperationSets");
@@ -1288,11 +1099,6 @@ namespace CostEstimationApp.Migrations
                     b.Navigation("Operations");
 
                     b.Navigation("Przedmiots");
-                });
-
-            modelBuilder.Entity("Przedmiot", b =>
-                {
-                    b.Navigation("Process");
                 });
 #pragma warning restore 612, 618
         }

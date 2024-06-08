@@ -78,46 +78,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVhdHVyZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FinishingAccuracyClasses/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmluaXNoaW5nQWNjdXJhY3lDbGFzc2VzXENyZWF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FinishingAccuracyClasses/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmluaXNoaW5nQWNjdXJhY3lDbGFzc2VzXERlbGV0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FinishingAccuracyClasses/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmluaXNoaW5nQWNjdXJhY3lDbGFzc2VzXERldGFpbHMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FinishingAccuracyClasses/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmluaXNoaW5nQWNjdXJhY3lDbGFzc2VzXEVkaXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FinishingAccuracyClasses/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmluaXNoaW5nQWNjdXJhY3lDbGFzc2VzXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FinishingSurfaceRoughnesses/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmluaXNoaW5nU3VyZmFjZVJvdWdobmVzc2VzXENyZWF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FinishingSurfaceRoughnesses/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmluaXNoaW5nU3VyZmFjZVJvdWdobmVzc2VzXERlbGV0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FinishingSurfaceRoughnesses/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmluaXNoaW5nU3VyZmFjZVJvdWdobmVzc2VzXERldGFpbHMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FinishingSurfaceRoughnesses/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmluaXNoaW5nU3VyZmFjZVJvdWdobmVzc2VzXEVkaXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/FinishingSurfaceRoughnesses/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmluaXNoaW5nU3VyZmFjZVJvdWdobmVzc2VzXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -266,26 +226,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3BlcmF0aW9uVHlwZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Proces/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2VzXENyZWF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Proces/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2VzXERlbGV0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Proces/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2VzXERldGFpbHMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Proces/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2VzXEVkaXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Proces/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2VzXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Projekts/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVrdHNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -352,26 +292,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/SurfaceRoughnesses/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VyZmFjZVJvdWdobmVzc2VzXENyZWF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/SurfaceRoughnesses/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VyZmFjZVJvdWdobmVzc2VzXERlbGV0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/SurfaceRoughnesses/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VyZmFjZVJvdWdobmVzc2VzXERldGFpbHMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/SurfaceRoughnesses/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VyZmFjZVJvdWdobmVzc2VzXEVkaXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/SurfaceRoughnesses/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VyZmFjZVJvdWdobmVzc2VzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/filip/Documents/mvc/CostEstimationApp/CostEstimationApp/Views/ToolMaterials/Create.cshtml]

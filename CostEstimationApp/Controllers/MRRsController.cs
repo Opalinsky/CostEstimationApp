@@ -59,24 +59,16 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MaterialId,ToolMaterialId,Rate")] MRR mRR)
+        public async Task<IActionResult> Create([Bind("Id,MaterialId,ToolMaterialId,Rate,RateFinish")] MRR mRR)
         {
             if (ModelState.IsValid)
             {
-                // Sprawdź, czy istnieje już kombinacja MaterialId i ToolMaterialId
-                var existingMRR = await _context.MRRs
-                    .FirstOrDefaultAsync(m => m.MaterialId == mRR.MaterialId && m.ToolMaterialId == mRR.ToolMaterialId);
 
-                if (existingMRR != null)
-                {
-                    ModelState.AddModelError(string.Empty, "This Material and ToolMaterial combination already exists.");
-                }
-                else
-                {
-                    _context.Add(mRR);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
+                //mRR.Rate = mRR.Rate * 60000;
+               // mRR.RateFinish = mRR.RateFinish * 60000;
+                _context.Add(mRR);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
             ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", mRR.MaterialId);
             ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", mRR.ToolMaterialId);
@@ -106,7 +98,7 @@ namespace CostEstimationApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,MaterialId,ToolMaterialId,Rate")] MRR mRR)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,MaterialId,ToolMaterialId,Rate,RateFinish")] MRR mRR)
         {
             if (id != mRR.Id)
             {

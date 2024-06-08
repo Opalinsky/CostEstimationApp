@@ -32,19 +32,19 @@
                 @Html.DisplayNameFor(model => model.AccuracyClass)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SurfaceRoughness)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FinishingAccuracyClass)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FinishingSurfaceRoughness)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.DrillDiameter)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DrillDepth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DrillingDepthFinish)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReamingDiameter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReamingDepth)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DrillApplicationCount)
@@ -71,6 +71,9 @@
                 @Html.DisplayNameFor(model => model.SlotHeight)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.SlotHeightFinish)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.SlotPlane)
             </th>
             <th>
@@ -78,6 +81,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StepHeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StepHeightFinish)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StepWidth)
@@ -111,19 +117,19 @@
                     @Html.DisplayFor(modelItem => item.AccuracyClass.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SurfaceRoughness.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FinishingAccuracyClass.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FinishingSurfaceRoughness.Name)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.DrillDiameter)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DrillDepth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DrillingDepthFinish)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReamingDiameter)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReamingDepth)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DrillApplicationCount)
@@ -150,6 +156,9 @@
                     @Html.DisplayFor(modelItem => item.SlotHeight)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.SlotHeightFinish)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.SlotPlane)
                 </td>
                 <td>
@@ -157,6 +166,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.StepHeight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StepHeightFinish)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.StepWidth)

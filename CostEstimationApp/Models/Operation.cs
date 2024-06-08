@@ -48,32 +48,8 @@ namespace CostEstimationApp.Models
         public OperationSet? OperationSet { get; set; }
 
         public decimal? SetUpTime { get; set; }
-        // Fields for CuttingOperation
-        public decimal? CuttingLength { get; set; }
-        public decimal? CuttingWidth { get; set; }
-        public decimal? CuttingDepth { get; set; }
-
-        // Fields for DrillingOperation
-        public decimal? DrillDiameter { get; set; }
-        public decimal? DrillDepth { get; set; }
-
-        public decimal? FinishingMillingDepth { get; set; }
-        public decimal FaceArea { get; set; }
-        public decimal? FaceMillingDepth { get; set; }
-
-        public decimal? PocketLength { get; set; }
-        public decimal? PocketWidth { get; set; }
-        public decimal? PocketDepth { get; set; }
-
-        public decimal LengthBeforeOperation { get; set; }
-        public decimal WidthBeforeOperation { get; set; }
-        public decimal HeightBeforeOperation { get; set; }
-
-        public decimal LengthAfterOperation { get; set; }
-        public decimal WidthAfterOperation { get; set; }
-        public decimal HeightAfterOperation { get; set; }
-
         public decimal VolumeToRemove { get; set; }
+        public decimal VolumeToRemoveFinish { get; set; }
         public decimal MachiningTime { get; set; }
 
         public decimal MachineCost { get; set; }

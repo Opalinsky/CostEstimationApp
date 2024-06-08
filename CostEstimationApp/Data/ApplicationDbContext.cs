@@ -20,223 +20,76 @@ namespace CostEstimationApp.Data
         public DbSet<OperationSet> OperationSets { get; set; }
         public DbSet<Projekt> Projekts { get; set; }
         public DbSet<Przedmiot> Przedmiots { get; set; }
-        public DbSet<Proces> Process { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<FeatureOperationType> FeatureOperationTypes { get; set; }
         public DbSet<AccuracyClass> AccuracyClasses { get; set; }
-        public DbSet<SurfaceRoughness> SurfaceRoughnesses { get; set; }
-        public DbSet<AccuracyClass> FinishingAccuracyClasses { get; set; }
-        public DbSet<SurfaceRoughness> FinishingSurfaceRoughnesses { get; set; }
-        public DbSet<CostEstimationApp.Models.FinishingAccuracyClass>? FinishingAccuracyClass { get; set; }
-        public DbSet<CostEstimationApp.Models.FinishingSurfaceRoughness>? FinishingSurfaceRoughness { get; set; }
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<MachineType>().HasData(
-               new MachineType
-               {
-                   Id = 1,
-                   Typeof = "Automatyczna",
-                   AdditionalTime = 0.2,
-                   AuxiliaryTime = 0.1
-               },
-               new MachineType
-               {
-                   Id = 2,
-                   Typeof = "Manualna",
-                   AdditionalTime = 0.1,
-                   AuxiliaryTime = 0.2
-               }
-           );
+             new MachineType { Id = 1, Typeof = "Automatyczna", AdditionalTime = 0.2, AuxiliaryTime = 0.1 },
+             new MachineType { Id = 2, Typeof = "Konwencjonalna", AdditionalTime = 0.1, AuxiliaryTime = 0.2 }
+            ); 
+
             modelBuilder.Entity<Material>().HasData(
-                new Material
-                {
-                    Id = 1,
-                    Name = "Material1",
-                    PricePerKg = 8,
-                    Density = 0.1m
-                }
+                new Material { Id = 1, Name = "Stal", PricePerKg = 8, Density = 7850 }
             );
+
             modelBuilder.Entity<ToolMaterial>().HasData(
-                new ToolMaterial
-                {
-                    Id = 1,
-                    Name = "Stal Szybkotnąca",
-                }
+                new ToolMaterial { Id = 1, Name = "Stal Szybkotnąca" }
             );
+
             modelBuilder.Entity<Worker>().HasData(
-                new Worker
-                {
-                    Id = 1,
-                    Name = "Pracownika1",
-                    CostPerHour = 50,
-                }
-            );
-            modelBuilder.Entity<OperationType>().HasData(
-                new OperationType
-                {
-                    Id = 1,
-                    Name = "Frezowanie Zgrubne Płaszczyzny Górnej",
-                },
-                new OperationType
-                {
-                    Id = 2,
-                    Name = "Frezowanie Wykańczające Płaszczyzny",
-                },
-                new OperationType
-                {
-                    Id = 3,
-                    Name = "Wiercenie",
-                },
-                new OperationType
-                {
-                    Id = 4,
-                    Name = "Rozwiercanie",
-                },
-                new OperationType
-                {
-                    Id = 5,
-                    Name = "Frezowanie Zgrubne Kieszeni",
-                },
-                new OperationType
-                {
-                    Id = 6,
-                    Name = "Frezowanie Wykańczające Kieszeni",
-                },
-                new OperationType
-                {
-                    Id = 7,
-                    Name = "Frezowanie Rowka",
-                },
-                new OperationType
-                {
-                    Id = 8,
-                    Name = "Frezowanie Uskoku",
-                }
+                new Worker { Id = 1, Name = "Pracownika1", CostPerHour = 50 }
             );
 
             modelBuilder.Entity<AccuracyClass>().HasData(
-                new AccuracyClass
-                {
-                    Id = 1,
-                    Name = "IT12",
-                },
-                new AccuracyClass
-                {
-                    Id = 2,
-                    Name = "IT13",
-                },
-                new AccuracyClass
-                {
-                    Id = 3,
-                    Name = "IT14",
-                }
+                new AccuracyClass { Id = 1, Name = "IT1" },
+                new AccuracyClass { Id = 2, Name = "IT2" },
+                new AccuracyClass { Id = 3, Name = "IT3" },
+                new AccuracyClass { Id = 4, Name = "IT4" },
+                new AccuracyClass { Id = 5, Name = "IT5" },
+                new AccuracyClass { Id = 6, Name = "IT6" },
+                new AccuracyClass { Id = 7, Name = "IT7" },
+                new AccuracyClass { Id = 8, Name = "IT8" },
+                new AccuracyClass { Id = 9, Name = "IT9" },
+                new AccuracyClass { Id = 10, Name = "IT10" },
+                new AccuracyClass { Id = 11, Name = "IT11" },
+                new AccuracyClass { Id = 12, Name = "IT12" },
+                new AccuracyClass { Id = 13, Name = "IT13" }
             );
-           
-            modelBuilder.Entity<FinishingAccuracyClass>().HasData(
-               new FinishingAccuracyClass
-               {
-                   Id = 1,
-                   Name = "IT5",
-               },
-               new FinishingAccuracyClass
-               {
-                   Id = 2,
-                   Name = "IT6",
-               },
-               new FinishingAccuracyClass
-               {
-                   Id = 3,
-                   Name = "IT7",
-               }
+
+            modelBuilder.Entity<OperationType>().HasData(
+                new OperationType { Id = 1, Name = "Frezowanie Zgrubne Płaszczyzny Górnej" },
+                new OperationType { Id = 2, Name = "Frezowanie Wykańczające Płaszczyzny" },
+                new OperationType { Id = 3, Name = "Wiercenie Zgrubne" },
+                new OperationType { Id = 4, Name = "Wiercenie Wykańczające" },
+                new OperationType { Id = 5, Name = "Rozwiercanie" },
+                new OperationType { Id = 6, Name = "Frezowanie Zgrubne Kieszeni" },
+                new OperationType { Id = 7, Name = "Frezowanie Wykańczające Kieszeni" },
+                new OperationType { Id = 8, Name = "Frezowanie Zgrubnie Rowka" },
+                new OperationType { Id = 9, Name = "Frezowanie Wykańczająco Rowka" },
+                new OperationType { Id = 10, Name = "Frezowanie Zgrubnie Uskoku" },
+                new OperationType { Id = 11, Name = "Frezowanie Wykańczająco Uskoku" }
             );
-            
-            modelBuilder.Entity<SurfaceRoughness>().HasData(
-               new SurfaceRoughness
-               {
-                   Id = 1,
-                   Name = "N10",
-               },
-               new SurfaceRoughness
-               {
-                   Id = 2,
-                   Name = "N11",
-               },
-               new SurfaceRoughness
-               {
-                   Id = 3,
-                   Name = "N12",
-               }
-           );
-            modelBuilder.Entity<FinishingSurfaceRoughness>().HasData(
-               new FinishingSurfaceRoughness
-               {
-                   Id = 1,
-                   Name = "N4",
-               },
-               new FinishingSurfaceRoughness
-               {
-                   Id = 2,
-                   Name = "N5",
-               },
-               new FinishingSurfaceRoughness
-               {
-                   Id = 3,
-                   Name = "N6",
-               }
-           );
+
             modelBuilder.Entity<Feature>().HasData(
-                new Feature
-                {
-                    Id = 1,
-                    Name = "Płaszczyzna Górna",
-                },
-                new Feature
-                {
-                    Id = 2,
-                    Name = "Otwór",
-                },
-                new Feature
-                {
-                    Id = 3,
-                    Name = "Kieszeń Zamknięta",
-                },
-                 new Feature
-                 {
-                     Id = 4,
-                     Name = "Rowek Przelotowy",
-                 },
-                new Feature
-                {
-                    Id = 5,
-                    Name = "Uskok",
-                }
+                new Feature { Id = 1, Name = "Płaszczyzna Górna" },
+                new Feature { Id = 2, Name = "Otwór" },
+                new Feature { Id = 3, Name = "Kieszeń Zamknięta" },
+                new Feature { Id = 4, Name = "Rowek Przelotowy" },
+                new Feature { Id = 5, Name = "Uskok" }
             );
-            //// Relacja Operation -> Przedmiot
-            //modelBuilder.Entity<Operation>()
-            //    .HasOne(o => o.Przedmiot)
-            //    .WithMany(p => p.Operations)
-            //    .HasForeignKey(o => o.PrzedmiotId)
-            //    .OnDelete(DeleteBehavior.Restrict); // Tutaj dodajemy DeleteBehavior.Restrict
+
+
+
+
             modelBuilder.Entity<Przedmiot>()
                 .HasOne(p => p.AccuracyClass)
                 .WithMany(ac => ac.Przedmiots)
                 .HasForeignKey(p => p.AccuracyClassId);
-
-            modelBuilder.Entity<Przedmiot>()
-                .HasOne(p => p.SurfaceRoughness)
-                .WithMany(sr => sr.Przedmiots)
-                .HasForeignKey(p => p.SurfaceRoughnessId);
-            
-            modelBuilder.Entity<Przedmiot>()
-               .HasOne(p => p.FinishingAccuracyClass)
-               .WithMany(ac => ac.Przedmiots)
-               .HasForeignKey(p => p.FinishingAccuracyClassId);
-
-            modelBuilder.Entity<Przedmiot>()
-                .HasOne(p => p.FinishingSurfaceRoughness)
-                .WithMany(sr => sr.Przedmiots)
-                .HasForeignKey(p => p.FinishingSurfaceRoughnessId);
 
             modelBuilder.Entity<OperationType>()
                 .HasMany(ot => ot.Machines)
