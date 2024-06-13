@@ -4,31 +4,40 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Narzędzia</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Stwórz Nowy</a>
+    <a class="btn btn-secondary" asp-controller="ToolMaterials" asp-action="Index">Materiał Narzędzia >></a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+@*                 @Html.DisplayNameFor(model => model.Name)
+ *@                Nazwa
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                    @*@Html.DisplayNameFor(model => model.Price)*@
+                    Cena
+           </th>
+            <th>
+@*                 @Html.DisplayNameFor(model => model.AmountOfEdges)
+ *@             Ilość krawędzi   
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AmountOfEdges)
+@*                 @Html.DisplayNameFor(model => model.VitalityPerEdge)
+ *@         Żywotność na krawędź [h]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.VitalityPerEdge)
+@*                 @Html.DisplayNameFor(model => model.CostPerHour)
+ *@         
+            Koszt [pln/h]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CostPerHour)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ToolMaterial)
+@*                 @Html.DisplayNameFor(model => model.ToolMaterial)
+ *@    
+            Materiał narzędzia
             </th>
             <th></th>
         </tr>

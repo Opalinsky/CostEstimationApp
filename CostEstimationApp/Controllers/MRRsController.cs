@@ -64,8 +64,7 @@ namespace CostEstimationApp.Controllers
             if (ModelState.IsValid)
             {
 
-                //mRR.Rate = mRR.Rate * 60000;
-               // mRR.RateFinish = mRR.RateFinish * 60000;
+                
                 _context.Add(mRR);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

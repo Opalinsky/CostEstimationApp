@@ -4,22 +4,25 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Typy Maszyn</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
-</p>
+@*     <a asp-action="Create">Create New</a 
+ *@</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Typeof)
+                @* @Html.DisplayNameFor(model => model.Typeof) *@
+                Typ maszyny
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AdditionalTime)
+                @* @Html.DisplayNameFor(model => model.AdditionalTime) *@
+                Czas pomocniczny (tp)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AuxiliaryTime)
+                @* @Html.DisplayNameFor(model => model.AuxiliaryTime) *@
+                Czas uzupełniający (tu)
             </th>
             <th></th>
         </tr>
@@ -45,3 +48,5 @@
 }
     </tbody>
 </table>
+<a class="btn btn-secondary" asp-controller="Machines" asp-action="Index">Maszyny <<</a>
+

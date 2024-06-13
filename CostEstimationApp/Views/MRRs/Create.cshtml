@@ -13,20 +13,20 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="MaterialId" class="control-label"></label>
+                <label asp-for="MaterialId" class="control-label">Materiał półfabrykatu</label>
                 <select asp-for="MaterialId" class ="form-control" asp-items="ViewBag.MaterialId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="ToolMaterialId" class="control-label"></label>
+                <label asp-for="ToolMaterialId" class="control-label">Materiał narzędzia</label>
                 <select asp-for="ToolMaterialId" class ="form-control" asp-items="ViewBag.ToolMaterialId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Rate" class="control-label"></label>
+                <label asp-for="Rate" class="control-label">MRR [cm3/min]</label>
                 <input asp-for="Rate" class="form-control" />
                 <span asp-validation-for="Rate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RateFinish" class="control-label"></label>
+                <label asp-for="RateFinish" class="control-label">MRR Wykańczający [cm3/min]</label>
                 <input asp-for="RateFinish" class="form-control" />
                 <span asp-validation-for="RateFinish" class="text-danger"></span>
             </div>

@@ -14,17 +14,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Typeof" class="control-label"></label>
+                <label asp-for="Typeof" class="control-label">Typ maszyny</label>
                 <input asp-for="Typeof" class="form-control" />
                 <span asp-validation-for="Typeof" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AdditionalTime" class="control-label"></label>
+                <label asp-for="AdditionalTime" class="control-label">Czas pomocniczy (tp)</label>
                 <input asp-for="AdditionalTime" class="form-control" />
                 <span asp-validation-for="AdditionalTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AuxiliaryTime" class="control-label"></label>
+                <label asp-for="AuxiliaryTime" class="control-label">Czas uzupełniający (tu)</label>
                 <input asp-for="AuxiliaryTime" class="form-control" />
                 <span asp-validation-for="AuxiliaryTime" class="text-danger"></span>
             </div>

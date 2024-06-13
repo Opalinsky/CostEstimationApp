@@ -4,16 +4,18 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Materiał narzędzia</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Stwórz Nowy</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+@*                 @Html.DisplayNameFor(model => model.Name)
+ *@      
+            Nazwa
             </th>
             <th></th>
         </tr>
@@ -33,3 +35,4 @@
 }
     </tbody>
 </table>
+<a class="btn btn-secondary" asp-controller="Tools" asp-action="Index">Narzędzia <<</a>

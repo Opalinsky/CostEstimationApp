@@ -4,28 +4,30 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Półfabrykaty</h1>
 
 <p>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Materials" asp-action="Index">>>> Materiały >>></a>
-    </li>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Stwórz Nowy</a>
+    <a class="btn btn-secondary" asp-controller="Materials" asp-action="Index">Materiały >></a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Material)
+                @* @Html.DisplayNameFor(model => model.Material) *@
+                Nazwa Materiału
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DimensionX)
+                @* @Html.DisplayNameFor(model => model.DimensionX) *@
+                Długość
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DimensionY)
+                @* @Html.DisplayNameFor(model => model.DimensionY) *@
+                Szerokość
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DimensionZ)
+                @* @Html.DisplayNameFor(model => model.DimensionZ) *@
+                Wysokość
             </th>
             <th>
                 @* @Html.DisplayNameFor(model => model.Volume) *@      
@@ -68,3 +70,4 @@
 }
     </tbody>
 </table>
+<a class="btn btn-secondary" asp-controller="Projekts" asp-action="Index">Projekty <<</a>

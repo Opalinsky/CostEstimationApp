@@ -4,7 +4,7 @@
     ViewData["Title"] = "Operations Index";
 }
 
-<h1>Operations Index</h1>
+<h1></h1>
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
@@ -15,10 +15,10 @@
 @*          <th>@Html.DisplayNameFor(model => model.SemiFinishedProduct)</th>
  *@         <th>@Html.DisplayNameFor(model => model.Machine)</th>
             <th>@Html.DisplayNameFor(model => model.Tool)</th>
-            <th>@Html.DisplayNameFor(model => model.SetUpTime)</th>
-            <th>@Html.DisplayNameFor(model => model.OperationType)</th>
-            <th>@Html.DisplayNameFor(model => model.MachiningTime)</th>
-            <th>@Html.DisplayNameFor(model => model.TotalCost)</th>
+            <th>@* @Html.DisplayNameFor(model => model.SetUpTime) *@Czas Przygotowawczo-Zakończeniowy [min]</th>
+            <th>@* >@Html.DisplayNameFor(model => model.OperationType) *@ Typ Operacji</th>
+            <th>@*@Html.DisplayNameFor(model => model.MachiningTime) *@Czas Obróbki [min]</th>
+            <th>@* @Html.DisplayNameFor(model => model.TotalCost) *@ Koszt Całkowity [pln]</th>
             <th></th>
         </tr>
     </thead>
@@ -44,6 +44,4 @@
     </tbody>
 </table>
 </li>
-<li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-controller="OperationSets" asp-action="Index">Powrót do listy operacji</a>
-</li>
+<a class="btn btn-success" asp-controller="OperationSets" asp-action="Index">Zaakceptuj </a>

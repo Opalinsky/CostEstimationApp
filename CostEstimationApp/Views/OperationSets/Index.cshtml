@@ -4,34 +4,42 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Proces</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Stwórz Nowy</a>
+    <a class="btn btn-secondary" asp-controller="OperationSets" asp-action="Index">Proces >></a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Projekt.Name)
+@*                 @Html.DisplayNameFor(model => model.FirstOrDefault().Projekt.Name) *@
+                Nazwa projektu
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+                @* @Html.DisplayNameFor(model => model.FirstOrDefault().Name) *@
+                Nazwa
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Operations)
+                @* @Html.DisplayNameFor(model => model.FirstOrDefault().Operations) *@
+                Przypisane operacje
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().MachineCost)
+                @* @Html.DisplayNameFor(model => model.FirstOrDefault().MachineCost) *@
+                Koszt maszyny
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().ToolCost)
+                @* @Html.DisplayNameFor(model => model.FirstOrDefault().ToolCost) *@
+                Koszt narzędzia
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().WorkerCost)
+                @* @Html.DisplayNameFor(model => model.FirstOrDefault().WorkerCost) *@
+                Koszt pracownika
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().TotalCost)
+                @* @Html.DisplayNameFor(model => model.FirstOrDefault().TotalCost) *@
+                Całkowity koszt
             </th>
             <th></th>
         </tr>
@@ -71,4 +79,5 @@
         }
     </tbody>
 </table>
-<a asp-controller="Projekts" asp-action="Index">Powrót</a>
+<a class="btn btn-secondary" asp-controller="Przedmiots" asp-action="Index">Powrót do Cech <<</a>
+<a class="btn btn-success" asp-controller="Projekts" asp-action="Index">Zaakceptuj </a>

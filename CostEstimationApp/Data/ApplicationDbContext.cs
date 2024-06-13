@@ -33,9 +33,10 @@ namespace CostEstimationApp.Data
              new MachineType { Id = 2, Typeof = "Konwencjonalna", AdditionalTime = 0.1, AuxiliaryTime = 0.2 }
             ); 
 
-            modelBuilder.Entity<Material>().HasData(
-                new Material { Id = 1, Name = "Stal", PricePerKg = 8, Density = 7850 }
-            );
+            //modelBuilder.Entity<Material>().HasData(
+            //    new Material { Id = 1, Name = "Stal konstrukcyjna S275JR", PricePerKg = 2.40m, Density = 7850 },
+            //    new Material { Id = 2, Name = "Stal stopowa 42CrMo4", PricePerKg = 9.5m, Density = 7700 }
+            //);
 
             modelBuilder.Entity<ToolMaterial>().HasData(
                 new ToolMaterial { Id = 1, Name = "Stal Szybkotnąca" }

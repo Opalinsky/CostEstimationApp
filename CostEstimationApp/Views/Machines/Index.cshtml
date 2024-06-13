@@ -4,10 +4,12 @@
     ViewData["Title"] = "Machines";
 }
 
-<h1>Machines</h1>
+<h1>Maszyny</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Stwórz Nowy</a>
+    <a class="btn btn-secondary" asp-controller="MachineTypes" asp-action="Index">Typy maszyn >></a>
+
 </p>
 <table class="table">
     <thead>

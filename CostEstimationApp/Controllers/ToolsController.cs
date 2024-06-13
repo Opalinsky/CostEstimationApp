@@ -139,7 +139,7 @@ namespace CostEstimationApp.Controllers
                     // Obliczanie CostPerHour
                     if (tool.AmountOfEdges > 0 && tool.VitalityPerEdge > 0)
                     {
-                        toolToUpdate.CostPerHour = tool.Price / (tool.AmountOfEdges * tool.VitalityPerEdge);
+                        toolToUpdate.CostPerHour = (tool.Price ) / (tool.AmountOfEdges * tool.VitalityPerEdge);
                     }
 
                     toolToUpdate.OperationTypes.Clear();

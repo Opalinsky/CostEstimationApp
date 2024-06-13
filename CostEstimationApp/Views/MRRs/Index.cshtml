@@ -4,25 +4,29 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>MRR</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Stwórz Nowy</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Material)
+                @* @Html.DisplayNameFor(model => model.Material) *@
+                Materiał półfabrykatu
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ToolMaterial)
+                @* @Html.DisplayNameFor(model => model.ToolMaterial) *@
+                Materiał narzędzia
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Rate)
+                @* @Html.DisplayNameFor(model => model.Rate) *@
+                MRR [cm3/min]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RateFinish)
+                @* @Html.DisplayNameFor(model => model.RateFinish) *@
+                MRR Wykańczający [cm3/min]
             </th>
             <th></th>
         </tr>

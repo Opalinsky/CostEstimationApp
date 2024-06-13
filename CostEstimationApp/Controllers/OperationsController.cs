@@ -153,85 +153,110 @@ namespace CostEstimationApp.Controllers
                 var przedmiot = await _context.Przedmiots
                     .Where(p => p.ProjektId == projectId && p.FeatureId == operation.FeatureId)
                     .FirstOrDefaultAsync();
-
-                Console.WriteLine(mrr.Rate);
-                Console.WriteLine(mrr.RateFinish);
+                
                 // Obliczenia dla typu operacji
                 if (operation.OperationType.Name == "Frezowanie Zgrubne Płaszczyzny Górnej")
                 {
                     Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
                     operation.VolumeToRemove = przedmiot.VolumeToRemove;
-                    operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
+                    var Rate = mrr.Rate * 1000;
+                    operation.MachiningTime = operation.VolumeToRemove / Rate;
+                    Console.WriteLine(mrr.Rate);
+                    Console.WriteLine(operation.MachiningTime);
                 }
                 else if (operation.OperationType.Name == "Frezowanie Wykańczające Płaszczyzny")
                 {
                     Console.WriteLine($"volume to remove finish: {przedmiot.VolumeToRemoveFinish}");
                     operation.VolumeToRemoveFinish = przedmiot.VolumeToRemoveFinish;
-                    operation.MachiningTime = operation.VolumeToRemoveFinish / mrr.RateFinish;
+                    var RateFinish = mrr.RateFinish * 1000;
+                    operation.MachiningTime = operation.VolumeToRemoveFinish / RateFinish;
+                    Console.WriteLine($"mrr finish: {mrr.RateFinish}");
+                    Console.WriteLine(operation.MachiningTime);
                 }
                 else if (operation.OperationType.Name == "Wiercenie Zgrubne")
                 {
                     Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
                     operation.VolumeToRemove = przedmiot.VolumeToRemove;
-                    operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
-
+                    var Rate = mrr.Rate * 1000;
+                    operation.MachiningTime = operation.VolumeToRemove / Rate;
+                    Console.WriteLine(mrr.Rate);
+                    Console.WriteLine(operation.MachiningTime);
                 }
                 else if (operation.OperationType.Name == "Wiercenie Wykańczające")
                 {
                     Console.WriteLine($"volume to remove finish: {przedmiot.VolumeToRemoveFinish}");
                     operation.VolumeToRemoveFinish = przedmiot.VolumeToRemoveFinish;
-                    operation.MachiningTime = operation.VolumeToRemoveFinish / mrr.RateFinish;
+                    var RateFinish = mrr.RateFinish * 1000;
+                    operation.MachiningTime = operation.VolumeToRemoveFinish / RateFinish;
+                    Console.WriteLine($"mrr finish: {mrr.RateFinish}");
+                    Console.WriteLine(operation.MachiningTime);
                 }
                 else if (operation.OperationType.Name == "Rozwiercanie")
                 {
                     Console.WriteLine($"volume to remove finish: {przedmiot.VolumeToRemoveFinish}");
                     operation.VolumeToRemoveFinish = przedmiot.VolumeToRemoveFinish;
-                    operation.MachiningTime = operation.VolumeToRemoveFinish / mrr.RateFinish;
+                    var RateFinish = mrr.RateFinish * 1000;
+                    operation.MachiningTime = operation.VolumeToRemoveFinish / RateFinish;
+                    Console.WriteLine($"mrr finish: {mrr.RateFinish}");
+                    Console.WriteLine(operation.MachiningTime);
                 }
                 else if (operation.OperationType.Name == "Frezowanie Zgrubne Kieszeni")
                 {
                     Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
                     operation.VolumeToRemove = przedmiot.VolumeToRemove;
-                    operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
-
+                    var Rate = mrr.Rate * 1000;
+                    operation.MachiningTime = operation.VolumeToRemove / Rate;
+                    Console.WriteLine(mrr.Rate);
+                    Console.WriteLine(operation.MachiningTime);
                 }
                 else if (operation.OperationType.Name == "Frezowanie Wykańczające Kieszeni")
                 {
                     Console.WriteLine($"volume to remove finish: {przedmiot.VolumeToRemoveFinish}");
                     operation.VolumeToRemoveFinish = przedmiot.VolumeToRemoveFinish;
-                    operation.MachiningTime = operation.VolumeToRemoveFinish / mrr.RateFinish;
+                    var RateFinish = mrr.RateFinish * 1000;
+                    operation.MachiningTime = operation.VolumeToRemoveFinish / RateFinish;
+                    Console.WriteLine($"mrr finish: {mrr.RateFinish}");
+                    Console.WriteLine(operation.MachiningTime);
                 }
                 else if (operation.OperationType.Name == "Frezowanie Zgrubnie Rowka")
                 {
                     Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
-                    operation.VolumeToRemove = przedmiot.VolumeToRemoveFinish;
-                    operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
+                    operation.VolumeToRemove = przedmiot.VolumeToRemove;
+                    var Rate = mrr.Rate * 1000;
+                    operation.MachiningTime = operation.VolumeToRemove / Rate;
+                    Console.WriteLine(mrr.Rate);
+                    Console.WriteLine(operation.MachiningTime);
 
                 }
                 else if (operation.OperationType.Name == "Frezowanie Wykańczająco Rowka")
                 {
                     Console.WriteLine($"volume to remove finish: {przedmiot.VolumeToRemoveFinish}");
                     operation.VolumeToRemoveFinish = przedmiot.VolumeToRemoveFinish;
-                    operation.MachiningTime = operation.VolumeToRemoveFinish / mrr.RateFinish;
+                    var RateFinish = mrr.RateFinish * 1000;
+                    operation.MachiningTime = operation.VolumeToRemoveFinish / RateFinish;
+                    Console.WriteLine($"mrr finish: {mrr.RateFinish}");
+                    Console.WriteLine(operation.MachiningTime);
                 }
                 else if (operation.OperationType.Name == "Frezowanie Zgrubnie Uskoku")
                 {
                     Console.WriteLine($"volume to remove: {przedmiot.VolumeToRemove}");
-                    operation.VolumeToRemove = przedmiot.VolumeToRemoveFinish;
-                    operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
-
+                    operation.VolumeToRemove = przedmiot.VolumeToRemove;
+                    var Rate = mrr.Rate * 1000;
+                    operation.MachiningTime = operation.VolumeToRemove / Rate;
+                    Console.WriteLine(mrr.Rate);
+                    Console.WriteLine(operation.MachiningTime);
                 }
                 else if (operation.OperationType.Name == "Frezowanie Wykańczająco Uskoku")
                 {
                     Console.WriteLine($"volume to remove finish: {przedmiot.VolumeToRemoveFinish}");
                     operation.VolumeToRemoveFinish = przedmiot.VolumeToRemoveFinish;
-                    operation.MachiningTime = operation.VolumeToRemoveFinish / mrr.RateFinish;
+                    var RateFinish = mrr.RateFinish * 1000;
+                    operation.MachiningTime = operation.VolumeToRemoveFinish / RateFinish;
+                    Console.WriteLine($"mrr finish: {mrr.RateFinish}");
+                    Console.WriteLine(operation.MachiningTime);
                 }
 
-                Console.WriteLine($"Volume to remove: {operation.VolumeToRemove}");
-
                 //operation.MachiningTime = operation.VolumeToRemove / mrr.Rate;
-                Console.WriteLine($"MRR is: {mrr.RateFinish}");
                 Console.WriteLine($"Machining time is: {operation.MachiningTime}");
 
                 // Pobierz koszt maszyny, pracownika i narzędzia
@@ -252,11 +277,11 @@ namespace CostEstimationApp.Controllers
                 Console.WriteLine($"Worker Id is: {worker.Id}");
 
                 // Użyj AdditionalTime z MachineType
-                operation.MachineCost = (machine.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime);
+                operation.MachineCost = ((machine.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime))/60;
 
-                operation.WorkerCost = (worker.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime + (decimal)machine.MachineType.AuxiliaryTime) + (worker.CostPerHour * operation.SetUpTime.GetValueOrDefault());
+                operation.WorkerCost = ((worker.CostPerHour * operation.MachiningTime) * (1 + (decimal)machine.MachineType.AdditionalTime + (decimal)machine.MachineType.AuxiliaryTime) + (worker.CostPerHour * (operation.SetUpTime.GetValueOrDefault())))/60;
 
-                operation.ToolCost = tool.CostPerHour * operation.MachiningTime;
+                operation.ToolCost = (tool.CostPerHour * operation.MachiningTime)/60;
 
                 Console.WriteLine($"Machine cost is: {operation.MachineCost}");
                 Console.WriteLine($"Worker cost is: {operation.WorkerCost}");

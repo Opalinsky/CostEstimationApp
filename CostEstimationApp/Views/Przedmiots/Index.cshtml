@@ -4,34 +4,39 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Przedmiot</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
-    <a asp-action="GoToOperationSets" class="btn btn-primary">Go to Operation Sets</a>
+    <a class="btn btn-primary" asp-action="Create">Stwórz Nowy</a>
+    <a class="btn btn-secondary" asp-controller="OperationSets" asp-action="Index">Proces >></a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @* @Html.DisplayNameFor(model => model.Name) *@
+                Nazwa
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Projekt)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Feature)
+                @* @Html.DisplayNameFor(model => model.Feature) *@
+                Cecha
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.VolumeToRemove)
+                @* @Html.DisplayNameFor(model => model.VolumeToRemove) *@
+                Objętość do usunięcia zgrubnie [mm3]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.VolumeToRemoveFinish)
+                @* @Html.DisplayNameFor(model => model.VolumeToRemoveFinish) *@
+                Objętość do usunięcia operacją wykańczająco [mm3]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AccuracyClass)
+                @* @Html.DisplayNameFor(model => model.AccuracyClass) *@
+                Klasa dokładności
             </th>
-            <th>
+           @*  <th>
                 @Html.DisplayNameFor(model => model.DrillDiameter)
             </th>
             <th>
@@ -90,7 +95,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StepPlane)
-            </th>
+            </th> *@
             <th></th>
         </tr>
     </thead>
@@ -116,7 +121,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.AccuracyClass.Name)
                 </td>
-                <td>
+               @*  <td>
                     @Html.DisplayFor(modelItem => item.DrillDiameter)
                 </td>
                 <td>
@@ -175,15 +180,15 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.StepPlane)
-                </td>
+                </td> *@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | 
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
-                <a asp-controller="Projekts" asp-action="Index">Powrót</a>
 
             </tr>
         }
     </tbody>
 </table>
+<a class="btn btn-secondary" asp-controller="Projekts" asp-action="Index">Projekty <<</a>
