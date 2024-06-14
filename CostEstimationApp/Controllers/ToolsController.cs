@@ -107,7 +107,74 @@ namespace CostEstimationApp.Controllers
             return View(tool);
         }
 
-        // POST: Tools/Edit/5
+        //// POST: Tools/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,AmountOfEdges,VitalityPerEdge,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
+        //{
+        //    if (id != tool.Id)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            var toolToUpdate = await _context.Tools
+        //                .Include(t => t.OperationTypes)
+        //                .FirstOrDefaultAsync(t => t.Id == id);
+
+        //            if (toolToUpdate == null)
+        //            {
+        //                return NotFound();
+        //            }
+
+        //            toolToUpdate.Name = tool.Name;
+        //            toolToUpdate.Price = tool.Price;
+        //            toolToUpdate.AmountOfEdges = tool.AmountOfEdges;
+        //            toolToUpdate.VitalityPerEdge = tool.VitalityPerEdge;
+        //            toolToUpdate.ToolMaterialId = tool.ToolMaterialId;
+
+        //            // Obliczanie CostPerHour
+        //            if (tool.AmountOfEdges > 0 && tool.VitalityPerEdge > 0)
+        //            {
+        //                toolToUpdate.CostPerHour = (tool.Price ) / (tool.AmountOfEdges * tool.VitalityPerEdge);
+        //            }
+
+        //            toolToUpdate.OperationTypes.Clear();
+        //            if (OperationTypeIds != null && OperationTypeIds.Length > 0)
+        //            {
+        //                foreach (var operationTypeId in OperationTypeIds)
+        //                {
+        //                    var operationType = await _context.OperationTypes.FindAsync(operationTypeId);
+        //                    if (operationType != null)
+        //                    {
+        //                        toolToUpdate.OperationTypes.Add(operationType);
+        //                    }
+        //                }
+        //            }
+
+        //            _context.Update(toolToUpdate);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!ToolExists(tool.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["ToolMaterialId"] = new SelectList(_context.ToolMaterials, "Id", "Name", tool.ToolMaterialId);
+        //    ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
+        //    return View(tool);
+        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,AmountOfEdges,VitalityPerEdge,ToolMaterialId")] Tool tool, int[] OperationTypeIds)
@@ -139,9 +206,10 @@ namespace CostEstimationApp.Controllers
                     // Obliczanie CostPerHour
                     if (tool.AmountOfEdges > 0 && tool.VitalityPerEdge > 0)
                     {
-                        toolToUpdate.CostPerHour = (tool.Price ) / (tool.AmountOfEdges * tool.VitalityPerEdge);
+                        toolToUpdate.CostPerHour = tool.Price / (tool.AmountOfEdges * tool.VitalityPerEdge);
                     }
 
+                    // Aktualizacja operacji typu
                     toolToUpdate.OperationTypes.Clear();
                     if (OperationTypeIds != null && OperationTypeIds.Length > 0)
                     {

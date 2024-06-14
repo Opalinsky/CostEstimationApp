@@ -109,6 +109,7 @@ namespace CostEstimationApp.Controllers
             {
                 try
                 {
+                   
                     var semiFinishedProduct = await _context.SemiFinishedProducts
                         .FirstOrDefaultAsync(s => s.Id == projekt.SemiFinishedProductId);
 
@@ -120,10 +121,11 @@ namespace CostEstimationApp.Controllers
                     }
 
                     projekt.SemiFinishedProductCost = semiFinishedProduct.Price * projekt.Quantity;
-                    projekt.TotalCost = projekt.SemiFinishedProductCost;
 
                     _context.Update(projekt);
                     await _context.SaveChangesAsync();
+                    
+                    await UpdateProjectCosts(projekt.Id);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -209,13 +211,12 @@ namespace CostEstimationApp.Controllers
         {
             var projekt = await _context.Projekts
                 .Include(p => p.OperationSets)
-                .Include(p => p.SemiFinishedProduct)
                 .FirstOrDefaultAsync(p => p.Id == projektId);
 
             if (projekt != null)
             {
                 projekt.OperationCost = projekt.OperationSets.Sum(os => os.TotalCost);
-                projekt.TotalCost = (projekt.OperationCost + projekt.SemiFinishedProductCost) * projekt.Quantity;
+                projekt.TotalCost = projekt.OperationCost * projekt.Quantity;
 
                 _context.Update(projekt);
                 await _context.SaveChangesAsync();

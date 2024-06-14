@@ -14,22 +14,22 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Nazwa</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
+                <label asp-for="Price" class="control-label">Cena</label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AmountOfEdges" class="control-label"></label>
+                <label asp-for="AmountOfEdges" class="control-label">Ilość krawędzi</label>
                 <input asp-for="AmountOfEdges" class="form-control" />
                 <span asp-validation-for="AmountOfEdges" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VitalityPerEdge" class="control-label"></label>
+                <label asp-for="VitalityPerEdge" class="control-label">Żwyotność na krawędź [h]</label>
                 <input asp-for="VitalityPerEdge" class="form-control" />
                 <span asp-validation-for="VitalityPerEdge" class="text-danger"></span>
             </div>
@@ -39,9 +39,21 @@
                 <span asp-validation-for="CostPerHour" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ToolMaterialId" class="control-label"></label>
+                <label asp-for="ToolMaterialId" class="control-label">Materiał narzędzia</label>
                 <select asp-for="ToolMaterialId" class="form-control" asp-items="ViewBag.ToolMaterialId"></select>
                 <span asp-validation-for="ToolMaterialId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Operation Types</label>
+                <div>
+                    @foreach (var operationType in (MultiSelectList)ViewBag.OperationTypeIds)
+                    {
+                        <div>
+                            <input type="checkbox" name="OperationTypeIds" value="@operationType.Value" id="operationType_@operationType.Value" @(Model.OperationTypes.Any(ot => ot.Id == int.Parse(operationType.Value)) ? "checked" : "") />
+                            <label for="operationType_@operationType.Value">@operationType.Text</label>
+                        </div>
+                    }
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -55,5 +67,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

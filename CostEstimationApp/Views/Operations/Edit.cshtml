@@ -12,6 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -23,30 +24,43 @@
                 <span asp-validation-for="SemiFinishedProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MachineId" class="control-label"></label>
-                <select asp-for="MachineId" class="form-control" asp-items="ViewBag.MachineId"></select>
-                <span asp-validation-for="MachineId" class="text-danger"></span>
+                <label asp-for="FeatureId" class="control-label"></label>
+                <select asp-for="FeatureId" class="form-control" asp-items="ViewBag.FeatureId"></select>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" id="acceptFeatureButton">Zaakceptuj</button>
+            </div>
+            <div class="form-group">
+                <label asp-for="OperationTypeId" class="control-label">Operation Type</label>
+                <div id="operationTypeContainer">
+                    <select asp-for="OperationTypeId" class="form-control">
+                        <option value="">-- Wybierz typ operacji --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" id="acceptOperationTypeButton">Zaakceptuj Operation Type</button>
+            </div>
+            <div class="form-group">
+                <label asp-for="MachineId" class="control-label">Machine</label>
+                <div id="machineContainer">
+                    <select asp-for="MachineId" class="form-control">
+                        <option value="">-- Wybierz maszynę --</option>
+                    </select>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="ToolId" class="control-label"></label>
-                <select asp-for="ToolId" class="form-control" asp-items="ViewBag.ToolId"></select>
-                <span asp-validation-for="ToolId" class="text-danger"></span>
+                <div id="toolContainer">
+                    <select asp-for="ToolId" class="form-control">
+                        <option value="">-- Wybierz narzędzie --</option>
+                    </select>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="SetUpTime" class="control-label"></label>
-                <select asp-for="SetUpTime" class="form-control" asp-items="ViewBag.SetUpTime"></select>
+                <input asp-for="SetUpTime" class="form-control" />
                 <span asp-validation-for="SetUpTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FeatureId" class="control-label"></label>
-                <select asp-for="FeatureId" class="form-control" asp-items="ViewBag.FeatureId" id="FeatureId"></select>
-                <span asp-validation-for="FeatureId" class="text-danger"></span>
-                <button type="button" id="acceptFeature" class="btn btn-secondary">Zaakceptuj</button>
-            </div>
-            <div class="form-group">
-                <label asp-for="OperationTypeId" class="control-label">Operation Types</label>
-                <select asp-for="OperationTypeId" class="form-control" asp-items="ViewBag.OperationTypeId" id="OperationTypeId"></select>
-                <span asp-validation-for="OperationTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -60,24 +74,46 @@
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
     <script>
         $(document).ready(function () {
-            $('#acceptFeature').click(function () {
+            $('#acceptFeatureButton').click(function () {
                 var featureId = $('#FeatureId').val();
-                $.ajax({
-                    url: '@Url.Action("GetOperationTypesByFeature", "Operations")/' + featureId,
-                    type: 'GET',
-                    success: function (data) {
-                        var operationTypeSelect = $('#OperationTypeId');
-                        operationTypeSelect.empty();
-                        $.each(data, function (i, item) {
-                            operationTypeSelect.append($('<option>', {
-                                value: item.id,
-                                text: item.name
-                            }));
-                        });
-                    }
+                $.getJSON('/Operations/GetOperationTypesByFeature', { featureId: featureId }, function (data) {
+                    var operationTypeSelect = $('#OperationTypeId');
+                    operationTypeSelect.empty();
+                    $.each(data.operationTypes, function (index, item) {
+                        operationTypeSelect.append($('<option>', {
+                            value: item.id,
+                            text: item.name
+                        }));
+                    });
+                });
+            });
+
+            $('#acceptOperationTypeButton').click(function () {
+                var operationTypeId = $('#OperationTypeId').val();
+                $.getJSON('/Operations/GetMachinesAndToolsByOperationType', { operationTypeId: operationTypeId }, function (data) {
+                    var machineSelect = $('#MachineId');
+                    machineSelect.empty();
+                    $.each(data.machines, function (index, item) {
+                        machineSelect.append($('<option>', {
+                            value: item.id,
+                            text: item.name
+                        }));
+                    });
+
+                    var toolSelect = $('#ToolId');
+                    toolSelect.empty();
+                    $.each(data.tools, function (index, item) {
+                        toolSelect.append($('<option>', {
+                            value: item.id,
+                            text: item.name
+                        }));
+                    });
                 });
             });
         });

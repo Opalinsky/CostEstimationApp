@@ -107,7 +107,67 @@ namespace CostEstimationApp.Controllers
             return View(machine);
         }
 
-        // POST: Machines/Edit/5
+        //// POST: Machines/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CostPerHour,MachineTypeId,WorkerId")] Machine machine, int[] OperationTypeIds)
+        //{
+        //    if (id != machine.Id)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            var machineToUpdate = await _context.Machines
+        //                .Include(m => m.OperationTypes)
+        //                .FirstOrDefaultAsync(m => m.Id == id);
+
+        //            if (machineToUpdate == null)
+        //            {
+        //                return NotFound();
+        //            }
+
+        //            machineToUpdate.Name = machine.Name;
+        //            machineToUpdate.CostPerHour = machine.CostPerHour;
+        //            machineToUpdate.MachineTypeId = machine.MachineTypeId;
+
+        //            machineToUpdate.OperationTypes.Clear();
+        //            if (OperationTypeIds != null && OperationTypeIds.Length > 0)
+        //            {
+        //                foreach (var operationTypeId in OperationTypeIds)
+        //                {
+        //                    var operationType = await _context.OperationTypes.FindAsync(operationTypeId);
+        //                    if (operationType != null)
+        //                    {
+        //                        machineToUpdate.OperationTypes.Add(operationType);
+        //                    }
+        //                }
+        //            }
+
+        //            _context.Update(machineToUpdate);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!MachineExists(machine.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["MachineTypeId"] = new SelectList(_context.MachineTypes, "Id", "Typeof", machine.MachineTypeId);
+        //    ViewData["WorkerId"] = new SelectList(_context.Workers, "Id", "Name", machine.WorkerId);
+        //    ViewData["OperationTypeIds"] = new MultiSelectList(_context.OperationTypes, "Id", "Name", OperationTypeIds);
+        //    return View(machine);
+        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CostPerHour,MachineTypeId,WorkerId")] Machine machine, int[] OperationTypeIds)
@@ -133,7 +193,9 @@ namespace CostEstimationApp.Controllers
                     machineToUpdate.Name = machine.Name;
                     machineToUpdate.CostPerHour = machine.CostPerHour;
                     machineToUpdate.MachineTypeId = machine.MachineTypeId;
+                    machineToUpdate.WorkerId = machine.WorkerId;
 
+                    // Aktualizacja operacji typu
                     machineToUpdate.OperationTypes.Clear();
                     if (OperationTypeIds != null && OperationTypeIds.Length > 0)
                     {

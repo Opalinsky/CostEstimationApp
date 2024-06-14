@@ -8,101 +8,120 @@
 
 <h4>Przedmiot</h4>
 <hr />
+<h4>Przedmiot</h4>
+<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Nazwa</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProjektId" class="control-label"></label>
-                <select asp-for="ProjektId" class="form-control" asp-items="ViewBag.ProjektId"></select>
-                <span asp-validation-for="ProjektId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FeatureId" class="control-label"></label>
+                <label asp-for="FeatureId" class="control-label">Cecha</label>
                 <select asp-for="FeatureId" class="form-control" asp-items="ViewBag.FeatureId"></select>
-                <span asp-validation-for="FeatureId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AccuracyClassId" class="control-label"></label>
-                <select asp-for="AccuracyClassId" class="form-control" asp-items="ViewBag.AccuracyClassId"></select>
-                <span asp-validation-for="AccuracyClassId" class="text-danger"></span>
+                <button type="button" class="btn btn-primary" id="acceptFeatureButton">Zaakceptuj</button>
             </div>
-            @* <div class="form-group">
-                <label asp-for="FinishingAccuracyClassId" class="control-label"></label>
-                <select asp-for="FinishingAccuracyClassId" class="form-control" asp-items="ViewBag.FinishingAccuracyClassId"></select>
-                <span asp-validation-for="FinishingAccuracyClassId" class="text-danger"></span>
+
+            <div id="dynamic-fields">
+                <div class="form-group dynamic-field" id="accuracy-class">
+                    <label asp-for="AccuracyClassId" class="control-label">Klasa dokładności</label>
+                    <select asp-for="AccuracyClassId" class="form-control" asp-items="ViewBag.AccuracyClassId"></select>
+                    <span asp-validation-for="AccuracyClassId" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="face-milling-depth">
+                    <label asp-for="FaceMillingDepth" class="control-label">Naddatek do usunięcia</label>
+                    <input asp-for="FaceMillingDepth" class="form-control" />
+                    <span asp-validation-for="FaceMillingDepth" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="drill-diameter">
+                    <label asp-for="DrillDiameter" class="control-label">Średnica otworu</label>
+                    <input asp-for="DrillDiameter" class="form-control" />
+                    <span asp-validation-for="DrillDiameter" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="drill-depth">
+                    <label asp-for="DrillDepth" class="control-label">Głębokość otworu</label>
+                    <input asp-for="DrillDepth" class="form-control" />
+                    <span asp-validation-for="DrillDepth" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="drill-application-count">
+                    <label asp-for="DrillApplicationCount" class="control-label">Ilość otworów</label>
+                    <input asp-for="DrillApplicationCount" class="form-control" />
+                    <span asp-validation-for="DrillApplicationCount" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="reaming-diameter">
+                    <label asp-for="ReamingDiameter" class="control-label">Średnica pogłębiania walcowego</label>
+                    <input asp-for="ReamingDiameter" class="form-control" />
+                    <span asp-validation-for="ReamingDiameter" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="reaming-depth">
+                    <label asp-for="ReamingDepth" class="control-label">Głębokość pogłębiania walcowego</label>
+                    <input asp-for="ReamingDepth" class="form-control" />
+                    <span asp-validation-for="ReamingDepth" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="pocket-length">
+                    <label asp-for="PocketLength" class="control-label">Długość kieszeni</label>
+                    <input asp-for="PocketLength" class="form-control" />
+                    <span asp-validation-for="PocketLength" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="pocket-width">
+                    <label asp-for="PocketWidth" class="control-label">Szerokość kieszeni</label>
+                    <input asp-for="PocketWidth" class="form-control" />
+                    <span asp-validation-for="PocketWidth" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="pocket-depth">
+                    <label asp-for="PocketDepth" class="control-label">Głębokość kieszeni</label>
+                    <input asp-for="PocketDepth" class="form-control" />
+                    <span asp-validation-for="PocketDepth" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="add-finishing-operation">
+                    <label asp-for="AddFinishingOperation" class="control-label"></label>
+                    <input asp-for="AddFinishingOperation" class="form-control" />
+                    <span asp-validation-for="AddFinishingOperation" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="slot-height">
+                    <label asp-for="SlotHeight" class="control-label">Wysokość rowka</label>
+                    <input asp-for="SlotHeight" class="form-control" />
+                    <span asp-validation-for="SlotHeight" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="slot-application-count">
+                    <label asp-for="SlotApplicationCount" class="control-label">Ilość rowków</label>
+                    <input asp-for="SlotApplicationCount" class="form-control" />
+                    <span asp-validation-for="SlotApplicationCount" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="slot-plane">
+                    <label asp-for="SlotPlane" class="control-label">Ściana rowka</label>
+                    <div>
+                        <input type="radio" asp-for="SlotPlane" value="true" /> Dłuższa krawędź
+                        <input type="radio" asp-for="SlotPlane" value="false" /> Krótsza krawędź
+                    </div>
+                    <span asp-validation-for="SlotPlane" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="step-height">
+                    <label asp-for="StepHeight" class="control-label">Wysokość uskoku</label>
+                    <input asp-for="StepHeight" class="form-control" />
+                    <span asp-validation-for="StepHeight" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="step-width">
+                    <label asp-for="StepWidth" class="control-label">Szerokość uskoku</label>
+                    <input asp-for="StepWidth" class="form-control" />
+                    <span asp-validation-for="StepWidth" class="text-danger"></span>
+                </div>
+                <div class="form-group dynamic-field" id="step-plane">
+                    <label asp-for="StepPlane" class="control-label">Ściana uskoku</label>
+                    <div>
+                        <input type="radio" asp-for="StepPlane" value="true" /> Dłuższa krawędź
+                        <input type="radio" asp-for="StepPlane" value="false" /> Krótsza krawędź
+                    </div>
+                    <span asp-validation-for="StepPlane" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="FinishingSurfaceRoughnessId" class="control-label"></label>
-                <select asp-for="FinishingSurfaceRoughnessId" class="form-control" asp-items="ViewBag.FinishingSurfaceRoughnessId"></select>
-                <span asp-validation-for="FinishingSurfaceRoughnessId" class="text-danger"></span>
-            </div> *@
-            <div class="form-group">
-                <label asp-for="DrillDiameter" class="control-label"></label>
-                <input asp-for="DrillDiameter" class="form-control" />
-                <span asp-validation-for="DrillDiameter" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DrillDepth" class="control-label"></label>
-                <input asp-for="DrillDepth" class="form-control" />
-                <span asp-validation-for="DrillDepth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DrillApplicationCount" class="control-label"></label>
-                <input asp-for="DrillApplicationCount" class="form-control" />
-                <span asp-validation-for="DrillApplicationCount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FaceMillingDepth" class="control-label"></label>
-                <input asp-for="FaceMillingDepth" class="form-control" />
-                <span asp-validation-for="FaceMillingDepth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FinishingMillingDepth" class="control-label"></label>
-                <input asp-for="FinishingMillingDepth" class="form-control" />
-                <span asp-validation-for="FinishingMillingDepth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PocketLength" class="control-label"></label>
-                <input asp-for="PocketLength" class="form-control" />
-                <span asp-validation-for="PocketLength" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PocketWidth" class="control-label"></label>
-                <input asp-for="PocketWidth" class="form-control" />
-                <span asp-validation-for="PocketWidth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PocketDepth" class="control-label"></label>
-                <input asp-for="PocketDepth" class="form-control" />
-                <span asp-validation-for="PocketDepth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AddFinishingOperation" class="control-label"></label>
-                <input asp-for="AddFinishingOperation" class="form-control" />
-                <span asp-validation-for="AddFinishingOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SlotHeight" class="control-label"></label>
-                <input asp-for="SlotHeight" class="form-control" />
-                <span asp-validation-for="SlotHeight" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SlotPlane" class="control-label"></label>
-                <input asp-for="SlotPlane" class="form-control" />
-                <span asp-validation-for="SlotPlane" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SlotApplicationCount" class="control-label"></label>
-                <input asp-for="SlotApplicationCount" class="form-control" />
-                <span asp-validation-for="SlotApplicationCount" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -115,5 +134,60 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            $('#dynamic-fields').hide();
+            $('.dynamic-field').hide();
+
+            $('#acceptFeatureButton').click(function () {
+                var featureId = $('#FeatureId').val();
+
+                $('#dynamic-fields').hide();
+                $('.dynamic-field').hide();
+
+                switch (featureId) {
+                    case '1': // Płaszczyzna Górna
+                        $('#dynamic-fields').show();
+                        $('#accuracy-class').show();
+                        $('#face-milling-depth').show();
+                        break;
+                    case '2': // Otwór
+                        $('#dynamic-fields').show();
+                        $('#accuracy-class').show();
+                        $('#drill-diameter').show();
+                        $('#drill-depth').show();
+                        $('#drill-application-count').show();
+                        $('#reaming-diameter').show();
+                        $('#reaming-depth').show();
+                        break;
+                    case '3': // Kieszeń Zamknięta
+                        $('#dynamic-fields').show();
+                        $('#accuracy-class').show();
+                        $('#pocket-length').show();
+                        $('#pocket-width').show();
+                        $('#pocket-depth').show();
+                        $('#accuracy-class').show();
+                        break;
+                    case '4': // Rowek Przelotowy
+                        $('#dynamic-fields').show();
+                        $('#accuracy-class').show();
+                        $('#slot-height').show();
+                        $('#slot-plane').show();
+                        $('#slot-application-count').show();
+                        break;
+                    case '5': // Uskok
+                        $('#dynamic-fields').show();
+                        $('#accuracy-class').show();
+                        $('#step-height').show();
+                        $('#step-width').show();
+                        $('#step-plane').show();
+                        break;
+                }
+            });
+        });
+    </script>
 }
