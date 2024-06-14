@@ -15,7 +15,9 @@ namespace CostEstimationApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Projekts");
+
+
         }
 
         public IActionResult Privacy()
