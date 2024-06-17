@@ -24,7 +24,7 @@ Przykład:
 3.2 Zalogowanie się do do SQL Managment Studio (SSMS)
 3.3. Przywrócenie bazy danych 
   3.3.1 Kliknięcie prawym przyciskiem myszy na węzeł "Database" i wybranie "Restore database" aby wskazać plik .bak
-  3.3.2. W oknie `Restore Database', wybranie `Device` i kliknięcie przycisku `...`, aby wskazać lokalizację pliku `.bak`.
+  3.3.2. W oknie "Restore Database", wybranie "Device" i kliknięcie przycisku "...", aby wskazać lokalizację pliku ".bak".
   3.3.2 Kliknięcie Add i wskazanie na plik CostEstimationDb.bak i kliknięcie ok
   3.3.3 Upewnienie się, że zaznaczono opcję "Restore" i kliknięcie ok aby rozpocząc przywracanie bazy danych
   3.3.4 W celu sprawdzenia czy baza danych została przywrócona poprawnie trzeba upewnić się, że jest widoczna pod węzłem "Databases"
