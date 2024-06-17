@@ -23,7 +23,7 @@ namespace CostEstimationApp.Models
         public decimal WorkerCost { get; set; }
 
         [Column(TypeName = "decimal(18, 12)")]
-        public decimal TotalCost { get; set; } // Koszt całkowity
+        public decimal TotalCost { get; set; } 
 
         [ForeignKey("ProjektId")]
         public int ProjektId { get; set; }

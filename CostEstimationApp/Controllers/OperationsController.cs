@@ -416,8 +416,7 @@ namespace CostEstimationApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                // Rekord został zmodyfikowany lub usunięty przez inny proces.
-                // Możesz dodać dodatkowe logowanie lub obsługę błędów tutaj.
+                
                 return RedirectToAction(nameof(Index));
             }
 
